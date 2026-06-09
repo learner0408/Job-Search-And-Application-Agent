@@ -16,13 +16,19 @@ def main():
         model=llm,
         tools=tools,
         system_prompt="You are a job search assistant. Help users find and apply to jobs.",
-        debug=True,
     )
-    inputs = {"messages": [("user", "Find me software engineering jobs")]}
+    inputs = {"messages": [("user", "Find me AI Engineer job in Bangalore")]}
     for chunk in graph.stream(inputs, stream_mode="updates"):
         for node, update in chunk.items():
-            print(f"--- {node} ---")
-            print(update)
+            if node == "tools":
+                for msg in update.get("messages", []):
+                    if msg.type == "tool" and msg.content:
+                        print(msg.content)
+                continue
+            messages = update.get("messages", [])
+            for msg in messages:
+                if msg.type == "ai" and msg.content:
+                    print(msg.content)
 
 
 if __name__ == "__main__":
