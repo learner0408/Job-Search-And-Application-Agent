@@ -1,4 +1,5 @@
 import os
+import json
 from langchain.chat_models import init_chat_model
 from langchain.agents import create_agent
 from dotenv import load_dotenv
@@ -15,7 +16,12 @@ def main():
     graph = create_agent(
         model=llm,
         tools=tools,
-        system_prompt="You are a job search assistant. Help users find and apply to jobs.",
+        system_prompt=(
+            "You are a job search assistant. "
+            "For each job found, output a line with format:\n"
+            "---\nTitle: <title>\nDescription: <description>\n"
+            "Location: <location>\nSalary: <salary or N/A>\nLink: <url>\n---"
+        ),
     )
     inputs = {"messages": [("user", "Find me AI Engineer job in Bangalore")]}
     for chunk in graph.stream(inputs, stream_mode="updates"):
@@ -23,12 +29,15 @@ def main():
             if node == "tools":
                 for msg in update.get("messages", []):
                     if msg.type == "tool" and msg.content:
-                        print(msg.content)
-                continue
-            messages = update.get("messages", [])
-            for msg in messages:
-                if msg.type == "ai" and msg.content:
-                    print(msg.content)
+                        data = json.loads(msg.content)
+                        for source in ("indeed", "linkedin"):
+                            for job in data.get(source, []):
+                                print(f"Title: {job['title']}")
+                                print(f"Description: {job.get('description', '')}")
+                                print(f"Location: {job.get('location', '') or 'N/A'}")
+                                print(f"Salary: {job.get('salary', '') or 'N/A'}")
+                                print(f"Link: {job['link']}")
+                                print()
 
 
 if __name__ == "__main__":
