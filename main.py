@@ -8,7 +8,7 @@ from tools import search_jobs
 load_dotenv()
 
 
-def main():
+def main(user_ques:str):
     model = os.getenv("LLM_MODEL", "gemini-2.0-flash")
     provider = os.getenv("LLM_PROVIDER", "google_genai")
     llm = init_chat_model(model, model_provider=provider, temperature=0)
@@ -23,7 +23,7 @@ def main():
             "Location: <location>\nSalary: <salary or N/A>\nLink: <url>\n---"
         ),
     )
-    inputs = {"messages": [("user", "Find me AI Engineer job in Bangalore")]}
+    inputs = {"messages": [("user", user_ques)]}
     for chunk in graph.stream(inputs, stream_mode="updates"):
         for node, update in chunk.items():
             if node == "tools":
@@ -41,4 +41,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    job_ques = "Find me a job for Machine Learning engineer in Bangalore"
+    main(job_ques)

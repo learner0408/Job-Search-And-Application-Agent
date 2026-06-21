@@ -18,3 +18,4 @@
 - Use LangChain by default when creating agents unless otherwise specified.
 - Do not deploy anything before receiving explicit consent.
 - If not sure about some tool or function, check official documentation first before generating the response. For Example - If unsure about a query related to influxDB, seach official influxDB documentation first etc
+- Keep the README.md up-to-date as new edits are performed

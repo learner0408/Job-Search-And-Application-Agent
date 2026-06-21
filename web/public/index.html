@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Job Search Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #2563eb;
+      --color-primary-hover: #1d4ed8;
+      --color-primary-light: #eff6ff;
+      --color-bg: #f1f5f9;
+      --color-surface: #ffffff;
+      --color-header: #0f172a;
+      --color-text: #1e293b;
+      --color-text-secondary: #64748b;
+      --color-border: #e2e8f0;
+      --color-indeed: #003d9a;
+      --color-linkedin: #0a66c2;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+      --max-width: 1200px;
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background: var(--color-header);
+      color: #fff;
+      padding: 32px 24px 24px;
+    }
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .header p {
+      color: #94a3b8;
+      margin-top: 4px;
+      font-size: 15px;
+    }
+
+    /* Search */
+    .search-section {
+      max-width: var(--max-width);
+      margin: -20px auto 0;
+      padding: 0 24px;
+      position: relative;
+      z-index: 10;
+    }
+    .search-card {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      padding: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+    .search-field {
+      flex: 1 1 200px;
+      min-width: 0;
+    }
+    .search-field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-bottom: 4px;
+    }
+    .search-field input,
+    .search-field select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.2s;
+      background: var(--color-surface);
+      color: var(--color-text);
+    }
+    .search-field input:focus,
+    .search-field select:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    }
+    .search-field input::placeholder {
+      color: #94a3b8;
+    }
+
+    .search-btn {
+      flex: 0 0 auto;
+      padding: 10px 32px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      white-space: nowrap;
+      height: 44px;
+    }
+    .search-btn:hover {
+      background: var(--color-primary-hover);
+    }
+    .search-btn:active {
+      transform: scale(0.97);
+    }
+    .search-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Range slider */
+    .range-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .range-wrapper input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--color-border);
+      outline: none;
+      cursor: pointer;
+    }
+    .range-wrapper input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      border: 2px solid #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .range-wrapper input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    .range-wrapper input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      border: 2px solid #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+    .range-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text);
+      min-width: 28px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Main content */
+    .main {
+      max-width: var(--max-width);
+      margin: 24px auto;
+      padding: 0 24px;
+    }
+
+    /* Spinner */
+    .spinner {
+      display: none;
+      justify-content: center;
+      padding: 60px 0;
+    }
+    .spinner.active {
+      display: flex;
+    }
+    .spinner-ring {
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--color-border);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--color-text-secondary);
+    }
+    .empty-state .icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+    .empty-state h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+    .empty-state p {
+      font-size: 15px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    /* Error */
+    .error-banner {
+      display: none;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .error-banner.active {
+      display: block;
+    }
+
+    /* Results count */
+    .results-count {
+      display: none;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-bottom: 8px;
+    }
+    .results-count.active {
+      display: block;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: none;
+      gap: 0;
+      border-bottom: 2px solid var(--color-border);
+      margin-bottom: 20px;
+    }
+    .tabs.active {
+      display: flex;
+    }
+    .tab-button {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: var(--font);
+      color: var(--color-text-secondary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-button:hover {
+      color: var(--color-text);
+    }
+    .tab-button.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* Grid */
+    .job-grid {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    .job-grid.active {
+      display: grid;
+    }
+
+    /* Card */
+    .job-card {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: box-shadow 0.2s, transform 0.2s;
+      border: 1px solid var(--color-border);
+    }
+    .job-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .source-badge {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #fff;
+    }
+    .source-badge.indeed {
+      background: var(--color-indeed);
+    }
+    .source-badge.linkedin {
+      background: var(--color-linkedin);
+    }
+    .source-badge.yc-startup {
+      background: #f26522;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .card-title a {
+      color: var(--color-text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .card-title a:hover {
+      color: var(--color-primary);
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-top: auto;
+    }
+    .card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      max-width: 100%;
+    }
+    .card-meta .label {
+      font-weight: 500;
+    }
+
+    .card-action {
+      margin-top: 4px;
+    }
+    .card-action a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .card-action a:hover {
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--color-text-secondary);
+      font-size: 13px;
+      border-top: 1px solid var(--color-border);
+      margin-top: 40px;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .header h1 { font-size: 22px; }
+      .search-card { padding: 16px; }
+      .search-field { flex: 1 1 100%; }
+      .search-btn { width: 100%; }
+      .job-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (min-width: 641px) and (max-width: 900px) {
+      .job-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* History */
+    .history-panel {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .history-panel.active {
+      display: flex;
+    }
+
+    .history-item {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: box-shadow 0.15s;
+    }
+    .history-item:hover {
+      box-shadow: var(--shadow-sm);
+    }
+    .history-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .history-item-query {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .history-item-meta {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-top: 2px;
+    }
+    .history-item-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .history-item-actions button {
+      padding: 5px 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .history-view-btn {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+    .history-view-btn:hover {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .history-del-btn {
+      background: #fef2f2;
+      color: #991b1b;
+    }
+    .history-del-btn:hover {
+      background: #991b1b;
+      color: #fff;
+    }
+    .history-empty {
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--color-text-secondary);
+      font-size: 15px;
+    }
+    .history-panel.loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 0;
+    }
+
+    .history-load-more {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: none;
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius-sm);
+      color: var(--color-primary);
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .history-load-more:hover {
+      background: var(--color-primary-light);
+      border-color: var(--color-primary);
+    }
+
+    .header-reset {
+      flex-shrink: 0;
+      background: none;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 28px;
+      padding: 6px 16px;
+      border-radius: 8px;
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .header-reset:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      border-color: #64748b;
+    }
+
+    /* Chatbox */
+    .chat-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      z-index: 1000;
+      transition: transform 0.2s, background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chat-toggle:hover {
+      background: var(--color-primary-hover);
+      transform: scale(1.05);
+    }
+    .chat-toggle.open {
+      transform: rotate(45deg);
+    }
+
+    .chat-panel {
+      position: fixed;
+      bottom: 92px;
+      right: 24px;
+      width: 380px;
+      height: 520px;
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      z-index: 999;
+      display: none;
+      flex-direction: column;
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+    }
+    .chat-panel.open {
+      display: flex;
+    }
+
+    .chat-header {
+      padding: 16px 20px;
+      background: var(--color-header);
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .chat-msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+    .chat-msg.user {
+      align-self: flex-end;
+      background: var(--color-primary);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .chat-msg.bot {
+      align-self: flex-start;
+      background: var(--color-bg);
+      color: var(--color-text);
+      border-bottom-left-radius: 4px;
+    }
+    .chat-msg.bot.loading {
+      opacity: 0.6;
+    }
+
+    .chat-input-area {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      border-top: 1px solid var(--color-border);
+    }
+    .chat-input-area input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .chat-input-area input:focus {
+      border-color: var(--color-primary);
+    }
+    .chat-input-area button {
+      padding: 10px 18px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .chat-input-area button:hover {
+      background: var(--color-primary-hover);
+    }
+    .chat-input-area button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 480px) {
+      .chat-panel {
+        width: calc(100vw - 32px);
+        right: 16px;
+        bottom: 84px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <div>
+        <h1>Job Search Agent</h1>
+        <p>Search Indeed, LinkedIn, and Y Combinator startups</p>
+      </div>
+      <button class="header-reset" id="resetBtn" title="Reset">↻</button>
+    </div>
+  </header>
+
+  <section class="search-section">
+    <div class="search-card">
+      <div class="search-field">
+        <label for="query">Job Title</label>
+        <input type="text" id="query" placeholder="e.g. AI Engineer" autofocus>
+      </div>
+      <div class="search-field">
+        <label for="location">Location</label>
+        <input type="text" id="location" placeholder="e.g. Bangalore">
+      </div>
+      <div class="search-field" style="flex:0 1 160px">
+        <label for="maxResults">Results</label>
+        <div class="range-wrapper">
+          <input type="range" id="maxResults" min="5" max="20" value="10" step="1">
+          <span class="range-value" id="rangeValue">10</span>
+        </div>
+      </div>
+      <button class="search-btn" id="searchBtn">Search</button>
+    </div>
+  </section>
+
+  <main class="main">
+    <div class="error-banner" id="errorBanner"></div>
+
+    <div class="empty-state" id="emptyState">
+      <div class="icon">&#128269;</div>
+      <h2>Find your next role</h2>
+      <p>Enter a job title and location above to search Indeed, LinkedIn, and Y Combinator startups.</p>
+    </div>
+
+    <div class="spinner" id="spinner">
+      <div class="spinner-ring"></div>
+    </div>
+
+    <div class="results-count" id="resultsCount"></div>
+
+    <div class="tabs" id="tabs">
+      <button class="tab-button active" data-source="indeed">Indeed</button>
+      <button class="tab-button" data-source="linkedin">LinkedIn</button>
+      <button class="tab-button" data-source="yc">YC Startup</button>
+      <button class="tab-button" data-source="history" style="margin-left:auto">History</button>
+    </div>
+
+    <div class="job-grid" id="jobGrid"></div>
+    <div class="history-panel" id="historyPanel"></div>
+  </main>
+
+  <footer class="footer">
+    Powered by DuckDuckGo &middot; Indeed &middot; LinkedIn &middot; Y Combinator
+  </footer>
+
+  <button class="chat-toggle" id="chatToggle" aria-label="Toggle chat">&#128172;</button>
+
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-header">Job Search Assistant</div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Ask about jobs or careers..." autocomplete="off">
+      <button id="chatSend">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const queryInput = document.getElementById('query');
+    const locationInput = document.getElementById('location');
+    const maxResultsInput = document.getElementById('maxResults');
+    const rangeValue = document.getElementById('rangeValue');
+    const searchBtn = document.getElementById('searchBtn');
+    const errorBanner = document.getElementById('errorBanner');
+    const emptyState = document.getElementById('emptyState');
+    const spinner = document.getElementById('spinner');
+    const resultsCount = document.getElementById('resultsCount');
+    const tabs = document.getElementById('tabs');
+    const jobGrid = document.getElementById('jobGrid');
+
+    let allJobsBySource = {};
+
+    function sourceKey(label) {
+      return label === 'LinkedIn' ? 'linkedin'
+        : label === 'YC Startup' ? 'yc'
+        : 'indeed';
+    }
+
+    maxResultsInput.addEventListener('input', () => {
+      rangeValue.textContent = maxResultsInput.value;
+    });
+
+    queryInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') searchBtn.click();
+    });
+    locationInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') searchBtn.click();
+    });
+
+    searchBtn.addEventListener('click', search);
+
+    tabs.addEventListener('click', (e) => {
+      const btn = e.target.closest('.tab-button');
+      if (!btn) return;
+      if (btn.classList.contains('active')) return;
+      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (btn.dataset.source === 'history') {
+        renderHistory();
+      } else {
+        renderGrid(btn.dataset.source);
+      }
+    });
+
+    function sourceLabel(source) {
+      return source === 'LinkedIn' ? 'LinkedIn'
+        : source === 'YC Startup' ? 'YC Startup'
+        : 'Indeed';
+    }
+
+    async function search() {
+      const query = queryInput.value.trim();
+      if (!query) {
+        showError('Please enter a job title.');
+        queryInput.focus();
+        return;
+      }
+
+      clearError();
+      emptyState.classList.remove('active');
+      emptyState.style.display = '';
+      resultsCount.classList.remove('active');
+      historyPanel.classList.remove('active');
+      historyPanel.innerHTML = '';
+      tabs.classList.remove('active');
+      jobGrid.classList.remove('active');
+      spinner.classList.add('active');
+      searchBtn.disabled = true;
+
+      try {
+        const res = await fetch('/api/search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query,
+            location: locationInput.value.trim(),
+            max_results: parseInt(maxResultsInput.value, 10),
+          }),
+        });
+
+        if (!res.ok) {
+          throw new Error(`Server error (${res.status})`);
+        }
+
+        const data = await res.json();
+        renderJobs(data.jobs || []);
+      } catch (err) {
+        showError(err.message || 'Something went wrong. Make sure the API server is running.');
+      } finally {
+        spinner.classList.remove('active');
+        searchBtn.disabled = false;
+      }
+    }
+
+    function renderJobs(jobs) {
+      historyPanel.classList.remove('active');
+      historyPanel.innerHTML = '';
+      if (jobs.length === 0) {
+        emptyState.style.display = 'block';
+        emptyState.classList.add('active');
+        emptyState.querySelector('h2').textContent = 'No jobs found';
+        emptyState.querySelector('p').textContent = 'Try different keywords or a broader location.';
+        return;
+      }
+
+      allJobsBySource = { indeed: [], linkedin: [], yc: [] };
+      for (const job of jobs) {
+        const key = sourceKey(job.source || 'Indeed');
+        if (allJobsBySource[key]) {
+          allJobsBySource[key].push(job);
+        }
+      }
+
+      resultsCount.classList.add('active');
+      resultsCount.textContent = `${jobs.length} job${jobs.length > 1 ? 's' : ''} found`;
+      tabs.classList.add('active');
+
+      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+      document.querySelector('.tab-button[data-source="indeed"]').classList.add('active');
+      renderGrid('indeed');
+    }
+
+    function renderGrid(source) {
+      const jobs = allJobsBySource[source] || [];
+      jobGrid.classList.add('active');
+      jobGrid.innerHTML = jobs.map(job => {
+        const label = sourceLabel(job.source || 'Indeed');
+        const tabKey = sourceKey(label);
+        const badgeClass = tabKey === 'linkedin' ? 'linkedin'
+          : tabKey === 'yc' ? 'yc-startup'
+          : 'indeed';
+        const location = job.location && job.location !== 'N/A' ? job.location : null;
+        const salary = job.salary && job.salary !== 'N/A' ? job.salary : null;
+        const link = job.link || '#';
+
+        return `
+          <div class="job-card">
+            <div class="card-header">
+              <span class="source-badge ${badgeClass}">${label}</span>
+            </div>
+            <div class="card-title">
+              <a href="${link}" target="_blank" rel="noopener">${escapeHtml(job.title)}</a>
+            </div>
+            <div class="card-meta">
+              ${location ? `<span><span class="label">Location:</span> ${escapeHtml(location)}</span>` : ''}
+              ${salary ? `<span><span class="label">Salary:</span> ${escapeHtml(salary)}</span>` : ''}
+            </div>
+            <div class="card-action">
+              <a href="${link}" target="_blank" rel="noopener">
+                View on ${label} &rarr;
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function showError(msg) {
+      errorBanner.textContent = msg;
+      errorBanner.classList.add('active');
+    }
+
+    function clearError() {
+      errorBanner.textContent = '';
+      errorBanner.classList.remove('active');
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    /* History */
+    const historyPanel = document.getElementById('historyPanel');
+    let historyPage = 1;
+    let allHistory = [];
+    let historyTotal = 0;
+
+    function resetPage() {
+      historyPanel.classList.remove('active');
+      jobGrid.classList.remove('active');
+      jobGrid.innerHTML = '';
+      resultsCount.classList.remove('active');
+      tabs.classList.add('active');
+      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+      errorBanner.classList.remove('active');
+      allJobsBySource = {};
+      emptyState.style.display = 'block';
+      emptyState.classList.add('active');
+      emptyState.querySelector('h2').textContent = 'Find your next role';
+      emptyState.querySelector('p').textContent = 'Enter a job title and location above to search Indeed, LinkedIn, and Y Combinator startups.';
+    }
+
+    async function renderHistory(page = 1) {
+      jobGrid.classList.remove('active');
+      jobGrid.innerHTML = '';
+      resultsCount.classList.remove('active');
+      historyPanel.classList.add('active');
+
+      if (page === 1) {
+        historyPanel.classList.add('loading');
+        historyPanel.innerHTML = '<div class="spinner-ring"></div>';
+        allHistory = [];
+        historyPage = 1;
+      }
+
+      try {
+        const res = await fetch(`/api/history?page=${page}&per_page=10`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        historyTotal = data.total;
+        historyPage = page;
+        allHistory = page === 1 ? data.searches : [...allHistory, ...data.searches];
+
+        if (allHistory.length === 0) {
+          historyPanel.classList.remove('loading');
+          historyPanel.innerHTML = '<div class="history-empty">No search history yet.</div>';
+          return;
+        }
+
+        historyPanel.classList.remove('loading');
+        historyPanel.innerHTML = allHistory.map(s => {
+          const date = s.created_at ? new Date(s.created_at + 'Z').toLocaleString() : '';
+          const trigger = s.source_trigger === 'chat' ? 'via Chat' : 'via Search';
+          return `
+            <div class="history-item" data-id="${s.id}">
+              <div class="history-item-info">
+                <div class="history-item-query">${escapeHtml(s.query)}${s.location ? ' — ' + escapeHtml(s.location) : ''}</div>
+                <div class="history-item-meta">${s.result_count} jobs · ${date} · ${trigger}</div>
+              </div>
+              <div class="history-item-actions">
+                <button class="history-view-btn" data-action="view">View</button>
+                <button class="history-del-btn" data-action="delete">Delete</button>
+              </div>
+            </div>`;
+        }).join('');
+
+        const loaded = allHistory.length;
+        if (loaded < historyTotal) {
+          const loadMore = document.createElement('button');
+          loadMore.className = 'history-load-more';
+          loadMore.textContent = `Show ${Math.min(10, historyTotal - loaded)} more (${loaded} of ${historyTotal})`;
+          historyPanel.appendChild(loadMore);
+          loadMore.addEventListener('click', () => renderHistory(historyPage + 1));
+        }
+
+        historyPanel.querySelectorAll('.history-view-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const item = btn.closest('.history-item');
+            const id = item.dataset.id;
+            const res = await fetch(`/api/history/${id}`);
+            if (!res.ok) return;
+            const data = await res.json();
+            const tab = document.querySelector('.tab-button[data-source="indeed"]');
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            tab.classList.add('active');
+            historyPanel.classList.remove('active');
+            renderJobs(data.results || []);
+          });
+        });
+
+        historyPanel.querySelectorAll('.history-del-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            if (!confirm('Delete this search?')) return;
+            const item = btn.closest('.history-item');
+            const id = item.dataset.id;
+            const res = await fetch(`/api/history/${id}`, { method: 'DELETE' });
+            if (!res.ok) return;
+            renderHistory(1);
+          });
+        });
+      } catch (err) {
+        historyPanel.classList.remove('loading');
+        historyPanel.innerHTML = `<div class="history-empty">Error loading history: ${err.message}</div>`;
+      }
+    }
+
+    /* Chat */
+    const chatToggle = document.getElementById('chatToggle');
+    const chatPanel = document.getElementById('chatPanel');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+
+    chatToggle.addEventListener('click', () => {
+      const open = chatPanel.classList.toggle('open');
+      chatToggle.classList.toggle('open', open);
+      if (open) chatInput.focus();
+    });
+
+    function addChatMessage(text, role) {
+      const el = document.createElement('div');
+      el.className = `chat-msg ${role}`;
+      el.textContent = text;
+      chatMessages.appendChild(el);
+      el.scrollIntoView({ behavior: 'smooth' });
+      return el;
+    }
+
+    async function sendChat() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      chatInput.value = '';
+      addChatMessage(text, 'user');
+
+      const loadingEl = addChatMessage('Thinking...', 'bot loading');
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text }),
+        });
+
+        loadingEl.remove();
+
+        if (!res.ok) {
+          addChatMessage(`Error: server returned ${res.status}`, 'bot');
+          return;
+        }
+
+        const data = await res.json();
+        addChatMessage(data.reply, 'bot');
+
+        if (data.jobs && data.jobs.length > 0) {
+          renderJobs(data.jobs);
+        }
+      } catch (err) {
+        loadingEl.remove();
+        addChatMessage(`Error: ${err.message}`, 'bot');
+      }
+    }
+
+    chatSend.addEventListener('click', sendChat);
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendChat();
+    });
+
+    /* Reset */
+    document.getElementById('resetBtn').addEventListener('click', resetPage);
+
+    /* Auto-load history on page refresh */
+    (async function init() {
+      try {
+        const res = await fetch('/api/history?page=1&per_page=10');
+        const data = await res.json();
+        if (data.total > 0) {
+          emptyState.style.display = '';
+          emptyState.classList.remove('active');
+          tabs.classList.add('active');
+          document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+          document.querySelector('.tab-button[data-source="history"]').classList.add('active');
+          renderHistory(1);
+        }
+      } catch (_) {}
+    })();
+  </script>
+
+</body>
+</html>

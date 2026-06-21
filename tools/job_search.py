@@ -51,7 +51,7 @@ def _parse_jobs(results: list[dict], source: str) -> list[dict]:
         jobs.append({
             "source": source,
             "title": title,
-            "description": snippet[:300],
+            "description": snippet[:300] if snippet else "",
             "location": _extract_location(f"{title} {snippet}"),
             "salary": _extract_salary(snippet),
             "link": r.get("href", ""),
@@ -67,7 +67,7 @@ def search_indeed(
     max_results: int = 10,
 ) -> list[dict]:
     """Search Indeed for jobs via DuckDuckGo."""
-    parts = ["site:indeed.com", title]
+    parts = ["site:indeed.com", title, "jobs"]
     if location:
         parts.append(location)
     if remote:
@@ -97,6 +97,22 @@ def search_linkedin(
     return _parse_jobs(_ddgs_search(query, max_results), "LinkedIn")
 
 
+def search_yc(
+    title: str,
+    location: str = "",
+    remote: bool = False,
+    max_results: int = 10,
+) -> list[dict]:
+    """Search Y Combinator startup jobs via DuckDuckGo."""
+    parts = ["site:workatastartup.com/jobs", title]
+    if location:
+        parts.append(location)
+    if remote:
+        parts.append("remote")
+    query = " ".join(parts)
+    return _parse_jobs(_ddgs_search(query, max_results), "YC Startup")
+
+
 @tool
 def search_jobs(
     title: str,
@@ -105,7 +121,7 @@ def search_jobs(
     remote: Optional[bool] = False,
     max_results: Optional[int] = 10,
 ) -> str:
-    """Search for jobs on Indeed and LinkedIn.
+    """Search for jobs on Indeed, LinkedIn, and Y Combinator startups.
 
     Args:
         title: Job title or keywords to search for.
@@ -116,11 +132,10 @@ def search_jobs(
     """
     indeed_jobs = search_indeed(title, location, employment_type, remote, max_results)
     linkedin_jobs = search_linkedin(title, location, employment_type, remote, max_results)
-
-    if not indeed_jobs and not linkedin_jobs:
-        return json.dumps({"indeed": [], "linkedin": []})
+    yc_jobs = search_yc(title, location, remote, max_results)
 
     return json.dumps({
         "indeed": indeed_jobs,
         "linkedin": linkedin_jobs,
+        "yc_startups": yc_jobs,
     }, indent=2)
