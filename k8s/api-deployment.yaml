@@ -47,9 +47,11 @@ spec:
             port: 8000
           initialDelaySeconds: 10
           periodSeconds: 15
+          timeoutSeconds: 5
         readinessProbe:
           httpGet:
             path: /api/health
             port: 8000
           initialDelaySeconds: 5
           periodSeconds: 10
+          timeoutSeconds: 5

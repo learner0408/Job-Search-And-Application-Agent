@@ -43,6 +43,8 @@
       color: var(--color-text);
       line-height: 1.5;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     /* Header */
@@ -73,10 +75,8 @@
     /* Search */
     .search-section {
       max-width: var(--max-width);
-      margin: -20px auto 0;
+      margin: 12px auto 0;
       padding: 0 24px;
-      position: relative;
-      z-index: 10;
     }
     .search-card {
       background: var(--color-surface);
@@ -89,7 +89,7 @@
       align-items: flex-end;
     }
     .search-field {
-      flex: 1 1 200px;
+      flex: 1 1 280px;
       min-width: 0;
     }
     .search-field label {
@@ -423,7 +423,8 @@
 
     /* Responsive */
     @media (max-width: 640px) {
-      .header h1 { font-size: 22px; }
+      .header-title p { display: none; }
+      .header h1 { font-size: 20px; }
       .search-card { padding: 16px; }
       .search-field { flex: 1 1 100%; }
       .search-btn { width: 100%; }
@@ -434,14 +435,8 @@
       .job-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
-    /* History */
-    .history-panel {
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .history-panel.active {
-      display: flex;
+    @media (min-width: 641px) and (max-width: 900px) {
+      .job-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     .history-item {
@@ -509,13 +504,6 @@
       color: var(--color-text-secondary);
       font-size: 15px;
     }
-    .history-panel.loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 0;
-    }
-
     .history-load-more {
       display: block;
       width: 100%;
@@ -620,7 +608,8 @@
     }
 
     .chat-msg {
-      max-width: 85%;
+      width: 40%;
+      box-sizing: border-box;
       padding: 10px 14px;
       border-radius: 12px;
       font-size: 14px;
@@ -635,7 +624,7 @@
     }
     .chat-msg.bot {
       align-self: flex-start;
-      background: var(--color-bg);
+      background: var(--color-surface);
       color: var(--color-text);
       border-bottom-left-radius: 4px;
     }
@@ -682,12 +671,724 @@
       cursor: not-allowed;
     }
 
-    @media (max-width: 480px) {
-      .chat-panel {
-        width: calc(100vw - 32px);
-        right: 16px;
-        bottom: 84px;
-      }
+    @media (max-width: 640px) {
+      .header-title p { display: none; }
+      .header h1 { font-size: 20px; }
+    }
+
+    .profile-form {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .profile-form h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .profile-grid .full-width {
+      grid-column: 1 / -1;
+    }
+    .profile-field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-bottom: 4px;
+    }
+    .profile-field input,
+    .profile-field textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: var(--font);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .profile-field input:focus,
+    .profile-field textarea:focus {
+      border-color: var(--color-primary);
+    }
+    .profile-section {
+      border-top: 1px solid var(--color-border);
+      padding-top: 16px;
+      margin-top: 16px;
+    }
+    .profile-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .profile-section-header h3 {
+      margin: 0;
+    }
+    .profile-array-item {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .profile-array-item .full-width {
+      grid-column: 1 / -1;
+    }
+    .profile-array-item input,
+    .profile-array-item textarea {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: var(--font);
+      outline: none;
+    }
+    .profile-array-item input:focus,
+    .profile-array-item textarea:focus {
+      border-color: var(--color-primary);
+    }
+    .profile-remove-btn {
+      grid-column: 1 / -1;
+      justify-self: end;
+      padding: 4px 10px;
+      background: #fef2f2;
+      color: #991b1b;
+      border: none;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .profile-add-btn {
+      padding: 6px 14px;
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      border: 1px dashed var(--color-primary);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+    .profile-save-btn {
+      padding: 10px 28px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .profile-save-btn:hover {
+      background: var(--color-primary-hover);
+    }
+    .profile-save-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .profile-status {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-top: 8px;
+    }
+
+    .app-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+    }
+    .app-card-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .app-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .app-card-title {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .app-card-meta {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      margin-top: 2px;
+    }
+    .app-status-badge {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .app-status-badge.preparing { background: #f59e0b; }
+    .app-status-badge.applied { background: #10b981; }
+    .app-status-badge.rejected { background: #ef4444; }
+    .app-status-badge.interview { background: #8b5cf6; }
+    .app-status-badge.offer { background: #3b82f6; }
+    .app-filter {
+      margin-bottom: 10px;
+    }
+    .app-filter select {
+      padding: 6px 12px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: var(--font);
+      outline: none;
+    }
+
+    /* Apply button on cards */
+    .apply-btn {
+      padding: 6px 14px;
+      background: #10b981;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .apply-btn:hover {
+      background: #059669;
+    }
+    .apply-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Status modal */
+    .status-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .status-modal-overlay.active {
+      display: flex;
+    }
+    .status-modal-box {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      padding: 28px;
+      max-width: 460px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .status-modal-box h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .status-modal-box .sub {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      margin-bottom: 16px;
+    }
+    .status-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 14px;
+    }
+    .status-step .step-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .status-step.done .step-icon {
+      background: #10b981;
+      color: #fff;
+    }
+    .status-step.active .step-icon {
+      background: var(--color-primary);
+      color: #fff;
+    }
+    .status-step.pending .step-icon {
+      background: var(--color-border);
+      color: #94a3b8;
+    }
+    .status-step .cover-preview {
+      margin-top: 10px;
+      padding: 12px;
+      background: var(--color-bg);
+      border-radius: 6px;
+      font-size: 13px;
+      white-space: pre-wrap;
+      max-height: 200px;
+      overflow-y: auto;
+      line-height: 1.5;
+    }
+    .status-close-btn {
+      margin-top: 16px;
+      padding: 8px 20px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* Header icons */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .header-icon {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 20px;
+      padding: 6px;
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+      line-height: 1;
+    }
+    .header-icon:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* Side panels */
+    .side-panel-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 2999;
+    }
+    .side-panel-overlay.active {
+      display: block;
+    }
+    .side-panel {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 440px;
+      max-width: 100vw;
+      height: 100vh;
+      background: var(--color-surface);
+      box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+      z-index: 3000;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .side-panel.active {
+      display: flex;
+    }
+    .side-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--color-border);
+      font-weight: 600;
+      font-size: 16px;
+      position: sticky;
+      top: 0;
+      background: var(--color-surface);
+      z-index: 1;
+    }
+    .side-panel-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+    .side-panel-close:hover {
+      background: var(--color-bg);
+    }
+    .side-panel-body {
+      padding: 20px;
+      flex: 1;
+    }
+
+    /* Hamburger */
+    .hamburger-btn {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 26px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      line-height: 1;
+      transition: color 0.15s, background 0.15s;
+      margin-top: 2px;
+    }
+    .hamburger-btn:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.1);
+    }
+    .header-title {
+      flex: 1;
+    }
+
+    .header {
+      position: relative;
+    }
+
+    /* Nav dropdown */
+    .nav-dropdown {
+      display: none;
+      position: fixed;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      z-index: 900;
+      min-width: 200px;
+      overflow: hidden;
+    }
+    .nav-dropdown.active {
+      display: block;
+    }
+    .nav-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 16px;
+      background: none;
+      border: none;
+      font-size: 15px;
+      font-family: var(--font);
+      color: var(--color-text);
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s;
+    }
+    .nav-dropdown-item:hover {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    /* Main layout */
+    .main-layout {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--color-surface);
+      border-radius: 12px;
+      margin: 16px;
+      align-self: flex-start;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar-header {
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+    }
+    .sidebar-new-btn {
+      padding: 4px 10px;
+      font-size: 12px;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: var(--font);
+    }
+    .sidebar-new-btn:hover {
+      background: var(--color-primary-hover);
+    }
+    .sidebar-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+    .sidebar-item {
+      padding: 10px 12px;
+      cursor: pointer;
+      font-size: 13px;
+      background: var(--color-bg);
+      border-radius: 6px;
+      margin-bottom: 8px;
+      transition: background 0.15s;
+    }
+    .sidebar-item:hover {
+      background: var(--color-primary-light);
+    }
+    .sidebar-item.active {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+    .sidebar-item-text {
+      display: inline;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sidebar-item-del {
+      float: right;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      padding: 0 2px;
+      line-height: 1;
+      opacity: 0;
+      transition: opacity 0.15s;
+      font-family: var(--font);
+    }
+    .sidebar-item:hover .sidebar-item-del {
+      opacity: 1;
+    }
+    .sidebar-item-del:hover {
+      color: #e00;
+    }
+    .sidebar-item-time {
+      display: block;
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      margin-top: 2px;
+    }
+    .content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* Page sections */
+    .page-section {
+      display: none;
+    }
+    .page-section.active {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .page-content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      color: var(--color-primary);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      padding: 12px 0;
+      transition: color 0.15s;
+    }
+    .back-link:hover {
+      color: var(--color-primary-hover);
+    }
+
+    /* Chat main (replaces floating chat) */
+    #chatPage {
+      max-width: 100%;
+      padding: 0;
+    }
+    #chatPage.active {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    #chatPage .chat-panel {
+      position: static;
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      flex: 1;
+      min-height: 0;
+      background: none;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    #chatPage .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    #chatPage .chat-input-area {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      width: 60%;
+      align-self: center;
+    }
+
+    /* Applications page */
+    .app-page-filter {
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .app-page-filter label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+    }
+    .app-page-filter select {
+      padding: 8px 12px;
+      border: 1.5px solid var(--color-border);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: var(--font);
+      outline: none;
+    }
+    .app-tile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    .app-tile {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-border);
+      padding: 20px;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .app-tile:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .app-tile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .app-tile-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .app-tile-company {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      margin-bottom: 4px;
+    }
+    .app-tile-meta {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+    }
+    .app-tile-status {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .app-tile-status.preparing { background: #f59e0b; }
+    .app-tile-status.applied { background: #10b981; }
+    .app-tile-status.rejected { background: #ef4444; }
+    .app-tile-status.interview { background: #8b5cf6; }
+    .app-tile-status.offer { background: #3b82f6; }
+    .app-tile-details {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-border);
+      font-size: 14px;
+      color: var(--color-text);
+    }
+    .app-tile-details.open {
+      display: block;
+    }
+    .app-tile-details .cover-preview {
+      margin-top: 10px;
+      padding: 12px;
+      background: var(--color-bg);
+      border-radius: 6px;
+      font-size: 13px;
+      white-space: pre-wrap;
+      max-height: 200px;
+      overflow-y: auto;
+      line-height: 1.5;
+    }
+    .app-tile-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--color-text-secondary);
+      font-size: 15px;
+    }
+    @media (max-width: 640px) {
+      .app-tile-grid { grid-template-columns: 1fr; }
+      #chatPage { padding: 0; margin-top: 16px; }
+    }
+    @media (min-width: 641px) and (max-width: 900px) {
+      .app-tile-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -695,73 +1396,143 @@
 
   <header class="header">
     <div class="header-inner">
-      <div>
+      <button class="hamburger-btn" id="hamburgerBtn">☰</button>
+      <div class="header-title">
         <h1>Job Search Agent</h1>
         <p>Search Indeed, LinkedIn, and Y Combinator startups</p>
       </div>
-      <button class="header-reset" id="resetBtn" title="Reset">↻</button>
+      <div class="header-actions">
+        <button class="header-icon" id="historyToggle" title="History">⏱</button>
+        <button class="header-icon" id="profileToggle" title="Profile">👤</button>
+        <button class="header-reset" id="resetBtn" title="Reset">↻</button>
+      </div>
     </div>
   </header>
 
-  <section class="search-section">
-    <div class="search-card">
-      <div class="search-field">
-        <label for="query">Job Title</label>
-        <input type="text" id="query" placeholder="e.g. AI Engineer" autofocus>
+  <div class="nav-dropdown" id="navDropdown">
+    <button class="nav-dropdown-item" data-page="search">🔍 Job Search</button>
+    <button class="nav-dropdown-item" data-page="apps">📋 Applications</button>
+  </div>
+
+  <div class="main-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span>Conversations</span>
+        <button class="sidebar-new-btn" id="newChatBtn">+ New</button>
       </div>
-      <div class="search-field">
-        <label for="location">Location</label>
-        <input type="text" id="location" placeholder="e.g. Bangalore">
+      <div class="sidebar-list" id="sidebarSessions"></div>
+    </aside>
+    <div class="content-area">
+
+  <div class="page-section active" id="chatPage">
+    <div class="chat-panel">
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Ask about jobs or careers..." autocomplete="off">
+        <button id="chatSend">Send</button>
       </div>
-      <div class="search-field" style="flex:0 1 160px">
-        <label for="maxResults">Results</label>
-        <div class="range-wrapper">
-          <input type="range" id="maxResults" min="5" max="20" value="10" step="1">
-          <span class="range-value" id="rangeValue">10</span>
+    </div>
+  </div>
+
+  <div class="page-section" id="searchPage">
+    <div class="page-content">
+      <button class="back-link" data-page="chatPage">← Back to Chat</button>
+      <section class="search-section">
+        <div class="search-card">
+          <div class="search-field">
+            <label for="query">Job Title</label>
+            <input type="text" id="query" placeholder="e.g. AI Engineer">
+          </div>
+          <div class="search-field">
+            <label for="location">Location</label>
+            <input type="text" id="location" placeholder="e.g. Bangalore">
+          </div>
+          <div class="search-field" style="flex:0 1 160px">
+            <label for="maxResults">Results</label>
+            <div class="range-wrapper">
+              <input type="range" id="maxResults" min="5" max="20" value="10" step="1">
+              <span class="range-value" id="rangeValue">10</span>
+            </div>
+          </div>
+          <button class="search-btn" id="searchBtn">Search</button>
         </div>
+      </section>
+
+      <main class="main">
+        <div class="error-banner" id="errorBanner"></div>
+
+        <div class="empty-state" id="emptyState">
+          <div class="icon">&#128269;</div>
+          <h2>Find your next role</h2>
+          <p>Enter a job title and location above to search Indeed, LinkedIn, and Y Combinator startups.</p>
+        </div>
+
+        <div class="spinner" id="spinner">
+          <div class="spinner-ring"></div>
+        </div>
+
+        <div class="results-count" id="resultsCount"></div>
+
+        <div class="tabs" id="tabs">
+          <button class="tab-button active" data-source="indeed">Indeed</button>
+          <button class="tab-button" data-source="linkedin">LinkedIn</button>
+          <button class="tab-button" data-source="yc">YC Startup</button>
+        </div>
+
+        <div class="job-grid" id="jobGrid"></div>
+      </main>
+    </div>
+  </div>
+
+  <div class="page-section" id="appsPage">
+    <div class="page-content">
+      <button class="back-link" data-page="chatPage">← Back to Chat</button>
+      <div class="app-page-filter">
+        <label for="appPageFilter">Status:</label>
+        <select id="appPageFilter">
+          <option value="all">All</option>
+          <option value="preparing">Preparing</option>
+          <option value="applied">Applied</option>
+          <option value="rejected">Rejected</option>
+          <option value="interview">Interview</option>
+          <option value="offer">Offer</option>
+        </select>
       </div>
-      <button class="search-btn" id="searchBtn">Search</button>
+      <div class="app-tile-grid" id="appTileGrid"></div>
     </div>
-  </section>
+  </div>
 
-  <main class="main">
-    <div class="error-banner" id="errorBanner"></div>
-
-    <div class="empty-state" id="emptyState">
-      <div class="icon">&#128269;</div>
-      <h2>Find your next role</h2>
-      <p>Enter a job title and location above to search Indeed, LinkedIn, and Y Combinator startups.</p>
     </div>
-
-    <div class="spinner" id="spinner">
-      <div class="spinner-ring"></div>
-    </div>
-
-    <div class="results-count" id="resultsCount"></div>
-
-    <div class="tabs" id="tabs">
-      <button class="tab-button active" data-source="indeed">Indeed</button>
-      <button class="tab-button" data-source="linkedin">LinkedIn</button>
-      <button class="tab-button" data-source="yc">YC Startup</button>
-      <button class="tab-button" data-source="history" style="margin-left:auto">History</button>
-    </div>
-
-    <div class="job-grid" id="jobGrid"></div>
-    <div class="history-panel" id="historyPanel"></div>
-  </main>
+  </div>
 
   <footer class="footer">
     Powered by DuckDuckGo &middot; Indeed &middot; LinkedIn &middot; Y Combinator
   </footer>
 
-  <button class="chat-toggle" id="chatToggle" aria-label="Toggle chat">&#128172;</button>
+  <div class="side-panel-overlay" id="sidePanelOverlay"></div>
 
-  <div class="chat-panel" id="chatPanel">
-    <div class="chat-header">Job Search Assistant</div>
-    <div class="chat-messages" id="chatMessages"></div>
-    <div class="chat-input-area">
-      <input type="text" id="chatInput" placeholder="Ask about jobs or careers..." autocomplete="off">
-      <button id="chatSend">Send</button>
+  <div class="side-panel" id="sideHistory">
+    <div class="side-panel-header">
+      <span>History</span>
+      <button class="side-panel-close" data-panel="sideHistory">✕</button>
+    </div>
+    <div class="side-panel-body" id="sideHistoryBody"></div>
+  </div>
+
+  <div class="side-panel" id="sideProfile">
+    <div class="side-panel-header">
+      <span>Profile</span>
+      <button class="side-panel-close" data-panel="sideProfile">✕</button>
+    </div>
+    <div class="side-panel-body" id="sideProfileBody"></div>
+  </div>
+
+  <div class="status-modal-overlay" id="statusModal">
+    <div class="status-modal-box">
+      <h3 id="statusTitle">Applying...</h3>
+      <div class="sub" id="statusJobInfo"></div>
+      <div id="statusSteps"></div>
+      <button class="status-close-btn" id="statusCloseBtn" style="display:none">Close</button>
     </div>
   </div>
 
@@ -778,7 +1549,23 @@
     const tabs = document.getElementById('tabs');
     const jobGrid = document.getElementById('jobGrid');
 
+    const sidePanelOverlay = document.getElementById('sidePanelOverlay');
+    const sideHistory = document.getElementById('sideHistory');
+    const sideProfile = document.getElementById('sideProfile');
+    const sideHistoryBody = document.getElementById('sideHistoryBody');
+    const sideProfileBody = document.getElementById('sideProfileBody');
+
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navDropdown = document.getElementById('navDropdown');
+    const chatPage = document.getElementById('chatPage');
+    const searchPage = document.getElementById('searchPage');
+    const appsPage = document.getElementById('appsPage');
+    const appTileGrid = document.getElementById('appTileGrid');
+    const appPageFilter = document.getElementById('appPageFilter');
+
     let allJobsBySource = {};
+    let currentSessionId = null;
+    const appStatusByLink = new Map();
 
     function sourceKey(label) {
       return label === 'LinkedIn' ? 'linkedin'
@@ -805,11 +1592,8 @@
       if (btn.classList.contains('active')) return;
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      if (btn.dataset.source === 'history') {
-        renderHistory();
-      } else {
-        renderGrid(btn.dataset.source);
-      }
+      errorBanner.classList.remove('active');
+      renderGrid(btn.dataset.source);
     });
 
     function sourceLabel(source) {
@@ -826,12 +1610,11 @@
         return;
       }
 
+      closeSidePanels();
       clearError();
       emptyState.classList.remove('active');
       emptyState.style.display = '';
       resultsCount.classList.remove('active');
-      historyPanel.classList.remove('active');
-      historyPanel.innerHTML = '';
       tabs.classList.remove('active');
       jobGrid.classList.remove('active');
       spinner.classList.add('active');
@@ -863,8 +1646,7 @@
     }
 
     function renderJobs(jobs) {
-      historyPanel.classList.remove('active');
-      historyPanel.innerHTML = '';
+      closeSidePanels();
       if (jobs.length === 0) {
         emptyState.style.display = 'block';
         emptyState.classList.add('active');
@@ -903,10 +1685,16 @@
         const salary = job.salary && job.salary !== 'N/A' ? job.salary : null;
         const link = job.link || '#';
 
+        const existingStatus = appStatusByLink.get(link);
+        const actionHtml = existingStatus
+          ? `<span class="app-status-badge ${existingStatus}" style="font-size:11px">${existingStatus}</span>`
+          : `<button class="apply-btn" data-title="${escapeHtml(job.title)}" data-company="" data-location="${escapeHtml(location || '')}" data-salary="${escapeHtml(salary || '')}" data-link="${escapeHtml(link)}" data-source="${escapeHtml(label)}" data-description="${escapeHtml(job.description || '')}">Apply</button>`;
+
         return `
           <div class="job-card">
             <div class="card-header">
               <span class="source-badge ${badgeClass}">${label}</span>
+              ${actionHtml}
             </div>
             <div class="card-title">
               <a href="${link}" target="_blank" rel="noopener">${escapeHtml(job.title)}</a>
@@ -923,6 +1711,79 @@
           </div>
         `;
       }).join('');
+      jobGrid.querySelectorAll('.apply-btn').forEach(btn => {
+        btn.addEventListener('click', handleApply);
+      });
+    }
+
+    async function handleApply(e) {
+      const btn = e.currentTarget;
+      btn.disabled = true;
+      btn.textContent = 'Applying...';
+      const data = {
+        job_title: btn.dataset.title,
+        company: btn.dataset.company || extractCompany(btn.dataset.title, btn.dataset.link),
+        location: btn.dataset.location,
+        salary: btn.dataset.salary,
+        link: btn.dataset.link,
+        source: btn.dataset.source,
+        description: btn.dataset.description,
+      };
+      showStatusModal(data.job_title, data.company);
+      try {
+        const res = await fetch('/api/apply/prepare', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const result = await res.json();
+
+        updateStatusStep('cover', result.cover_letter);
+        updateStatusStep('agent', 'Launching browser...', false);
+
+        const agentUrl = `http://127.0.0.1:8765/apply/${result.app_id}?api_base=${encodeURIComponent(window.location.origin)}`;
+        let agentOk = false;
+        try {
+          const agentRes = await fetch(agentUrl, { method: 'POST' });
+          if (agentRes.ok) {
+            agentOk = true;
+            updateStatusStep('agent', 'Browser opened — review & submit manually', true);
+            btn.textContent = 'Applied';
+            appStatusByLink.set(data.link, 'applied');
+          } else {
+            throw new Error(`Agent HTTP ${agentRes.status}`);
+          }
+        } catch (agentErr) {
+          const msg = agentErr.message.includes('fetch')
+            ? 'Local agent not running — start auto-apply/service.py'
+            : agentErr.message;
+          updateStatusStep('agent', msg, true);
+          btn.textContent = 'Applied';
+          appStatusByLink.set(data.link, 'applied');
+        }
+
+        if (appStatusByLink.has(data.link)) {
+          const activeTab = document.querySelector('.tab-button.active');
+          if (activeTab) renderGrid(activeTab.dataset.source);
+        }
+
+        showStatusClose();
+      } catch (err) {
+        updateStatusStep('agent', `Error: ${err.message}`, true);
+        showStatusClose();
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function extractCompany(title, link) {
+      try {
+        const host = new URL(link).hostname.replace('www.', '');
+        return host.split('.')[0] || '';
+      } catch {
+        return '';
+      }
     }
 
     function showError(msg) {
@@ -941,14 +1802,132 @@
       return div.innerHTML;
     }
 
-    /* History */
-    const historyPanel = document.getElementById('historyPanel');
+    function timeAgo(dateStr) {
+      const now = Date.now();
+      const then = new Date(dateStr + 'Z').getTime();
+      const diff = now - then;
+      const mins = Math.floor(diff / 60000);
+      if (mins < 60) return mins + 'm ago';
+      const hrs = Math.floor(mins / 60);
+      if (hrs < 24) return hrs + 'h ago';
+      const days = Math.floor(hrs / 24);
+      if (days < 7) return days + 'd ago';
+      return new Date(dateStr).toLocaleDateString();
+    }
+
+    function truncate(str, max) {
+      return str.length > max ? str.slice(0, max) + '...' : str;
+    }
+
+    async function refreshSidebar() {
+      try {
+        const res = await fetch('/api/sessions');
+        const data = await res.json();
+        const container = document.getElementById('sidebarSessions');
+        container.innerHTML = data.sessions.map(s => {
+          const preview = s.preview || 'Empty conversation';
+          const active = s.id === currentSessionId ? ' active' : '';
+          return `<div class="sidebar-item${active}" onclick="loadSession('${s.id}')" title="${escapeHtml(preview)}">
+            <span class="sidebar-item-text">${escapeHtml(truncate(preview, 28))}</span>
+            <button class="sidebar-item-del" onclick="event.stopPropagation();deleteSession('${s.id}')" title="Delete conversation">✕</button>
+            <span class="sidebar-item-time">${timeAgo(s.created_at)}</span>
+          </div>`;
+        }).join('');
+      } catch (_) {}
+    }
+
+    async function deleteSession(id) {
+      if (!confirm('Delete this conversation?')) return;
+      try {
+        const res = await fetch(`/api/sessions/${id}`, { method: 'DELETE' });
+        if (!res.ok) return;
+        if (id === currentSessionId) {
+          currentSessionId = null;
+          chatMessages.innerHTML = '';
+        }
+        refreshSidebar();
+      } catch (_) {}
+    }
+
+    async function loadSession(id) {
+      if (id === currentSessionId) return;
+      currentSessionId = id;
+      chatMessages.innerHTML = '';
+      try {
+        const res = await fetch(`/api/sessions/${id}/messages`);
+        const data = await res.json();
+        data.messages.forEach(m => addChatMessage(m.content, m.role === 'user' ? 'user' : 'bot'));
+      } catch (_) {}
+      refreshSidebar();
+    }
+
+    function newSession() {
+      currentSessionId = null;
+      chatMessages.innerHTML = '';
+      refreshSidebar();
+    }
+
     let historyPage = 1;
     let allHistory = [];
     let historyTotal = 0;
 
+    function closeSidePanels() {
+      sideHistory.classList.remove('active');
+      sideProfile.classList.remove('active');
+      sidePanelOverlay.classList.remove('active');
+    }
+
+    sidePanelOverlay.addEventListener('click', closeSidePanels);
+    document.querySelectorAll('.side-panel-close').forEach(btn => {
+      btn.addEventListener('click', closeSidePanels);
+    });
+    document.getElementById('historyToggle').addEventListener('click', () => renderHistory());
+    document.getElementById('profileToggle').addEventListener('click', () => renderProfile());
+
+    /* Navigation */
+    function showPage(pageId) {
+      chatPage.classList.remove('active');
+      searchPage.classList.remove('active');
+      appsPage.classList.remove('active');
+      document.getElementById(pageId).classList.add('active');
+      closeSidePanels();
+    }
+
+    hamburgerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const rect = hamburgerBtn.getBoundingClientRect();
+      navDropdown.style.top = rect.bottom + 'px';
+      navDropdown.style.left = rect.left + 'px';
+      navDropdown.classList.toggle('active');
+    });
+    document.addEventListener('click', () => navDropdown.classList.remove('active'));
+    navDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+    document.querySelectorAll('.nav-dropdown-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const page = item.dataset.page;
+        navDropdown.classList.remove('active');
+        if (page === 'search') {
+          showPage('searchPage');
+        } else if (page === 'apps') {
+          showPage('appsPage');
+          renderApplicationsPage();
+        }
+      });
+    });
+
+    document.querySelectorAll('.back-link').forEach(link => {
+      link.addEventListener('click', () => {
+        showPage(link.dataset.page);
+      });
+    });
+
+    appPageFilter.addEventListener('change', () => {
+      renderApplicationsPage(appPageFilter.value);
+    });
+
     function resetPage() {
-      historyPanel.classList.remove('active');
+      closeSidePanels();
       jobGrid.classList.remove('active');
       jobGrid.innerHTML = '';
       resultsCount.classList.remove('active');
@@ -960,17 +1939,19 @@
       emptyState.classList.add('active');
       emptyState.querySelector('h2').textContent = 'Find your next role';
       emptyState.querySelector('p').textContent = 'Enter a job title and location above to search Indeed, LinkedIn, and Y Combinator startups.';
+      currentSessionId = null;
+      chatMessages.innerHTML = '';
+      refreshSidebar();
     }
 
     async function renderHistory(page = 1) {
-      jobGrid.classList.remove('active');
-      jobGrid.innerHTML = '';
-      resultsCount.classList.remove('active');
-      historyPanel.classList.add('active');
+      closeSidePanels();
+      sideHistory.classList.add('active');
+      sidePanelOverlay.classList.add('active');
+      sideHistoryBody.setAttribute('data-page', String(page));
 
       if (page === 1) {
-        historyPanel.classList.add('loading');
-        historyPanel.innerHTML = '<div class="spinner-ring"></div>';
+        sideHistoryBody.innerHTML = '<div style="text-align:center;padding:40px"><div class="spinner-ring"></div></div>';
         allHistory = [];
         historyPage = 1;
       }
@@ -985,13 +1966,11 @@
         allHistory = page === 1 ? data.searches : [...allHistory, ...data.searches];
 
         if (allHistory.length === 0) {
-          historyPanel.classList.remove('loading');
-          historyPanel.innerHTML = '<div class="history-empty">No search history yet.</div>';
+          sideHistoryBody.innerHTML = '<div class="history-empty">No search history yet.</div>';
           return;
         }
 
-        historyPanel.classList.remove('loading');
-        historyPanel.innerHTML = allHistory.map(s => {
+        sideHistoryBody.innerHTML = allHistory.map(s => {
           const date = s.created_at ? new Date(s.created_at + 'Z').toLocaleString() : '';
           const trigger = s.source_trigger === 'chat' ? 'via Chat' : 'via Search';
           return `
@@ -1012,11 +1991,11 @@
           const loadMore = document.createElement('button');
           loadMore.className = 'history-load-more';
           loadMore.textContent = `Show ${Math.min(10, historyTotal - loaded)} more (${loaded} of ${historyTotal})`;
-          historyPanel.appendChild(loadMore);
+          sideHistoryBody.appendChild(loadMore);
           loadMore.addEventListener('click', () => renderHistory(historyPage + 1));
         }
 
-        historyPanel.querySelectorAll('.history-view-btn').forEach(btn => {
+        sideHistoryBody.querySelectorAll('.history-view-btn').forEach(btn => {
           btn.addEventListener('click', async (e) => {
             e.stopPropagation();
             const item = btn.closest('.history-item');
@@ -1024,15 +2003,15 @@
             const res = await fetch(`/api/history/${id}`);
             if (!res.ok) return;
             const data = await res.json();
+            closeSidePanels();
             const tab = document.querySelector('.tab-button[data-source="indeed"]');
             document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
             tab.classList.add('active');
-            historyPanel.classList.remove('active');
             renderJobs(data.results || []);
           });
         });
 
-        historyPanel.querySelectorAll('.history-del-btn').forEach(btn => {
+        sideHistoryBody.querySelectorAll('.history-del-btn').forEach(btn => {
           btn.addEventListener('click', async (e) => {
             e.stopPropagation();
             if (!confirm('Delete this search?')) return;
@@ -1044,23 +2023,296 @@
           });
         });
       } catch (err) {
-        historyPanel.classList.remove('loading');
-        historyPanel.innerHTML = `<div class="history-empty">Error loading history: ${err.message}</div>`;
+        sideHistoryBody.innerHTML = `<div class="history-empty">Error loading history: ${err.message}</div>`;
       }
     }
 
+    async function renderProfile() {
+      closeSidePanels();
+      sideProfile.classList.add('active');
+      sidePanelOverlay.classList.add('active');
+      sideProfileBody.innerHTML = '<div class="spinner-ring" style="margin:40px auto"></div>';
+      try {
+        const res = await fetch('/api/profile');
+        const p = await res.json();
+        const skills = Array.isArray(p.skills) ? p.skills : [];
+        const workHistory = Array.isArray(p.work_history) ? p.work_history : [];
+        const education = Array.isArray(p.education) ? p.education : [];
+
+        sideProfileBody.innerHTML = `
+          <div class="profile-form">
+            <div class="profile-grid">
+              <div class="profile-field"><label>Full Name</label><input id="pf-name" value="${escapeHtml(p.full_name)}"></div>
+              <div class="profile-field"><label>Email</label><input id="pf-email" value="${escapeHtml(p.email)}"></div>
+              <div class="profile-field"><label>Phone</label><input id="pf-phone" value="${escapeHtml(p.phone)}"></div>
+              <div class="profile-field"><label>LinkedIn URL</label><input id="pf-linkedin" value="${escapeHtml(p.linkedin_url)}"></div>
+              <div class="profile-field"><label>GitHub URL</label><input id="pf-github" value="${escapeHtml(p.github_url)}"></div>
+              <div class="profile-field"><label>Website</label><input id="pf-website" value="${escapeHtml(p.website)}"></div>
+            </div>
+
+            <div class="profile-section">
+              <div class="profile-section-header">
+                <h3>Skills</h3>
+              </div>
+              <div class="profile-field full-width">
+                <input id="pf-skills" value="${escapeHtml(skills.join(', '))}" placeholder="Python, React, K8s, ... (comma separated)">
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <div class="profile-section-header">
+                <h3>Work History</h3>
+                <button class="profile-add-btn" onclick="addWorkEntry()" type="button">+ Add</button>
+              </div>
+              <div id="pf-work-container">
+                ${workHistory.map((w, i) => renderWorkEntry(w, i)).join('')}
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <div class="profile-section-header">
+                <h3>Education</h3>
+                <button class="profile-add-btn" onclick="addEduEntry()" type="button">+ Add</button>
+              </div>
+              <div id="pf-edu-container">
+                ${education.map((e, i) => renderEduEntry(e, i)).join('')}
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <div class="profile-section-header">
+                <h3>Resume</h3>
+              </div>
+              <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:8px">${p.resume_name ? 'Current: ' + p.resume_name : 'No resume uploaded'}</p>
+              <input type="file" id="pf-resume" accept=".pdf,.docx" style="font-size:13px">
+            </div>
+
+            <button class="profile-save-btn" id="pf-save">Save Profile</button>
+            <div class="profile-status" id="pf-status"></div>
+          </div>`;
+        document.getElementById('pf-save').addEventListener('click', saveProfile);
+      } catch (err) {
+        sideProfileBody.innerHTML = `<div style="text-align:center;padding:40px;color:var(--color-text-secondary)">Error loading profile: ${err.message}</div>`;
+      }
+    }
+
+    function renderWorkEntry(w, i) {
+      return `<div class="profile-array-item">
+        <input class="full-width" placeholder="Company" value="${escapeHtml(w.company || '')}" data-idx="${i}" data-field="company">
+        <input placeholder="Title" value="${escapeHtml(w.title || '')}" data-idx="${i}" data-field="title">
+        <input placeholder="Start (e.g. 2020-01)" value="${escapeHtml(w.start || '')}" data-idx="${i}" data-field="start">
+        <input placeholder="End (e.g. 2024-06)" value="${escapeHtml(w.end || '')}" data-idx="${i}" data-field="end">
+        <textarea class="full-width" placeholder="Description" rows="2" data-idx="${i}" data-field="description">${escapeHtml(w.description || '')}</textarea>
+        <button class="profile-remove-btn" onclick="removeWorkEntry(${i})">Remove</button>
+      </div>`;
+    }
+
+    function renderEduEntry(e, i) {
+      return `<div class="profile-array-item">
+        <input class="full-width" placeholder="Institution" value="${escapeHtml(e.institution || '')}" data-idx="${i}" data-field="institution">
+        <input placeholder="Degree" value="${escapeHtml(e.degree || '')}" data-idx="${i}" data-field="degree">
+        <input placeholder="Field" value="${escapeHtml(e.field || '')}" data-idx="${i}" data-field="field">
+        <input placeholder="Start (e.g. 2016)" value="${escapeHtml(e.start || '')}" data-idx="${i}" data-field="start">
+        <input placeholder="End (e.g. 2020)" value="${escapeHtml(e.end || '')}" data-idx="${i}" data-field="end">
+        <button class="profile-remove-btn" onclick="removeEduEntry(${i})">Remove</button>
+      </div>`;
+    }
+
+    let workCount = 0;
+    let eduCount = 0;
+
+    function addWorkEntry() { workCount++; renderProfile(); }
+    function removeWorkEntry(i) {
+      const container = document.getElementById('pf-work-container');
+      const items = container.querySelectorAll('.profile-array-item');
+      if (items[i]) items[i].remove();
+    }
+    function addEduEntry() { eduCount++; renderProfile(); }
+    function removeEduEntry(i) {
+      const container = document.getElementById('pf-edu-container');
+      const items = container.querySelectorAll('.profile-array-item');
+      if (items[i]) items[i].remove();
+    }
+
+    function collectWorkEntries() {
+      const container = document.getElementById('pf-work-container');
+      if (!container) return [];
+      const items = container.querySelectorAll('.profile-array-item');
+      return Array.from(items).map(el => ({
+        company: el.querySelector('[data-field="company"]')?.value || '',
+        title: el.querySelector('[data-field="title"]')?.value || '',
+        start: el.querySelector('[data-field="start"]')?.value || '',
+        end: el.querySelector('[data-field="end"]')?.value || '',
+        description: el.querySelector('[data-field="description"]')?.value || '',
+      }));
+    }
+
+    function collectEduEntries() {
+      const container = document.getElementById('pf-edu-container');
+      if (!container) return [];
+      const items = container.querySelectorAll('.profile-array-item');
+      return Array.from(items).map(el => ({
+        institution: el.querySelector('[data-field="institution"]')?.value || '',
+        degree: el.querySelector('[data-field="degree"]')?.value || '',
+        field: el.querySelector('[data-field="field"]')?.value || '',
+        start: el.querySelector('[data-field="start"]')?.value || '',
+        end: el.querySelector('[data-field="end"]')?.value || '',
+      }));
+    }
+
+    async function saveProfile() {
+      const btn = document.getElementById('pf-save');
+      const status = document.getElementById('pf-status');
+      btn.disabled = true;
+      status.textContent = 'Saving...';
+      const skills = (document.getElementById('pf-skills')?.value || '').split(',').map(s => s.trim()).filter(Boolean);
+      const profile = {
+        full_name: document.getElementById('pf-name')?.value || '',
+        email: document.getElementById('pf-email')?.value || '',
+        phone: document.getElementById('pf-phone')?.value || '',
+        linkedin_url: document.getElementById('pf-linkedin')?.value || '',
+        github_url: document.getElementById('pf-github')?.value || '',
+        website: document.getElementById('pf-website')?.value || '',
+        skills,
+        work_history: collectWorkEntries(),
+        education: collectEduEntries(),
+      };
+      try {
+        const res = await fetch('/api/profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(profile),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        status.textContent = 'Profile saved ✓';
+        status.style.color = '#10b981';
+        // Upload resume if selected
+        const fileInput = document.getElementById('pf-resume');
+        if (fileInput && fileInput.files[0]) {
+          status.textContent = 'Uploading resume...';
+          status.style.color = '';
+          const fd = new FormData();
+          fd.append('file', fileInput.files[0]);
+          const r2 = await fetch('/api/resume/upload', { method: 'POST', body: fd });
+          if (r2.ok) status.textContent = 'Profile + resume saved ✓';
+        }
+      } catch (err) {
+        status.textContent = `Error: ${err.message}`;
+        status.style.color = '#ef4444';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function renderApplicationsPage(statusFilter) {
+      const filter = statusFilter || 'all';
+      appTileGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px"><div class="spinner-ring"></div></div>';
+      try {
+        const url = filter === 'all' ? '/api/applications' : `/api/applications?status=${filter}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const apps = data.applications || [];
+
+        if (apps.length === 0) {
+          appTileGrid.innerHTML = '<div class="app-tile-empty">No applications yet. Click "Apply" on a job card to start.</div>';
+          return;
+        }
+
+        appTileGrid.innerHTML = apps.map(a => {
+          const badgeClass = a.source === 'LinkedIn' ? 'linkedin' : a.source === 'YC Startup' ? 'yc-startup' : 'indeed';
+          const date = a.created_at ? new Date(a.created_at + 'Z').toLocaleDateString() : '';
+          return `
+          <div class="app-tile" data-id="${a.id}">
+            <div class="app-tile-header">
+              <span class="source-badge ${badgeClass}">${escapeHtml(a.source)}</span>
+              <span class="app-tile-status ${a.status}">${a.status}</span>
+            </div>
+            <div class="app-tile-title">${escapeHtml(a.job_title)}</div>
+            <div class="app-tile-company">${a.company ? escapeHtml(a.company) : ''}</div>
+            <div class="app-tile-meta">
+              <span>${a.location || 'N/A'}</span>
+              <span>${date}</span>
+            </div>
+            <div class="app-tile-details" id="app-details-${a.id}">
+              ${a.cover_letter ? `<strong>Cover Letter</strong><div class="cover-preview">${escapeHtml(a.cover_letter)}</div>` : '<em>No cover letter</em>'}
+            </div>
+          </div>`;
+        }).join('');
+
+        appTileGrid.querySelectorAll('.app-tile').forEach(tile => {
+          tile.addEventListener('click', () => {
+            const details = tile.querySelector('.app-tile-details');
+            details.classList.toggle('open');
+          });
+        });
+      } catch (err) {
+        appTileGrid.innerHTML = `<div class="app-tile-empty">Error: ${err.message}</div>`;
+      }
+    }
+
+    /* Status Modal */
+    const statusModal = document.getElementById('statusModal');
+    const statusTitle = document.getElementById('statusTitle');
+    const statusJobInfo = document.getElementById('statusJobInfo');
+    const statusSteps = document.getElementById('statusSteps');
+    const statusCloseBtn = document.getElementById('statusCloseBtn');
+
+    function showStatusModal(jobTitle, company) {
+      statusTitle.textContent = 'Preparing Application';
+      statusJobInfo.textContent = `${jobTitle}${company ? ' at ' + company : ''}`;
+      statusSteps.innerHTML = `
+        <div class="status-step active" id="step-cover">
+          <span class="step-icon">⟳</span>
+          <span>Generating cover letter...</span>
+        </div>
+        <div class="status-step pending" id="step-agent">
+          <span class="step-icon">○</span>
+          <span>Ready for auto-apply</span>
+        </div>`;
+      statusCloseBtn.style.display = 'none';
+      statusModal.classList.add('active');
+    }
+
+    function updateStatusStep(step, detail, isDone) {
+      const el = document.getElementById(`step-${step}`);
+      if (!el) return;
+      const icon = el.querySelector('.step-icon');
+      const text = el.querySelector('span:last-child');
+      if (isDone) {
+        el.classList.remove('active');
+        el.classList.add('done');
+        if (icon) icon.textContent = '✓';
+        if (step === 'cover') {
+          if (text) text.textContent = 'Cover letter generated';
+          if (detail) {
+            const preview = document.createElement('div');
+            preview.className = 'cover-preview';
+            preview.textContent = detail;
+            el.appendChild(preview);
+          }
+        } else if (step === 'agent') {
+          if (text) text.textContent = detail || 'Run auto-apply script to open browser';
+        }
+      } else {
+        el.classList.remove('pending');
+        el.classList.add('active');
+        if (icon) icon.textContent = '⟳';
+        if (text) text.textContent = detail || text.textContent;
+      }
+    }
+
+    function showStatusClose() {
+      statusCloseBtn.style.display = 'block';
+      statusCloseBtn.addEventListener('click', () => {
+        statusModal.classList.remove('active');
+      });
+    }
+
     /* Chat */
-    const chatToggle = document.getElementById('chatToggle');
-    const chatPanel = document.getElementById('chatPanel');
     const chatMessages = document.getElementById('chatMessages');
     const chatInput = document.getElementById('chatInput');
     const chatSend = document.getElementById('chatSend');
-
-    chatToggle.addEventListener('click', () => {
-      const open = chatPanel.classList.toggle('open');
-      chatToggle.classList.toggle('open', open);
-      if (open) chatInput.focus();
-    });
 
     function addChatMessage(text, role) {
       const el = document.createElement('div');
@@ -1084,7 +2336,7 @@
         const res = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text }),
+          body: JSON.stringify({ message: text, session_id: currentSessionId }),
         });
 
         loadingEl.remove();
@@ -1095,6 +2347,10 @@
         }
 
         const data = await res.json();
+        if (data.session_id) {
+          currentSessionId = data.session_id;
+          refreshSidebar();
+        }
         addChatMessage(data.reply, 'bot');
 
         if (data.jobs && data.jobs.length > 0) {
@@ -1113,22 +2369,22 @@
 
     /* Reset */
     document.getElementById('resetBtn').addEventListener('click', resetPage);
+    document.getElementById('newChatBtn').addEventListener('click', newSession);
 
-    /* Auto-load history on page refresh */
-    (async function init() {
+    /* Seed application status map from history */
+    (async function initApps() {
       try {
-        const res = await fetch('/api/history?page=1&per_page=10');
+        const res = await fetch('/api/applications');
         const data = await res.json();
-        if (data.total > 0) {
-          emptyState.style.display = '';
-          emptyState.classList.remove('active');
-          tabs.classList.add('active');
-          document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-          document.querySelector('.tab-button[data-source="history"]').classList.add('active');
-          renderHistory(1);
+        if (data.applications) {
+          for (const a of data.applications) {
+            if (a.link) appStatusByLink.set(a.link, a.status);
+          }
         }
       } catch (_) {}
     })();
+
+    refreshSidebar();
   </script>
 
 </body>
