@@ -7,33 +7,6 @@ logger = logging.getLogger(__name__)
 
 
 @tool
-def get_my_profile() -> str:
-    """View your saved profile information.
-
-    Returns the user's full profile including name, contact info, URLs, skills, work history, and education.
-    Use this before update_profile to see current values.
-
-    Returns:
-        JSON string with profile fields: full_name, email, phone, linkedin_url, github_url, website, skills,
-        work_history, education, resume_name.
-    """
-    from database import get_profile
-
-    profile = get_profile()
-    if not profile:
-        return json.dumps({"error": "No profile found. Use update_profile to set one up."}, indent=2)
-
-    for field in ("skills", "work_history", "education"):
-        if isinstance(profile.get(field), str):
-            try:
-                profile[field] = json.loads(profile[field])
-            except (json.JSONDecodeError, TypeError):
-                profile[field] = []
-
-    return json.dumps(profile, indent=2)
-
-
-@tool
 def update_profile(
     full_name: Optional[str] = None,
     email: Optional[str] = None,

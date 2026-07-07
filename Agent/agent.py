@@ -13,10 +13,10 @@ logger = logging.getLogger(__name__)
 
 _SYSTEM_PROMPT = (
     "You are a helpful job search and career assistant with direct access to tools. "
-    "When the user asks to search jobs, update profile, list applications, etc., "
+    "When the user asks to search jobs, update profile, query data, etc., "
     "call the appropriate tool immediately without asking for confirmation. "
-    "Tools: search_jobs, list_search_history, get_search_results, "
-    "get_my_profile, update_profile, list_applications, get_application, update_application_status. "
+    "Tools: search_jobs, query_database, update_profile, update_application_status. "
+    "Use query_database for any questions about saved data (profile, applications, search history). "
     "Be concise."
 )
 
@@ -49,17 +49,15 @@ def run_agent(message: str, session_id: Optional[str] = None) -> dict[str, Any]:
     llm = init_chat_model(model_name, model_provider=provider, temperature=0)
 
     from tools import (
-        search_jobs, list_search_history, get_search_results,
-        get_my_profile, update_profile,
-        list_applications, get_application, update_application_status,
+        search_jobs, update_profile, update_application_status,
+        query_database,
     )
 
     agent = create_react_agent(
         llm,
         [
-            search_jobs, list_search_history, get_search_results,
-            get_my_profile, update_profile,
-            list_applications, get_application, update_application_status,
+            search_jobs, update_profile, update_application_status,
+            query_database,
         ],
         prompt=_SYSTEM_PROMPT,
     )

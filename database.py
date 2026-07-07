@@ -387,3 +387,101 @@ def update_application_status(app_id: int, status: str, applied_at: Optional[str
         return cur.rowcount > 0
     finally:
         conn.close()
+
+
+_COLUMN_DESCRIPTIONS: dict[str, dict[str, str]] = {
+    "sessions": {
+        "id": "UUID identifying the conversation",
+        "preview": "First-message preview shown in sidebar",
+        "created_at": "When the conversation started",
+        "updated_at": "When the conversation was last active",
+    },
+    "chat_messages": {
+        "id": "Auto-increment message ID",
+        "role": "'user' or 'assistant'",
+        "content": "Full message text",
+        "search_id": "FK to searches if linked to a search",
+        "session_id": "FK to sessions; NULL for legacy messages",
+        "created_at": "When the message was sent",
+    },
+    "searches": {
+        "id": "Auto-increment search ID",
+        "query": "Search query text",
+        "location": "Location filter used",
+        "source_trigger": "Which source triggered the search",
+        "created_at": "When the search was performed",
+    },
+    "search_results": {
+        "id": "Auto-increment result ID",
+        "search_id": "FK to searches",
+        "title": "Job listing title",
+        "description": "Short job description",
+        "location": "Job location",
+        "salary": "Salary text if available",
+        "link": "URL to the job listing",
+        "source": "Which site it came from (Indeed, LinkedIn, YC)",
+    },
+    "user_profile": {
+        "id": "Always 1 (single-row profile)",
+        "full_name": "User's full name",
+        "email": "User's email address",
+        "phone": "User's phone number",
+        "linkedin_url": "URL to LinkedIn profile",
+        "github_url": "URL to GitHub profile",
+        "website": "Personal or portfolio website",
+        "skills": "JSON array of skill strings",
+        "work_history": "JSON array of work-history objects",
+        "education": "JSON array of education objects",
+        "resume_name": "Filename of uploaded resume",
+        "updated_at": "Last profile update timestamp",
+    },
+    "applications": {
+        "id": "Auto-increment application ID",
+        "job_title": "Title of the job applied to",
+        "company": "Company name",
+        "location": "Job location",
+        "salary": "Salary text",
+        "link": "URL to the original job listing",
+        "source": "Where the job was found",
+        "status": "preparing/applied/rejected/interview/offer",
+        "cover_letter": "Generated cover letter text",
+        "created_at": "When the application record was created",
+        "applied_at": "When it was marked applied (nullable)",
+    },
+}
+
+
+def get_schema_metadata() -> dict:
+    conn = _get_conn()
+    try:
+        rows = conn.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name NOT IN ('sqlite_sequence') ORDER BY name"
+        ).fetchall()
+        tables = []
+        for (tname,) in rows:
+            cols = conn.execute(f"PRAGMA table_info({tname!r})").fetchall()
+            columns = []
+            for cid, cname, ctype, notnull, default, pk in cols:
+                columns.append({
+                    "name": cname,
+                    "type": ctype,
+                    "notnull": bool(notnull),
+                    "pk": bool(pk),
+                    "description": _COLUMN_DESCRIPTIONS.get(tname, {}).get(cname, ""),
+                })
+            tables.append({"name": tname, "columns": columns})
+        return {"tables": tables}
+    finally:
+        conn.close()
+
+
+def execute_sql_query(sql: str) -> list[dict]:
+    stripped = sql.strip()
+    if not stripped.upper().startswith("SELECT"):
+        raise ValueError("Only SELECT queries are allowed")
+    conn = _get_conn()
+    try:
+        cur = conn.execute(stripped)
+        return [dict(r) for r in cur.fetchall()]
+    finally:
+        conn.close()
