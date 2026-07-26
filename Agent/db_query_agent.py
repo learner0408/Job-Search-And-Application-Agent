@@ -1,9 +1,22 @@
 import json
 import re
 import logging
-from typing import TypedDict, Optional, Literal
+from typing import Any, TypedDict, Optional, Literal
 from langgraph.graph import StateGraph, END
 from langchain.chat_models import init_chat_model
+
+
+def _safe_text(content: Any) -> str:
+    if not content:
+        return ""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return "".join(
+            b.get("text", "") for b in content
+            if isinstance(b, dict) and b.get("type") == "text"
+        )
+    return str(content)
 
 logger = logging.getLogger(__name__)
 
@@ -21,9 +34,9 @@ class DBQueryState(TypedDict):
 
 def _get_llm():
     import os
-    model_name = os.getenv("CHAT_LLM_MODEL", "llama-3.3-70b-versatile")
-    provider = os.getenv("CHAT_LLM_PROVIDER", "groq")
-    return init_chat_model(model_name, model_provider=provider, temperature=0)
+    model_name = os.getenv("CHAT_LLM_MODEL", "claude-sonnet-5")
+    provider = os.getenv("CHAT_LLM_PROVIDER", "anthropic")
+    return init_chat_model(model_name, model_provider=provider)
 
 
 def _extract_json(text: str) -> dict:
@@ -58,7 +71,7 @@ def classify_query(state: DBQueryState) -> dict:
     )
     try:
         result = llm.invoke(prompt)
-        parsed = _extract_json(result.content)
+        parsed = _extract_json(_safe_text(result.content))
         return {"can_answer": parsed.get("can_answer", False)}
     except Exception as e:
         logger.warning("classify_query failed: %s", e)
@@ -92,7 +105,7 @@ def generate_sql(state: DBQueryState) -> dict:
 
     try:
         result = llm.invoke(prompt)
-        sql = _extract_sql(result.content)
+        sql = _extract_sql(_safe_text(result.content))
         return {"sql_query": sql}
     except Exception as e:
         logger.warning("generate_sql failed: %s", e)

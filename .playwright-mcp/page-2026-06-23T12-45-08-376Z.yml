@@ -1,0 +1,1375 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#gnav-header-end"
+  - main [ref=e3]:
+    - generic [ref=e5]:
+      - navigation "Primary" [ref=e7]:
+        - generic [ref=e9]:
+          - generic [ref=e10]:
+            - generic [ref=e11]:
+              - link "Indeed Home" [ref=e12] [cursor=pointer]:
+                - /url: /?from=gnav-jobsearch--indeedmobile
+                - img [ref=e14]
+              - list [ref=e16]:
+                - listitem [ref=e17]:
+                  - link "Home" [ref=e19] [cursor=pointer]:
+                    - /url: https://www.indeed.com/
+                - listitem [ref=e20]:
+                  - link "Company reviews" [ref=e22] [cursor=pointer]:
+                    - /url: https://www.indeed.com/companies
+                - listitem [ref=e23]:
+                  - link "Find salaries" [ref=e25] [cursor=pointer]:
+                    - /url: https://www.indeed.com/career/salaries
+            - generic [ref=e26]:
+              - list [ref=e27]:
+                - listitem [ref=e28]:
+                  - link "Sign in" [ref=e31] [cursor=pointer]:
+                    - /url: https://secure.indeed.com/auth?hl=en_US&co=US&continue=https%3A%2F%2Fwww.indeed.com%3A443%2Fq-remote-frontend-developer-jobs.html%3Fq%3Dremote+frontend+developer&tmpl=desktop&from=gnav-util-jobsearch--indeedmobile&jsContinue=https%3A%2F%2Fwww.indeed.com%3A443%2Fq-remote-frontend-developer-jobs.html%3Fq%3Dremote+frontend+developer&empContinue=https%3A%2F%2Faccount.indeed.com%2Fmyaccess
+              - link "Employers / Post Job" [ref=e36] [cursor=pointer]:
+                - /url: https://www.indeed.com/hire?co=US&hl=en
+          - generic [ref=e37]: Start of main content
+      - generic [ref=e39]:
+        - search [ref=e44]:
+          - generic [ref=e47]:
+            - generic [ref=e49]:
+              - generic [ref=e50]:
+                - generic [ref=e51]: "Keyword : all jobs"
+                - generic [ref=e54]:
+                  - img [ref=e56]
+                  - 'combobox "search: Job title, keywords, or company" [ref=e58]': remote frontend developer
+                  - button "Clear what input" [ref=e60] [cursor=pointer]:
+                    - img [ref=e61]
+              - separator [ref=e63]:
+                - generic [ref=e64]: "&nbsp;"
+              - generic [ref=e65]:
+                - generic [ref=e66]: Edit location input box label
+                - generic [ref=e69]:
+                  - img [ref=e71]
+                  - combobox "Edit location" [ref=e73]
+            - button "Search" [ref=e75] [cursor=pointer]
+          - list [ref=e78]:
+            - button "Pay filter" [ref=e80] [cursor=pointer]: Pay
+            - button "Remote filter" [ref=e82] [cursor=pointer]: Remote
+            - button "Job Type filter" [ref=e84] [cursor=pointer]: Job Type
+            - button "Experience level filter" [ref=e86] [cursor=pointer]: Experience level
+            - button "Education filter" [ref=e88] [cursor=pointer]: Education
+            - button "Encouraged to apply filter" [ref=e90] [cursor=pointer]: Encouraged to apply
+            - button "Date posted filter" [ref=e92] [cursor=pointer]: Date posted
+        - generic [ref=e98]:
+          - generic [ref=e99]:
+            - generic [ref=e100]:
+              - link "Upload your resume" [ref=e101] [cursor=pointer]:
+                - /url: /promo/resume?from=serptop3&subfrom=resprmrtop&trk.origin=jobsearch&trk.variant=resprmrtop&trk.tk=1jrq85is9gsuu800
+              - text: "- Let employers find you"
+              - separator [ref=e102]:
+                - generic [ref=e103]: "&nbsp;"
+            - generic [ref=e104]:
+              - generic [ref=e105]:
+                - heading "remote frontend developer jobs" [level=1] [ref=e106]
+                - button "More information about job results" [ref=e109] [cursor=pointer]:
+                  - img "More information about job results" [ref=e110]
+              - generic [ref=e114]:
+                - generic [ref=e115]: "Sort by:"
+                - generic [ref=e116]: relevance - date
+            - list [ref=e120]:
+              - listitem
+              - listitem [ref=e121]:
+                - generic [ref=e123]:
+                  - generic:
+                    - generic [ref=e126]:
+                      - heading "full details of Staff Software Engineer (Frontend Developer)" [level=3] [ref=e128]:
+                        - button "full details of Staff Software Engineer (Frontend Developer)" [ref=e129] [cursor=pointer]: Staff Software Engineer (Frontend Developer)
+                      - generic [ref=e130]:
+                        - generic [ref=e132]:
+                          - generic [ref=e134]: Lockheed Martin Corporation
+                          - generic [ref=e135]: Remote in Colorado Springs, CO
+                        - list [ref=e137]:
+                          - listitem [ref=e138]:
+                            - generic [ref=e141]: Flextime
+                          - listitem [ref=e142]:
+                            - generic [ref=e145]: Parental leave
+                          - listitem [ref=e146]:
+                            - generic [ref=e149]: 401(k)
+                          - listitem [ref=e150]:
+                            - generic [ref=e153]: Health insurance
+                          - listitem [ref=e154]:
+                            - generic [ref=e157]: 401(k) matching
+                          - listitem [ref=e158]:
+                            - generic [ref=e161]: Paid time off
+                      - button "Save job Toggle" [ref=e163] [cursor=pointer]:
+                        - img [ref=e164]
+                    - generic [ref=e166]:
+                      - list [ref=e168]:
+                        - listitem [ref=e169]: Strong candidates who exceptionally match the roles and responsibilities will be considered for a fully-remote work schedule.
+                      - list [ref=e173]:
+                        - listitem [ref=e174]:
+                          - generic [ref=e175]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Colorado Springs, CO" [ref=e176] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Colorado Springs jobs" [ref=e177] [cursor=pointer]:
+                              - /url: /l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Software Engineer jobs in Colorado Springs, CO" [ref=e178] [cursor=pointer]:
+                              - /url: /q-software-engineer-l-colorado-springs,-co-jobs.html
+                        - listitem [ref=e179]:
+                          - generic [ref=e180]:
+                            - text: "Salary Search:"
+                            - link "Staff Software Engineer (Frontend Developer) salaries in Colorado Springs, CO" [ref=e181] [cursor=pointer]:
+                              - /url: /career/software-engineer/salaries/Colorado-Springs--CO?campaignid=serp-more&fromjk=4ed791b5fce97e51&from=serp-more
+                        - listitem [ref=e182]:
+                          - generic [ref=e183]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e184] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e186]:
+                - generic [ref=e188]:
+                  - generic:
+                    - generic [ref=e191]:
+                      - heading "full details of Software Engineer (Frontend Developer)" [level=3] [ref=e193]:
+                        - button "full details of Software Engineer (Frontend Developer)" [ref=e194] [cursor=pointer]: Software Engineer (Frontend Developer)
+                      - generic [ref=e195]:
+                        - generic [ref=e197]:
+                          - generic [ref=e199]: Lockheed Martin Corporation
+                          - generic [ref=e200]: Remote in Colorado Springs, CO
+                        - list [ref=e202]:
+                          - listitem [ref=e203]:
+                            - generic [ref=e206]: Flextime
+                          - listitem [ref=e207]:
+                            - generic [ref=e210]: Parental leave
+                          - listitem [ref=e211]:
+                            - generic [ref=e214]: 401(k)
+                          - listitem [ref=e215]:
+                            - generic [ref=e218]: Health insurance
+                          - listitem [ref=e219]:
+                            - generic [ref=e222]: 401(k) matching
+                          - listitem [ref=e223]:
+                            - generic [ref=e226]: Paid time off
+                      - button "Save job Toggle" [ref=e228] [cursor=pointer]:
+                        - img [ref=e229]
+                    - generic [ref=e231]:
+                      - list [ref=e233]:
+                        - listitem [ref=e234]: Strong candidates who exceptionally match the roles and responsibilities will be considered for a fully-remote work schedule.
+                        - listitem [ref=e235]: Experience across the full SDLC.
+                      - list [ref=e239]:
+                        - listitem [ref=e240]:
+                          - generic [ref=e241]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Colorado Springs, CO" [ref=e242] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Colorado Springs jobs" [ref=e243] [cursor=pointer]:
+                              - /url: /l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Software Engineer jobs in Colorado Springs, CO" [ref=e244] [cursor=pointer]:
+                              - /url: /q-software-engineer-l-colorado-springs,-co-jobs.html
+                        - listitem [ref=e245]:
+                          - generic [ref=e246]:
+                            - text: "Salary Search:"
+                            - link "Software Engineer (Frontend Developer) salaries in Colorado Springs, CO" [ref=e247] [cursor=pointer]:
+                              - /url: /career/software-engineer/salaries/Colorado-Springs--CO?campaignid=serp-more&fromjk=6b26d5c0f3ff7a2e&from=serp-more
+                        - listitem [ref=e248]:
+                          - generic [ref=e249]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e250] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e252]:
+                - generic [ref=e256]:
+                  - generic:
+                    - generic [ref=e259]:
+                      - heading "full details of Senior Software Engineer - Front End" [level=3] [ref=e261]:
+                        - button "full details of Senior Software Engineer - Front End" [ref=e262] [cursor=pointer]: Senior Software Engineer - Front End
+                      - generic [ref=e263]:
+                        - generic [ref=e265]:
+                          - generic [ref=e267]: Veeva Systems
+                          - generic [ref=e269]: Remote
+                        - list [ref=e271]:
+                          - listitem [ref=e272]:
+                            - generic [ref=e275]: Health insurance
+                          - listitem [ref=e276]:
+                            - generic [ref=e279]: Paid time off
+                          - listitem [ref=e280]:
+                            - generic [ref=e283]: Vision insurance
+                          - listitem [ref=e284]:
+                            - generic [ref=e287]: Dental insurance
+                          - listitem [ref=e288]:
+                            - generic [ref=e291]: Life insurance
+                          - listitem [ref=e292]:
+                            - generic [ref=e295]: Paid holidays
+                      - link "View similar jobs with this employer" [ref=e297] [cursor=pointer]:
+                        - /url: /addlLoc/redirect?tk=1jrq85is9gsuu800&jk=221ce408001749b1&dest=%2Fjobs%3Fq%3Dremote%2Bfrontend%2Bdeveloper%26nl%3D%26grpKey%3DoAEB8gcFdG5mZWy4D8_5rgGqECUKCW5vcm10aXRsZRoYc2VuaW9yIHNvZnR3YXJlIGVuZ2luZWVy
+                        - text: View similar jobs with this employer
+                        - img [ref=e298]
+                      - button "Save job Toggle" [ref=e301] [cursor=pointer]:
+                        - img [ref=e302]
+                    - generic [ref=e304]:
+                      - list [ref=e306]:
+                        - listitem [ref=e307]: Our teams are solving complex problems that impact the speed and effectiveness of the life sciences industry.
+                        - listitem [ref=e308]: Front-end engineers will collaborate directly with…
+                      - list [ref=e312]:
+                        - listitem [ref=e313]:
+                          - generic [ref=e314]:
+                            - text: View all
+                            - link "Veeva Systems jobs in Remote" [ref=e315] [cursor=pointer]:
+                              - /url: /q-veeva-systems-l-remote-jobs.html
+                            - text: "-"
+                            - link "Remote jobs" [ref=e316] [cursor=pointer]:
+                              - /url: /l-remote-jobs.html
+                            - text: "-"
+                            - link "Senior Software Engineer jobs in Remote" [ref=e317] [cursor=pointer]:
+                              - /url: /q-senior-software-engineer-l-remote-jobs.html
+                        - listitem [ref=e318]:
+                          - generic [ref=e319]:
+                            - text: "Salary Search:"
+                            - link "Senior Software Engineer - Front End salaries in Remote" [ref=e320] [cursor=pointer]:
+                              - /url: /career/senior-software-engineer/salaries?campaignid=serp-more&fromjk=221ce408001749b1&from=serp-more
+                        - listitem [ref=e321]:
+                          - generic [ref=e322]:
+                            - text: See popular
+                            - link "questions & answers about Veeva Systems" [ref=e323] [cursor=pointer]:
+                              - /url: /cmp/Veeva-Systems/faq
+              - listitem [ref=e325]:
+                - generic [ref=e327]:
+                  - generic:
+                    - generic [ref=e330]:
+                      - heading "full details of Senior Front End Engineering Manager" [level=3] [ref=e332]:
+                        - button "full details of Senior Front End Engineering Manager" [ref=e333] [cursor=pointer]: Senior Front End Engineering Manager
+                      - generic [ref=e334]:
+                        - generic [ref=e336]:
+                          - generic [ref=e338]: Veeva Systems
+                          - generic [ref=e340]: Remote
+                        - list [ref=e342]:
+                          - listitem [ref=e343]:
+                            - generic [ref=e346]: Health insurance
+                          - listitem [ref=e347]:
+                            - generic [ref=e350]: Paid time off
+                          - listitem [ref=e351]:
+                            - generic [ref=e354]: Vision insurance
+                          - listitem [ref=e355]:
+                            - generic [ref=e358]: Dental insurance
+                          - listitem [ref=e359]:
+                            - generic [ref=e362]: Life insurance
+                          - listitem [ref=e363]:
+                            - generic [ref=e366]: Paid holidays
+                      - button "Save job Toggle" [ref=e368] [cursor=pointer]:
+                        - img [ref=e369]
+                    - generic [ref=e371]:
+                      - list [ref=e373]:
+                        - listitem [ref=e374]: You lead by giving engineers autonomy, holding them accountable, and earning their respect.
+                        - listitem [ref=e375]: "Lead & Mentor: Grow a high-caliber engineering team through clear…"
+                      - list [ref=e379]:
+                        - listitem [ref=e380]:
+                          - generic [ref=e381]:
+                            - text: View all
+                            - link "Veeva Systems jobs in Remote" [ref=e382] [cursor=pointer]:
+                              - /url: /q-veeva-systems-l-remote-jobs.html
+                            - text: "-"
+                            - link "Remote jobs" [ref=e383] [cursor=pointer]:
+                              - /url: /l-remote-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Remote" [ref=e384] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-remote-jobs.html
+                        - listitem [ref=e385]:
+                          - generic [ref=e386]:
+                            - text: "Salary Search:"
+                            - link "Senior Front End Engineering Manager salaries in Remote" [ref=e387] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries?campaignid=serp-more&fromjk=ed7344d33d25ce30&from=serp-more
+                        - listitem [ref=e388]:
+                          - generic [ref=e389]:
+                            - text: See popular
+                            - link "questions & answers about Veeva Systems" [ref=e390] [cursor=pointer]:
+                              - /url: /cmp/Veeva-Systems/faq
+              - listitem [ref=e392]:
+                - generic [ref=e394]:
+                  - generic:
+                    - generic [ref=e397]:
+                      - heading "full details of Principal Software Engineer - Front End" [level=3] [ref=e399]:
+                        - button "full details of Principal Software Engineer - Front End" [ref=e400] [cursor=pointer]: Principal Software Engineer - Front End
+                      - generic [ref=e401]:
+                        - generic [ref=e403]:
+                          - generic [ref=e405]: Veeva Systems
+                          - generic [ref=e407]: Remote
+                        - list [ref=e409]:
+                          - listitem [ref=e410]:
+                            - generic [ref=e413]: Health insurance
+                          - listitem [ref=e414]:
+                            - generic [ref=e417]: Paid time off
+                          - listitem [ref=e418]:
+                            - generic [ref=e421]: Vision insurance
+                          - listitem [ref=e422]:
+                            - generic [ref=e425]: Dental insurance
+                          - listitem [ref=e426]:
+                            - generic [ref=e429]: Life insurance
+                          - listitem [ref=e430]:
+                            - generic [ref=e433]: Paid holidays
+                      - button "Save job Toggle" [ref=e435] [cursor=pointer]:
+                        - img [ref=e436]
+                    - generic [ref=e438]:
+                      - list [ref=e440]:
+                        - listitem [ref=e441]: Architect efficient and reusable front-end systems that drive complex web applications.
+                        - listitem [ref=e442]: Own all aspects of feature implementation from design to delivery.
+                      - list [ref=e446]:
+                        - listitem [ref=e447]:
+                          - generic [ref=e448]:
+                            - text: View all
+                            - link "Veeva Systems jobs in Remote" [ref=e449] [cursor=pointer]:
+                              - /url: /q-veeva-systems-l-remote-jobs.html
+                            - text: "-"
+                            - link "Remote jobs" [ref=e450] [cursor=pointer]:
+                              - /url: /l-remote-jobs.html
+                            - text: "-"
+                            - link "Principal Software Engineer jobs in Remote" [ref=e451] [cursor=pointer]:
+                              - /url: /q-principal-software-engineer-l-remote-jobs.html
+                        - listitem [ref=e452]:
+                          - generic [ref=e453]:
+                            - text: "Salary Search:"
+                            - link "Principal Software Engineer - Front End salaries in Remote" [ref=e454] [cursor=pointer]:
+                              - /url: /career/principal-software-engineer/salaries?campaignid=serp-more&fromjk=b6aacab73a321abb&from=serp-more
+                        - listitem [ref=e455]:
+                          - generic [ref=e456]:
+                            - text: See popular
+                            - link "questions & answers about Veeva Systems" [ref=e457] [cursor=pointer]:
+                              - /url: /cmp/Veeva-Systems/faq
+              - listitem
+              - listitem [ref=e459]:
+                - generic [ref=e461]:
+                  - generic:
+                    - generic [ref=e464]:
+                      - heading "full details of Sr. Front End Developer (React.js) - Remote" [level=3] [ref=e466]:
+                        - button "full details of Sr. Front End Developer (React.js) - Remote" [ref=e467] [cursor=pointer]: Sr. Front End Developer (React.js) - Remote
+                      - generic [ref=e470]:
+                        - generic [ref=e472]: Two95 International Inc.
+                        - generic [ref=e473]: Remote in Atlanta, GA
+                      - button "Save job Toggle" [ref=e475] [cursor=pointer]:
+                        - img [ref=e476]
+                    - generic [ref=e478]:
+                      - generic [ref=e479]: "Title – Sr. Front End Developer (React.js) Position – 6+ Months Contract Location – 100% Remote Work Rate - $Open (Best Possible) Skills: html5 / css3 /…"
+                      - list [ref=e483]:
+                        - listitem [ref=e484]:
+                          - generic [ref=e485]:
+                            - text: View all
+                            - link "Two95 International Inc. jobs in Atlanta, GA" [ref=e486] [cursor=pointer]:
+                              - /url: /q-two95-international-inc-l-atlanta,-ga-jobs.html
+                            - text: "-"
+                            - link "Atlanta jobs" [ref=e487] [cursor=pointer]:
+                              - /url: /l-atlanta,-ga-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Atlanta, GA" [ref=e488] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-atlanta,-ga-jobs.html
+                        - listitem [ref=e489]:
+                          - generic [ref=e490]:
+                            - text: "Salary Search:"
+                            - link "Sr. Front End Developer (React.js) - Remote salaries in Atlanta, GA" [ref=e491] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Atlanta--GA?campaignid=serp-more&fromjk=73125df9447c0ae9&from=serp-more
+              - listitem [ref=e493]:
+                - generic [ref=e495]:
+                  - generic:
+                    - generic [ref=e498]:
+                      - heading "full details of Software Engineer (L2)" [level=3] [ref=e500]:
+                        - button "full details of Software Engineer (L2)" [ref=e501] [cursor=pointer]: Software Engineer (L2)
+                      - generic [ref=e502]:
+                        - generic [ref=e504]:
+                          - generic [ref=e506]: Twilio
+                          - generic [ref=e507]: Remote in Indiana
+                        - list [ref=e509]:
+                          - listitem [ref=e510]:
+                            - generic [ref=e513]: Parental leave
+                      - button "Save job Toggle" [ref=e515] [cursor=pointer]:
+                        - img [ref=e516]
+                    - generic [ref=e518]:
+                      - list [ref=e520]:
+                        - listitem [ref=e521]: 3+ years of proven experience as a Software developer/Frontend developer, with a strong understanding of react, typescript and general frontend ecosystem.
+                      - list [ref=e525]:
+                        - listitem [ref=e526]:
+                          - generic [ref=e527]:
+                            - text: View all
+                            - link "Twilio jobs in Indiana" [ref=e528] [cursor=pointer]:
+                              - /url: /q-twilio-l-indiana-jobs.html
+                            - text: "-"
+                            - link "Indiana jobs" [ref=e529] [cursor=pointer]:
+                              - /url: /l-indiana-jobs.html
+                            - text: "-"
+                            - link "Software Engineer jobs in Indiana" [ref=e530] [cursor=pointer]:
+                              - /url: /q-software-engineer-l-indiana-jobs.html
+                        - listitem [ref=e531]:
+                          - generic [ref=e532]:
+                            - text: "Salary Search:"
+                            - link "Software Engineer (L2) salaries in Indiana" [ref=e533] [cursor=pointer]:
+                              - /url: /career/software-engineer/salaries/IN?campaignid=serp-more&fromjk=28aa9030f0dfed20&from=serp-more
+                        - listitem [ref=e534]:
+                          - generic [ref=e535]:
+                            - text: See popular
+                            - link "questions & answers about Twilio" [ref=e536] [cursor=pointer]:
+                              - /url: /cmp/Twilio/faq
+              - listitem [ref=e538]:
+                - generic [ref=e540]:
+                  - generic:
+                    - generic [ref=e543]:
+                      - heading "full details of Frontend Software Engineer" [level=3] [ref=e545]:
+                        - button "full details of Frontend Software Engineer" [ref=e546] [cursor=pointer]: Frontend Software Engineer
+                      - generic [ref=e547]:
+                        - generic [ref=e549]:
+                          - generic [ref=e551]: Twilio
+                          - generic [ref=e553]: Remote
+                        - list [ref=e555]:
+                          - listitem [ref=e556]:
+                            - generic [ref=e559]: Parental leave
+                      - button "Save job Toggle" [ref=e561] [cursor=pointer]:
+                        - img [ref=e562]
+                    - generic [ref=e564]:
+                      - list [ref=e566]:
+                        - listitem [ref=e567]: This role will be remote, and based in the UK.
+                        - listitem [ref=e568]: This position is needed to help Twilio develop and deliver new capabilities in the Twilio Console platform.
+                      - list [ref=e572]:
+                        - listitem [ref=e573]:
+                          - generic [ref=e574]:
+                            - text: View all
+                            - link "Twilio jobs in Remote" [ref=e575] [cursor=pointer]:
+                              - /url: /q-twilio-l-remote-jobs.html
+                            - text: "-"
+                            - link "Remote jobs" [ref=e576] [cursor=pointer]:
+                              - /url: /l-remote-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Remote" [ref=e577] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-remote-jobs.html
+                        - listitem [ref=e578]:
+                          - generic [ref=e579]:
+                            - text: "Salary Search:"
+                            - link "Frontend Software Engineer salaries in Remote" [ref=e580] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries?campaignid=serp-more&fromjk=eedccab20ee299c7&from=serp-more
+                        - listitem [ref=e581]:
+                          - generic [ref=e582]:
+                            - text: See popular
+                            - link "questions & answers about Twilio" [ref=e583] [cursor=pointer]:
+                              - /url: /cmp/Twilio/faq
+              - listitem [ref=e585]:
+                - generic [ref=e587]:
+                  - heading "Opportunities in web application development" [level=2] [ref=e590]
+                  - generic [ref=e593]:
+                    - button "Skip past carousel":
+                      - generic: Skip past carousel
+                    - list "Job cards carousel" [ref=e594]:
+                      - listitem [ref=e595]:
+                        - generic [ref=e598]:
+                          - generic [ref=e599]:
+                            - heading "full details of Full Stack Developer" [level=3] [ref=e602]:
+                              - button "full details of Full Stack Developer" [ref=e603] [cursor=pointer]: Full Stack Developer
+                            - generic [ref=e604]:
+                              - img [ref=e606]
+                              - generic [ref=e607]:
+                                - generic [ref=e610]: Brooksource
+                                - generic [ref=e612]: Remote
+                            - list [ref=e614]:
+                              - listitem [ref=e615]:
+                                - generic [ref=e618]: Health insurance
+                              - listitem [ref=e619]:
+                                - generic [ref=e622]: 401(k) matching
+                              - listitem [ref=e623]:
+                                - generic [ref=e626]: Paid time off
+                              - listitem [ref=e627]:
+                                - generic [ref=e630]: Vision insurance
+                              - listitem [ref=e631]:
+                                - generic [ref=e634]: Health savings account
+                              - listitem [ref=e635]:
+                                - generic [ref=e638]: Dental insurance
+                          - button "Save job Toggle" [ref=e640] [cursor=pointer]:
+                            - img [ref=e641]
+                      - listitem [ref=e644]:
+                        - generic [ref=e647]:
+                          - generic [ref=e648]:
+                            - heading "full details of WordPress Web Developer" [level=3] [ref=e651]:
+                              - button "full details of WordPress Web Developer" [ref=e652] [cursor=pointer]: WordPress Web Developer
+                            - generic [ref=e654]:
+                              - generic [ref=e657]: Diocesan
+                              - generic [ref=e659]: Byron Center, MI 49315
+                            - list [ref=e661]:
+                              - listitem [ref=e662]:
+                                - generic [ref=e665]: Health insurance
+                              - listitem [ref=e666]:
+                                - generic [ref=e669]: 401(k) matching
+                              - listitem [ref=e670]:
+                                - generic [ref=e673]: Paid time off
+                              - listitem [ref=e674]:
+                                - generic [ref=e677]: Vision insurance
+                              - listitem [ref=e678]:
+                                - generic [ref=e681]: Dental insurance
+                              - listitem [ref=e682]:
+                                - generic [ref=e685]: Life insurance
+                          - button "Save job Toggle" [ref=e687] [cursor=pointer]:
+                            - img [ref=e688]
+                      - listitem [ref=e691]:
+                        - generic [ref=e694]:
+                          - generic [ref=e695]:
+                            - heading "full details of Web Developer" [level=3] [ref=e698]:
+                              - button "full details of Web Developer" [ref=e699] [cursor=pointer]: Web Developer
+                            - generic [ref=e701]:
+                              - generic [ref=e704]: Posture Interactive
+                              - generic [ref=e706]: Scranton, PA 18503
+                            - list [ref=e708]:
+                              - listitem [ref=e709]:
+                                - generic [ref=e712]: Professional development assistance
+                              - listitem [ref=e713]:
+                                - generic [ref=e716]: Parental leave
+                              - listitem [ref=e717]:
+                                - generic [ref=e720]: 401(k)
+                              - listitem [ref=e721]:
+                                - generic [ref=e724]: Health insurance
+                              - listitem [ref=e725]:
+                                - generic [ref=e728]: 401(k) matching
+                              - listitem [ref=e729]:
+                                - generic [ref=e732]: Paid time off
+                          - button "Save job Toggle" [ref=e734] [cursor=pointer]:
+                            - img [ref=e735]
+                    - generic [ref=e738]:
+                      - button "Previous" [ref=e739] [cursor=pointer]:
+                        - img [ref=e740]
+                      - button "Next" [ref=e746] [cursor=pointer]:
+                        - img [ref=e747]
+                    - button "Go to beginning of carousel":
+                      - generic: Go to beginning of carousel
+              - listitem [ref=e749]:
+                - generic [ref=e751]:
+                  - generic:
+                    - generic [ref=e754]:
+                      - heading "full details of Sr. Software Engineer" [level=3] [ref=e756]:
+                        - button "full details of Sr. Software Engineer" [ref=e757] [cursor=pointer]: Sr. Software Engineer
+                      - generic [ref=e758]:
+                        - generic [ref=e760]:
+                          - generic [ref=e762]: Versant Media
+                          - generic [ref=e763]: Remote in Orlando, FL 32819
+                        - list [ref=e765]:
+                          - listitem [ref=e766]:
+                            - generic [ref=e769]: Retirement plan
+                      - button "Save job Toggle" [ref=e771] [cursor=pointer]:
+                        - img [ref=e772]
+                    - generic [ref=e774]:
+                      - list [ref=e776]:
+                        - listitem [ref=e777]: This is a fully remote role (U.S. only).
+                        - listitem [ref=e778]: Fully remote flexibility within the U.S., with opportunities for in-person connection and collaboration.
+                      - list [ref=e782]:
+                        - listitem [ref=e783]:
+                          - generic [ref=e784]:
+                            - text: View all
+                            - link "Versant Media jobs in Orlando, FL" [ref=e785] [cursor=pointer]:
+                              - /url: /q-versant-media-l-orlando,-fl-jobs.html
+                            - text: "-"
+                            - link "Orlando jobs" [ref=e786] [cursor=pointer]:
+                              - /url: /l-orlando,-fl-jobs.html
+                            - text: "-"
+                            - link "Senior Software Engineer jobs in Orlando, FL" [ref=e787] [cursor=pointer]:
+                              - /url: /q-senior-software-engineer-l-orlando,-fl-jobs.html
+                        - listitem [ref=e788]:
+                          - generic [ref=e789]:
+                            - text: "Salary Search:"
+                            - link "Sr. Software Engineer salaries in Orlando, FL" [ref=e790] [cursor=pointer]:
+                              - /url: /career/senior-software-engineer/salaries/32819--FL?campaignid=serp-more&fromjk=34ddae1242363f59&from=serp-more
+                        - listitem [ref=e791]:
+                          - generic [ref=e792]:
+                            - text: See popular
+                            - link "questions & answers about Versant Media" [ref=e793] [cursor=pointer]:
+                              - /url: /cmp/Versant-4/faq
+              - listitem
+              - listitem [ref=e795]:
+                - generic [ref=e797]:
+                  - generic:
+                    - generic [ref=e800]:
+                      - heading "full details of Full Stack Developer (Frontend Emphasis)" [level=3] [ref=e802]:
+                        - button "full details of Full Stack Developer (Frontend Emphasis)" [ref=e803] [cursor=pointer]: Full Stack Developer (Frontend Emphasis)
+                      - generic [ref=e804]:
+                        - generic [ref=e806]:
+                          - generic [ref=e808]: Agile Defense
+                          - generic [ref=e810]: Remote
+                        - list [ref=e812]:
+                          - listitem [ref=e813]:
+                            - generic [ref=e816]: Health insurance
+                          - listitem [ref=e817]:
+                            - generic [ref=e820]: Paid time off
+                          - listitem [ref=e821]:
+                            - generic [ref=e824]: Life insurance
+                          - listitem [ref=e825]:
+                            - generic [ref=e828]: Disability insurance
+                          - listitem [ref=e829]:
+                            - generic [ref=e832]: Paid holidays
+                      - button "Save job Toggle" [ref=e834] [cursor=pointer]:
+                        - img [ref=e835]
+                    - generic [ref=e837]:
+                      - list [ref=e839]:
+                        - listitem [ref=e840]: Experience consuming RESTful APIs and collaborating with backend developers to shape API contracts.
+                        - listitem [ref=e841]: You will collaborate closely with backend developers, guide…
+                      - list [ref=e845]:
+                        - listitem [ref=e846]:
+                          - generic [ref=e847]:
+                            - text: View all
+                            - link "Agile Defense jobs in Remote" [ref=e848] [cursor=pointer]:
+                              - /url: /q-agile-defense-l-remote-jobs.html
+                            - text: "-"
+                            - link "Remote jobs" [ref=e849] [cursor=pointer]:
+                              - /url: /l-remote-jobs.html
+                            - text: "-"
+                            - link "Full Stack Developer jobs in Remote" [ref=e850] [cursor=pointer]:
+                              - /url: /q-full-stack-developer-l-remote-jobs.html
+                        - listitem [ref=e851]:
+                          - generic [ref=e852]:
+                            - text: "Salary Search:"
+                            - link "Full Stack Developer (Frontend Emphasis) salaries in Remote" [ref=e853] [cursor=pointer]:
+                              - /url: /career/full-stack-developer/salaries?campaignid=serp-more&fromjk=aa22bafa5659f48c&from=serp-more
+                        - listitem [ref=e854]:
+                          - generic [ref=e855]:
+                            - text: See popular
+                            - link "questions & answers about Agile Defense" [ref=e856] [cursor=pointer]:
+                              - /url: /cmp/Agile-Defense-2/faq
+              - listitem
+              - listitem [ref=e858]:
+                - generic [ref=e860]:
+                  - heading "Positions in mobile application development" [level=2] [ref=e863]
+                  - generic [ref=e866]:
+                    - button "Skip past carousel":
+                      - generic: Skip past carousel
+                    - list "Job cards carousel" [ref=e867]:
+                      - listitem [ref=e868]:
+                        - generic [ref=e871]:
+                          - generic [ref=e872]:
+                            - generic [ref=e874]:
+                              - heading "full details of Salesforce Developer" [level=3] [ref=e875]:
+                                - button "full details of Salesforce Developer" [ref=e876] [cursor=pointer]: Salesforce Developer
+                              - generic [ref=e881]: New
+                            - generic [ref=e883]:
+                              - generic [ref=e886]: Big Joe Forklifts
+                              - generic [ref=e888]: Hybrid work in DeForest, WI 53532
+                            - list [ref=e890]:
+                              - listitem [ref=e891]:
+                                - generic [ref=e894]: Referral program
+                              - listitem [ref=e895]:
+                                - generic [ref=e898]: Professional development assistance
+                              - listitem [ref=e899]:
+                                - generic [ref=e902]: Tuition reimbursement
+                              - listitem [ref=e903]:
+                                - generic [ref=e906]: Parental leave
+                              - listitem [ref=e907]:
+                                - generic [ref=e910]: 401(k)
+                              - listitem [ref=e911]:
+                                - generic [ref=e914]: Health insurance
+                          - button "Save job Toggle" [ref=e916] [cursor=pointer]:
+                            - img [ref=e917]
+                      - listitem [ref=e920]:
+                        - generic [ref=e923]:
+                          - generic [ref=e924]:
+                            - heading "full details of Android Software Developer" [level=3] [ref=e927]:
+                              - button "full details of Android Software Developer" [ref=e928] [cursor=pointer]: Android Software Developer
+                            - generic [ref=e930]:
+                              - generic [ref=e933]: Nubble Site Solutions, Inc.
+                              - generic [ref=e935]: York, ME 03909
+                            - list [ref=e937]:
+                              - listitem [ref=e938]:
+                                - generic [ref=e941]: 401(k)
+                              - listitem [ref=e942]:
+                                - generic [ref=e945]: Health insurance
+                              - listitem [ref=e946]:
+                                - generic [ref=e949]: 401(k) matching
+                              - listitem [ref=e950]:
+                                - generic [ref=e953]: Paid time off
+                          - button "Save job Toggle" [ref=e955] [cursor=pointer]:
+                            - img [ref=e956]
+                      - listitem [ref=e959]:
+                        - generic [ref=e962]:
+                          - generic [ref=e963]:
+                            - heading "full details of Embedded Android Software Engineer" [level=3] [ref=e966]:
+                              - button "full details of Embedded Android Software Engineer" [ref=e967] [cursor=pointer]: Embedded Android Software Engineer
+                            - generic [ref=e969]:
+                              - generic [ref=e972]: Leoforce
+                              - generic [ref=e974]: San Francisco, CA 94080
+                            - list [ref=e976]:
+                              - listitem [ref=e977]:
+                                - generic [ref=e980]: Paid parental leave
+                              - listitem [ref=e981]:
+                                - generic [ref=e984]: Parental leave
+                              - listitem [ref=e985]:
+                                - generic [ref=e988]: 401(k)
+                              - listitem [ref=e989]:
+                                - generic [ref=e992]: 401(k) matching
+                              - listitem [ref=e993]:
+                                - generic [ref=e996]: Paid time off
+                              - listitem [ref=e997]:
+                                - generic [ref=e1000]: Health savings account
+                          - button "Save job Toggle" [ref=e1002] [cursor=pointer]:
+                            - img [ref=e1003]
+                    - generic [ref=e1006]:
+                      - button "Previous" [ref=e1007] [cursor=pointer]:
+                        - img [ref=e1008]
+                      - button "Next" [ref=e1014] [cursor=pointer]:
+                        - img [ref=e1015]
+                    - button "Go to beginning of carousel":
+                      - generic: Go to beginning of carousel
+              - listitem [ref=e1017]:
+                - generic [ref=e1019]:
+                  - generic:
+                    - generic [ref=e1022]:
+                      - heading "full details of Senior Frontend Engineer – In-office (NY)" [level=3] [ref=e1024]:
+                        - button "full details of Senior Frontend Engineer – In-office (NY)" [ref=e1025] [cursor=pointer]: Senior Frontend Engineer – In-office (NY)
+                      - generic [ref=e1026]:
+                        - generic [ref=e1028]:
+                          - generic [ref=e1030]: Jarvis Recruitment
+                          - generic [ref=e1031]: Remote in New York, NY
+                        - list [ref=e1033]:
+                          - listitem [ref=e1034]:
+                            - generic [ref=e1037]: Paid parental leave
+                          - listitem [ref=e1038]:
+                            - generic [ref=e1041]: Parental leave
+                          - listitem [ref=e1042]:
+                            - generic [ref=e1045]: 401(k)
+                          - listitem [ref=e1046]:
+                            - generic [ref=e1049]: Vision insurance
+                          - listitem [ref=e1050]:
+                            - generic [ref=e1053]: Dental insurance
+                          - listitem [ref=e1054]:
+                            - generic [ref=e1057]: Stock options
+                      - button "Save job Toggle" [ref=e1059] [cursor=pointer]:
+                        - img [ref=e1060]
+                    - generic [ref=e1062]:
+                      - list [ref=e1064]:
+                        - listitem [ref=e1065]: Partner closely with backend engineers to shape API contracts that improve frontend performance and iteration speed.
+                        - listitem [ref=e1066]: "Equity: Stock option plan included."
+                      - list [ref=e1070]:
+                        - listitem [ref=e1071]:
+                          - generic [ref=e1072]:
+                            - text: View all
+                            - link "Jarvis Recruitment jobs in New York, NY" [ref=e1073] [cursor=pointer]:
+                              - /url: /q-jarvis-recruitment-l-new-york,-ny-jobs.html
+                            - text: "-"
+                            - link "New York jobs" [ref=e1074] [cursor=pointer]:
+                              - /url: /l-new-york,-ny-jobs.html
+                            - text: "-"
+                            - link "Senior Engineer jobs in New York, NY" [ref=e1075] [cursor=pointer]:
+                              - /url: /q-senior-engineer-l-new-york,-ny-jobs.html
+                        - listitem [ref=e1076]:
+                          - generic [ref=e1077]:
+                            - text: "Salary Search:"
+                            - link "Senior Frontend Engineer – In-office (NY) salaries in New York, NY" [ref=e1078] [cursor=pointer]:
+                              - /url: /career/senior-engineer/salaries/New-York--NY?campaignid=serp-more&fromjk=a91ed91045b5ce64&from=serp-more
+              - listitem [ref=e1080]:
+                - generic [ref=e1082]:
+                  - generic:
+                    - generic [ref=e1085]:
+                      - heading "full details of Front End Software Developer" [level=3] [ref=e1087]:
+                        - button "full details of Front End Software Developer" [ref=e1088] [cursor=pointer]: Front End Software Developer
+                      - generic [ref=e1089]:
+                        - generic [ref=e1091]:
+                          - generic [ref=e1093]: Blu Omega
+                          - generic [ref=e1094]: Remote in Ashburn, VA
+                        - list [ref=e1096]:
+                          - listitem [ref=e1097]:
+                            - generic [ref=e1100]: Pet insurance
+                          - listitem [ref=e1101]:
+                            - generic [ref=e1104]: AD&D insurance
+                          - listitem [ref=e1105]:
+                            - generic [ref=e1108]: Health insurance
+                          - listitem [ref=e1109]:
+                            - generic [ref=e1112]: 401(k) matching
+                          - listitem [ref=e1113]:
+                            - generic [ref=e1116]: Paid time off
+                          - listitem [ref=e1117]:
+                            - generic [ref=e1120]: Vision insurance
+                      - button "Save job Toggle" [ref=e1122] [cursor=pointer]:
+                        - img [ref=e1123]
+                    - generic [ref=e1125]:
+                      - list [ref=e1127]:
+                        - listitem [ref=e1128]: Collaborate with backend developers to integrate APIs and data services.
+                        - listitem [ref=e1129]: Blu Omega is seeking a Front End Software Developer to support a federal program…
+                      - list [ref=e1133]:
+                        - listitem [ref=e1134]:
+                          - generic [ref=e1135]:
+                            - text: View all
+                            - link "Blu Omega jobs in Ashburn, VA" [ref=e1136] [cursor=pointer]:
+                              - /url: /q-blu-omega-l-ashburn,-va-jobs.html
+                            - text: "-"
+                            - link "Ashburn jobs" [ref=e1137] [cursor=pointer]:
+                              - /url: /l-ashburn,-va-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Ashburn, VA" [ref=e1138] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-ashburn,-va-jobs.html
+                        - listitem [ref=e1139]:
+                          - generic [ref=e1140]:
+                            - text: "Salary Search:"
+                            - link "Front End Software Developer salaries in Ashburn, VA" [ref=e1141] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Ashburn--VA?campaignid=serp-more&fromjk=116e83724d484647&from=serp-more
+              - listitem [ref=e1143]:
+                - generic [ref=e1145]:
+                  - heading "Roles in digital product design" [level=2] [ref=e1148]
+                  - generic [ref=e1151]:
+                    - button "Skip past carousel":
+                      - generic: Skip past carousel
+                    - list "Job cards carousel" [ref=e1152]:
+                      - listitem [ref=e1153]:
+                        - generic [ref=e1156]:
+                          - generic [ref=e1157]:
+                            - generic [ref=e1159]:
+                              - heading "full details of Product Designer, Stationery and Retail Products" [level=3] [ref=e1160]:
+                                - button "full details of Product Designer, Stationery and Retail Products" [ref=e1161] [cursor=pointer]: Product Designer, Stationery and Retail Products
+                              - generic [ref=e1163]:
+                                - generic [ref=e1166]: New
+                                - generic [ref=e1169]: Often replies in 3 days
+                            - generic [ref=e1171]:
+                              - generic [ref=e1174]: Cre8 Direct, Inc.
+                              - generic [ref=e1176]: Irving, TX 75063
+                            - list [ref=e1178]:
+                              - listitem [ref=e1179]:
+                                - generic [ref=e1182]: 401(k)
+                              - listitem [ref=e1183]:
+                                - generic [ref=e1186]: Health insurance
+                              - listitem [ref=e1187]:
+                                - generic [ref=e1190]: Paid time off
+                              - listitem [ref=e1191]:
+                                - generic [ref=e1194]: Dental insurance
+                          - button "Save job Toggle" [ref=e1196] [cursor=pointer]:
+                            - img [ref=e1197]
+                      - listitem [ref=e1200]:
+                        - generic [ref=e1203]:
+                          - generic [ref=e1204]:
+                            - generic [ref=e1206]:
+                              - heading "full details of Associate Product Designer-Dotcom (Hybrid)" [level=3] [ref=e1207]:
+                                - button "full details of Associate Product Designer-Dotcom (Hybrid)" [ref=e1208] [cursor=pointer]: Associate Product Designer-Dotcom (Hybrid)
+                              - generic [ref=e1210]:
+                                - generic [ref=e1213]: New
+                                - generic [ref=e1216]: Often replies in 3 days
+                            - generic [ref=e1218]:
+                              - generic [ref=e1221]: Uniek, Inc
+                              - generic [ref=e1223]: Hybrid work in Waunakee, WI 53597
+                            - list [ref=e1225]:
+                              - listitem [ref=e1226]:
+                                - generic [ref=e1229]: AD&D insurance
+                              - listitem [ref=e1230]:
+                                - generic [ref=e1233]: 401(k)
+                              - listitem [ref=e1234]:
+                                - generic [ref=e1237]: Health insurance
+                              - listitem [ref=e1238]:
+                                - generic [ref=e1241]: Retirement plan
+                              - listitem [ref=e1242]:
+                                - generic [ref=e1245]: 401(k) matching
+                              - listitem [ref=e1246]:
+                                - generic [ref=e1249]: Paid time off
+                          - button "Save job Toggle" [ref=e1251] [cursor=pointer]:
+                            - img [ref=e1252]
+                      - listitem [ref=e1255]:
+                        - generic [ref=e1258]:
+                          - generic [ref=e1259]:
+                            - heading "full details of Designer - Modular Systems" [level=3] [ref=e1262]:
+                              - button "full details of Designer - Modular Systems" [ref=e1263] [cursor=pointer]: Designer - Modular Systems
+                            - generic [ref=e1265]:
+                              - generic [ref=e1268]: Atomic Design, Inc.
+                              - generic [ref=e1270]: Lititz, PA 17543
+                            - list [ref=e1272]:
+                              - listitem [ref=e1273]:
+                                - generic [ref=e1276]: Referral program
+                              - listitem [ref=e1277]:
+                                - generic [ref=e1280]: AD&D insurance
+                              - listitem [ref=e1281]:
+                                - generic [ref=e1284]: Parental leave
+                              - listitem [ref=e1285]:
+                                - generic [ref=e1288]: 401(k)
+                              - listitem [ref=e1289]:
+                                - generic [ref=e1292]: Health insurance
+                              - listitem [ref=e1293]:
+                                - generic [ref=e1296]: Retirement plan
+                          - button "Save job Toggle" [ref=e1298] [cursor=pointer]:
+                            - img [ref=e1299]
+                    - generic [ref=e1302]:
+                      - button "Previous" [ref=e1303] [cursor=pointer]:
+                        - img [ref=e1304]
+                      - button "Next" [ref=e1310] [cursor=pointer]:
+                        - img [ref=e1311]
+                    - button "Go to beginning of carousel":
+                      - generic: Go to beginning of carousel
+              - listitem [ref=e1313]:
+                - generic [ref=e1315]:
+                  - generic:
+                    - generic [ref=e1318]:
+                      - heading "full details of Front End Software Developer" [level=3] [ref=e1320]:
+                        - button "full details of Front End Software Developer" [ref=e1321] [cursor=pointer]: Front End Software Developer
+                      - generic [ref=e1322]:
+                        - generic [ref=e1324]:
+                          - generic [ref=e1326]: Blu Omega LLC
+                          - generic [ref=e1327]: Remote in Ashburn, VA
+                        - list [ref=e1329]:
+                          - listitem [ref=e1330]:
+                            - generic [ref=e1333]: Pet insurance
+                          - listitem [ref=e1334]:
+                            - generic [ref=e1337]: AD&D insurance
+                          - listitem [ref=e1338]:
+                            - generic [ref=e1341]: Health insurance
+                          - listitem [ref=e1342]:
+                            - generic [ref=e1345]: 401(k) matching
+                          - listitem [ref=e1346]:
+                            - generic [ref=e1349]: Paid time off
+                          - listitem [ref=e1350]:
+                            - generic [ref=e1353]: Vision insurance
+                      - button "Save job Toggle" [ref=e1355] [cursor=pointer]:
+                        - img [ref=e1356]
+                    - generic [ref=e1358]:
+                      - list [ref=e1360]:
+                        - listitem [ref=e1361]: Collaborate with backend developers to integrate APIs and data services.
+                        - listitem [ref=e1362]: Blu Omega is seeking a Front End Software Developer to support a federal program…
+                      - list [ref=e1366]:
+                        - listitem [ref=e1367]:
+                          - generic [ref=e1368]:
+                            - text: View all
+                            - link "Blu Omega LLC jobs in Ashburn, VA" [ref=e1369] [cursor=pointer]:
+                              - /url: /q-blu-omega-llc-l-ashburn,-va-jobs.html
+                            - text: "-"
+                            - link "Ashburn jobs" [ref=e1370] [cursor=pointer]:
+                              - /url: /l-ashburn,-va-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Ashburn, VA" [ref=e1371] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-ashburn,-va-jobs.html
+                        - listitem [ref=e1372]:
+                          - generic [ref=e1373]:
+                            - text: "Salary Search:"
+                            - link "Front End Software Developer salaries in Ashburn, VA" [ref=e1374] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Ashburn--VA?campaignid=serp-more&fromjk=e5491ed06df60b13&from=serp-more
+              - listitem [ref=e1376]:
+                - generic [ref=e1378]:
+                  - generic:
+                    - generic [ref=e1381]:
+                      - heading "full details of Senior ADOBE Analytics Developer" [level=3] [ref=e1383]:
+                        - button "full details of Senior ADOBE Analytics Developer" [ref=e1384] [cursor=pointer]: Senior ADOBE Analytics Developer
+                      - generic [ref=e1387]:
+                        - generic [ref=e1389]: InfoQuest Consulting Group Inc.
+                        - generic [ref=e1391]: Remote
+                      - button "Save job Toggle" [ref=e1393] [cursor=pointer]:
+                        - img [ref=e1394]
+                    - generic [ref=e1396]:
+                      - list [ref=e1398]:
+                        - listitem [ref=e1399]: "Duration & Type: 6 months contract to start and potential to extend for a year."
+                        - listitem [ref=e1400]: Overall 6+ years of development experience in Adobe Analytics and Adobe DTM.
+                      - list [ref=e1404]:
+                        - listitem [ref=e1405]:
+                          - generic [ref=e1406]:
+                            - text: View all
+                            - link "InfoQuest Consulting Group Inc. jobs in Remote" [ref=e1407] [cursor=pointer]:
+                              - /url: /q-infoquest-consulting-group-inc-l-remote-jobs.html
+                            - text: "-"
+                            - link "Remote jobs" [ref=e1408] [cursor=pointer]:
+                              - /url: /l-remote-jobs.html
+                            - text: "-"
+                            - link "Senior Developer jobs in Remote" [ref=e1409] [cursor=pointer]:
+                              - /url: /q-senior-developer-l-remote-jobs.html
+                        - listitem [ref=e1410]:
+                          - generic [ref=e1411]:
+                            - text: "Salary Search:"
+                            - link "Senior ADOBE Analytics Developer salaries in Remote" [ref=e1412] [cursor=pointer]:
+                              - /url: /career/senior-developer/salaries?campaignid=serp-more&fromjk=0f3c4bce9f2d115d&from=serp-more
+              - listitem [ref=e1414]:
+                - generic [ref=e1416]:
+                  - generic:
+                    - generic [ref=e1419]:
+                      - heading "full details of Senior Frontend Engineer - AI Product" [level=3] [ref=e1421]:
+                        - button "full details of Senior Frontend Engineer - AI Product" [ref=e1422] [cursor=pointer]: Senior Frontend Engineer - AI Product
+                      - generic [ref=e1423]:
+                        - generic [ref=e1425]:
+                          - generic [ref=e1427]: Re:Build Manufacturing
+                          - generic [ref=e1428]: Remote in Boston, MA
+                        - list [ref=e1430]:
+                          - listitem [ref=e1431]:
+                            - generic [ref=e1434]: 401(k)
+                          - listitem [ref=e1435]:
+                            - generic [ref=e1438]: Health insurance
+                          - listitem [ref=e1439]:
+                            - generic [ref=e1442]: Paid time off
+                          - listitem [ref=e1443]:
+                            - generic [ref=e1446]: Vision insurance
+                          - listitem [ref=e1447]:
+                            - generic [ref=e1450]: Dental insurance
+                      - button "Save job Toggle" [ref=e1452] [cursor=pointer]:
+                        - img [ref=e1453]
+                    - generic [ref=e1455]:
+                      - list [ref=e1457]:
+                        - listitem [ref=e1458]: Contributing to frontend architecture decisions, code reviews, and engineering best practices.
+                        - listitem [ref=e1459]: We're seeking a frontend engineer who cares deeply about building…
+                      - list [ref=e1463]:
+                        - listitem [ref=e1464]:
+                          - generic [ref=e1465]:
+                            - text: View all
+                            - link "Re:Build Manufacturing jobs in Boston, MA" [ref=e1466] [cursor=pointer]:
+                              - /url: /q-re%3abuild-manufacturing-l-boston,-ma-jobs.html
+                            - text: "-"
+                            - link "Boston jobs" [ref=e1467] [cursor=pointer]:
+                              - /url: /l-boston,-ma-jobs.html
+                            - text: "-"
+                            - link "Senior Engineer jobs in Boston, MA" [ref=e1468] [cursor=pointer]:
+                              - /url: /q-senior-engineer-l-boston,-ma-jobs.html
+                        - listitem [ref=e1469]:
+                          - generic [ref=e1470]:
+                            - text: "Salary Search:"
+                            - link "Senior Frontend Engineer - AI Product salaries in Boston, MA" [ref=e1471] [cursor=pointer]:
+                              - /url: /career/senior-engineer/salaries/Boston--MA?campaignid=serp-more&fromjk=8c9d73440f245e50&from=serp-more
+                        - listitem [ref=e1472]:
+                          - generic [ref=e1473]:
+                            - text: See popular
+                            - link "questions & answers about Re:Build Manufacturing" [ref=e1474] [cursor=pointer]:
+                              - /url: /cmp/Re-Build-Manufacturing/faq
+            - navigation "pagination" [ref=e1476]:
+              - list [ref=e1477]:
+                - listitem [ref=e1478]:
+                  - link "1" [ref=e1479] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e1480]:
+                  - link "2" [ref=e1481] [cursor=pointer]:
+                    - /url: /jobs?q=remote+frontend+developer&start=10
+                - listitem [ref=e1482]:
+                  - link "3" [ref=e1483] [cursor=pointer]:
+                    - /url: /jobs?q=remote+frontend+developer&start=20
+                - listitem [ref=e1484]:
+                  - link "4" [ref=e1485] [cursor=pointer]:
+                    - /url: /jobs?q=remote+frontend+developer&start=30
+                - listitem [ref=e1486]:
+                  - link "5" [ref=e1487] [cursor=pointer]:
+                    - /url: /jobs?q=remote+frontend+developer&start=40
+                - listitem [ref=e1488]:
+                  - link "Next Page" [ref=e1489] [cursor=pointer]:
+                    - /url: /jobs?q=remote+frontend+developer&start=10
+                    - img [ref=e1490]
+            - generic [ref=e1492]:
+              - heading "People also searched:" [level=3] [ref=e1493]
+              - list [ref=e1494]:
+                - listitem [ref=e1495]:
+                  - link "junior front end developer in remote" [ref=e1496] [cursor=pointer]:
+                    - /url: /q-junior-front-end-developer-in-remote-jobs.html
+                    - generic [ref=e1498]: junior front end developer in remote
+                - listitem [ref=e1499]:
+                  - link "front end developer" [ref=e1500] [cursor=pointer]:
+                    - /url: /q-front-end-developer-jobs.html
+                    - generic [ref=e1502]: front end developer
+                - listitem [ref=e1503]:
+                  - link "junior front end developer remote" [ref=e1504] [cursor=pointer]:
+                    - /url: /q-junior-front-end-developer-remote-jobs.html
+                    - generic [ref=e1506]: junior front end developer remote
+                - listitem [ref=e1507]:
+                  - link "junior front end developer" [ref=e1508] [cursor=pointer]:
+                    - /url: /q-junior-front-end-developer-jobs.html
+                    - generic [ref=e1510]: junior front end developer
+                - listitem [ref=e1511]:
+                  - link "entry level front end developer in remote" [ref=e1512] [cursor=pointer]:
+                    - /url: /q-entry-level-front-end-developer-in-remote-jobs.html
+                    - generic [ref=e1514]: entry level front end developer in remote
+                - listitem [ref=e1515]:
+                  - link "remote web developer" [ref=e1516] [cursor=pointer]:
+                    - /url: /q-remote-web-developer-jobs.html
+                    - generic [ref=e1518]: remote web developer
+                - listitem [ref=e1519]:
+                  - link "react developer remote" [ref=e1520] [cursor=pointer]:
+                    - /url: /q-react-developer-remote-jobs.html
+                    - generic [ref=e1522]: react developer remote
+                - listitem [ref=e1523]:
+                  - link "remote front end developer internship" [ref=e1524] [cursor=pointer]:
+                    - /url: /q-remote-front-end-developer-internship-jobs.html
+                    - generic [ref=e1526]: remote front end developer internship
+                - listitem [ref=e1527]:
+                  - link "entry level front end developer" [ref=e1528] [cursor=pointer]:
+                    - /url: /q-entry-level-front-end-developer-jobs.html
+                    - generic [ref=e1530]: entry level front end developer
+                - listitem [ref=e1531]:
+                  - link "worldwide remote front end developer" [ref=e1532] [cursor=pointer]:
+                    - /url: /q-worldwide-remote-front-end-developer-jobs.html
+                    - generic [ref=e1534]: worldwide remote front end developer
+            - generic [ref=e1535]:
+              - heading "Resume Resources:" [level=2] [ref=e1536]
+              - list [ref=e1537]:
+                - listitem [ref=e1538]:
+                  - link "Resume Samples" [ref=e1539] [cursor=pointer]:
+                    - /url: https://www.indeed.com/career-advice/resume-samples?from=jobsearch_footer
+                - text: "-"
+                - listitem [ref=e1540]:
+                  - link "Resume Templates" [ref=e1541] [cursor=pointer]:
+                    - /url: https://www.indeed.com/profile/resume-templates?from=jobsearch_footer
+            - generic [ref=e1542]:
+              - heading "Career Resources:" [level=2] [ref=e1543]
+              - list [ref=e1544]:
+                - listitem [ref=e1545]:
+                  - link "Career Explorer" [ref=e1546] [cursor=pointer]:
+                    - /url: /career/salaries?from=jobsearch_footer
+                - text: "-"
+                - listitem [ref=e1547]:
+                  - link "Explore High Paying Jobs" [ref=e1548] [cursor=pointer]:
+                    - /url: /explorer/
+            - generic [ref=e1549]:
+              - heading "Employer Resources:" [level=2] [ref=e1550]
+              - list [ref=e1551]:
+                - listitem [ref=e1552]:
+                  - link "How to Write a Job Description" [ref=e1553] [cursor=pointer]:
+                    - /url: /hire/how-to-write-a-job-description?from=jobsearch_footer
+                - text: "-"
+                - listitem [ref=e1554]:
+                  - link "How to Hire Employees" [ref=e1555] [cursor=pointer]:
+                    - /url: /hire/how-to-hire?from=jobsearch_footer
+          - generic "Job Post Details" [ref=e1558]:
+            - button "Return to Search Result" [ref=e1559]
+            - heading "Job Post Details" [level=2] [ref=e1560]
+            - generic [ref=e1563]:
+              - generic [ref=e1565]:
+                - generic [ref=e1566]:
+                  - heading "Staff Software Engineer (Frontend Developer) - job post" [level=2] [ref=e1568]:
+                    - generic [ref=e1569]:
+                      - text: Staff Software Engineer (Frontend Developer)
+                      - generic [ref=e1570]: "- job post"
+                  - generic [ref=e1574]:
+                    - generic [ref=e1575]:
+                      - link "Lockheed Martin Corporation (opens in a new tab)" [ref=e1578] [cursor=pointer]:
+                        - /url: https://www.indeed.com/cmp/Lockheed-Martin?campaignid=mobvjcmp&from=mobviewjob&tk=1jrq85j47gsuu800&fromjk=4ed791b5fce97e51
+                        - text: Lockheed Martin Corporation
+                        - img [ref=e1579]
+                      - generic [ref=e1581]:
+                        - generic [ref=e1582]: · 4.0
+                        - generic [ref=e1583]: 4.0 out of 5 stars
+                        - img [ref=e1584]
+                    - generic [ref=e1587]: Colorado Springs, CO•Remote
+                - generic [ref=e1590]:
+                  - generic [ref=e1591]: $113,900 - $200,905 a year
+                  - generic [ref=e1592]: "- Full-time"
+                - generic [ref=e1594]:
+                  - generic [ref=e1595]: You must create an Indeed account before continuing to the company website to apply
+                  - button "Apply on company site (opens in a new tab)" [ref=e1601] [cursor=pointer]:
+                    - generic [ref=e1602]: Apply on company site
+                    - img [ref=e1603]
+                  - button "Save job" [ref=e1608] [cursor=pointer]:
+                    - img "save-icon" [ref=e1609]
+                  - button "Share Job" [ref=e1611] [cursor=pointer]
+              - generic [ref=e1614]:
+                - generic [ref=e1615]:
+                  - generic [ref=e1621]:
+                    - generic [ref=e1622]:
+                      - generic [ref=e1623]:
+                        - heading "Profile insights" [level=2] [ref=e1624]
+                        - text: Find out how your skills align with the job description
+                      - group "Skills" [ref=e1626]:
+                        - img [ref=e1627]
+                        - generic [ref=e1629]:
+                          - heading "Skills" [level=3] [ref=e1630]
+                          - group "Do you have experience in UX implementation?" [ref=e1631]:
+                            - generic [ref=e1633]:
+                              - text: Do you have experience in
+                              - strong [ref=e1634]: UX implementation
+                              - text: "?"
+                            - generic [ref=e1635]:
+                              - button "Yes" [ref=e1636] [cursor=pointer]:
+                                - generic [ref=e1637]: "Yes"
+                              - button "No" [ref=e1638] [cursor=pointer]:
+                                - generic [ref=e1639]: "No"
+                    - separator [ref=e1640]:
+                      - generic [ref=e1641]: "&nbsp;"
+                  - generic [ref=e1647]:
+                    - generic [ref=e1648]:
+                      - heading "Job details" [level=2] [ref=e1650]
+                      - generic [ref=e1651]:
+                        - group "Pay" [ref=e1652]:
+                          - img [ref=e1653]
+                          - generic [ref=e1655]:
+                            - heading "Pay" [level=3] [ref=e1656]
+                            - list [ref=e1658]:
+                              - listitem [ref=e1659]:
+                                - generic [ref=e1664]: $113,900 - $200,905 a year
+                        - group "Job type" [ref=e1665]:
+                          - img [ref=e1666]
+                          - generic [ref=e1669]:
+                            - heading "Job type" [level=3] [ref=e1670]
+                            - list [ref=e1672]:
+                              - listitem [ref=e1673]:
+                                - generic [ref=e1678]: Full-time
+                        - group "Shift and schedule" [ref=e1679]:
+                          - img [ref=e1680]
+                          - generic [ref=e1682]:
+                            - heading "Shift and schedule" [level=3] [ref=e1683]
+                            - list [ref=e1685]:
+                              - listitem [ref=e1686]:
+                                - generic [ref=e1691]: 4x10
+                              - listitem [ref=e1692]:
+                                - generic [ref=e1697]: Flextime
+                        - group "Work setting" [ref=e1698]:
+                          - img [ref=e1699]
+                          - generic [ref=e1701]:
+                            - heading "Work setting" [level=3] [ref=e1702]
+                            - list [ref=e1704]:
+                              - listitem [ref=e1705]:
+                                - generic [ref=e1710]: Remote
+                    - separator [ref=e1711]:
+                      - generic [ref=e1712]: "&nbsp;"
+                  - generic [ref=e1713]:
+                    - heading "Benefits" [level=3] [ref=e1714]
+                    - paragraph [ref=e1715]: Pulled from the full job description
+                    - list [ref=e1719]:
+                      - listitem [ref=e1720]: Flextime
+                      - listitem [ref=e1721]: Parental leave
+                      - listitem [ref=e1722]: 401(k)
+                      - listitem [ref=e1723]: Health insurance
+                      - listitem [ref=e1724]: 401(k) matching
+                      - listitem [ref=e1725]: Paid time off
+                      - listitem [ref=e1726]: Vision insurance
+                    - button "Show more" [ref=e1728] [cursor=pointer]:
+                      - generic [ref=e1729]: Show more
+                      - img [ref=e1730]
+                    - separator [ref=e1732]:
+                      - generic [ref=e1733]: "&nbsp;"
+                  - heading "Full job description" [level=2] [ref=e1735]
+                  - generic [ref=e1736]:
+                    - generic [ref=e1737]:
+                      - paragraph [ref=e1738]: "JOB ID: 732605BR"
+                      - paragraph [ref=e1739]: "Date posted: Jun. 17, 2026"
+                      - paragraph [ref=e1740]: "Description:"
+                      - paragraph [ref=e1741]: WHAT WE'RE DOING
+                      - text: Come join the CommandIQ® (CIQ) team – a product line established in 2025 with sizable investment and support from RMS senior leadership. We are developing mission critical Battle Management and Command & Control capabilities for a complete Command and Control mission suite. Our solution provides the open architecture as well as mission apps that can be customized to each user’s needs. Customers can also easily integrate their favorite tools into a single CommandIQ® Common Operating Picture (COP) to meet their own, specialized mission requirements.
+                      - text: Join us and become a part of the team that is actively designing and developing the initial baseline which has already generated significant customer interest both domestically and internationally!
+                      - text: "Check out these links for more information about our exciting suite of products:"
+                      - text: https://www.lockheedmartin.com/en-us/products/command-and-control.html
+                      - text: https://www.youtube.com/watch?v=mYu06sRV398
+                      - paragraph [ref=e1742]: THE WORK
+                      - text: "CommandIQ® is seeking a software engineer to join one of our agile development teams. In this role, you will:"
+                      - list [ref=e1743]:
+                        - listitem [ref=e1744]: Decompose higher-level roadmap features into actionable work items
+                        - listitem [ref=e1745]: Design, Implement, and integrate/test software features
+                        - listitem [ref=e1746]: Perform peer reviews for fellow software engineers and debug issues as they arise
+                        - listitem [ref=e1747]: Participate in technical discussions to define/solve overarching software architecture needs
+                        - listitem [ref=e1748]: Collaborate with cross-functional peers to better understand project requirements and customer/stakeholder needs
+                      - paragraph [ref=e1749]: WHO WE ARE
+                      - text: CommandIQ® is a geographically dispersed project team that executes in an agile – scrum setting. The team readily adapts to changing priorities as new information is discovered and project milestones shift to meet the various stakeholder needs. It has the opportunity to be fast-paced environment but also presents a highly-desirable opportunity for team members to gain exposure to various subject areas and hone their technical skills across various tools and frameworks. Additionally, team members have the ability to interface with an array of different customer groups and present thoughtful solutions to meet the various customer/stakeholder needs. If the desire to succeed in an actively changing and complex problem space excites you, CommandIQ® is the place to be!
+                      - text: For this role specifically, candidates who are local to Colorado Springs, CO or King of Prussia, PA are preferred. Strong candidates who exceptionally match the roles and responsibilities will be considered for a fully-remote work schedule. The specific weekly work schedule will be discussed during the hiring process.
+                      - paragraph [ref=e1750]: WHY JOIN US
+                      - text: Your Health, Your Wealth, Your Life - At Lockheed Martin, we prioritize the well-being of our employees. We offer flexible schedules, competitive pay, and a comprehensive benefits package to support your healthy, fulfilling life both at and outside of work.
+                      - paragraph [ref=e1751]: "Basic Qualifications:"
+                      - list [ref=e1752]:
+                        - listitem [ref=e1753]: Frontend framework development experience using Angular, javascript, CSS, and HTML
+                      - list [ref=e1754]:
+                        - listitem [ref=e1755]: Experience using REST API's and Docker
+                      - list [ref=e1756]:
+                        - listitem [ref=e1757]: Experience with UI/UX Design & Iteration Process/Tools (Figma, MockFlow, UXPin, Axure)
+                      - list [ref=e1758]:
+                        - listitem [ref=e1759]: Experience performing verification-level testing on UI/UX components and applications using recognized UI/UX Test Frameworks (Cypress, Selenium, Playwright, Jest)
+                      - list [ref=e1760]:
+                        - listitem [ref=e1761]: Experience across the full Software Development Life Cycle (SDLC)
+                      - list [ref=e1762]:
+                        - listitem [ref=e1763]: 5+ years of relevant work experience (Advanced Degree may be substituted for 2 years of experience)
+                      - paragraph [ref=e1764]: "Desired Skills:"
+                      - list [ref=e1765]:
+                        - listitem [ref=e1766]: Experience in Agile Methodologies & Tools
+                      - list [ref=e1767]:
+                        - listitem [ref=e1768]: Experience leading software teams through technical planning activities and mentoring junior engineers
+                      - list [ref=e1769]:
+                        - listitem [ref=e1770]: Experience in a Full-Stack engineering role
+                      - list [ref=e1771]:
+                        - listitem [ref=e1772]: Experience with container management using Kubernetes/Helm
+                      - list [ref=e1773]:
+                        - listitem [ref=e1774]: "Experience with any of the following: Gitlab CI/CD, gRPC, Python, Flask"
+                      - list [ref=e1775]:
+                        - listitem [ref=e1776]: Previous IRAD experience
+                      - list [ref=e1777]:
+                        - listitem [ref=e1778]: Active Secret Clearance
+                      - paragraph [ref=e1779]: "Security Clearance Statement:"
+                      - text: This position requires a government security clearance, you must be a US Citizen for consideration.
+                      - paragraph [ref=e1780]: "Clearance Level:"
+                      - text: Secret
+                      - paragraph [ref=e1781]: Other Important Information You Should Know
+                      - paragraph [ref=e1782]: "Expression of Interest:"
+                      - text: By applying to this job, you are expressing interest in this position and could be considered for other career opportunities where similar skills and requirements have been identified as a match. Should this match be identified you may be contacted for this and future openings.
+                      - paragraph [ref=e1783]: "Ability to Work Remotely:"
+                      - text: "Part-time Remote Telework: The employee selected for this position will work part of their work schedule remotely and part of their work schedule at a designated Lockheed Martin facility. The specific weekly schedule will be discussed during the hiring process."
+                      - paragraph [ref=e1784]: "Work Schedules:"
+                      - text: Lockheed Martin supports a variety of alternate work schedules that provide additional flexibility to our employees. Schedules range from standard 40 hours over a five day work week while others may be condensed. These condensed schedules provide employees with additional time away from the office and are in addition to our Paid Time off benefits.
+                      - paragraph [ref=e1785]: "Schedule for this Position:"
+                      - text: 4x10 hour day, 3 days off per week
+                      - text: "Pay Rate: The annual base salary range for this position in California, Massachusetts, and New York (excluding most major metropolitan areas), Colorado, Hawaii, Illinois, Maryland, Minnesota, New Jersey, Vermont, Washington or Washington DC is $113,900 - $200,905. For states not referenced above, the salary range for this position will reflect the candidate’s final work location. Please note that the salary information is a general guideline only. Lockheed Martin considers factors such as (but not limited to) scope and responsibilities of the position, candidate's work experience, education/ training, key skills as well as market and business considerations when extending an offer."
+                      - text: "Benefits offered: Medical, Dental, Vision, Life Insurance, Short-Term Disability, Long-Term Disability, 401(k) match, Flexible Spending Accounts, EAP, Education Assistance, Parental Leave, Paid time off, and Holidays."
+                      - text: "(Washington state applicants only) Non-represented full-time employees: accrue at least 10 hours per month of Paid Time Off (PTO) to be used for incidental absences and other reasons; receive at least 90 hours for holidays. Represented full time employees accrue 6.67 hours of Vacation per month; accrue up to 52 hours of sick leave annually; receive at least 96 hours for holidays. PTO, Vacation, sick leave, and holiday hours are prorated based on start date during the calendar year."
+                      - text: This position is incentive plan eligible.
+                      - text: Lockheed Martin is an equal opportunity employer. Qualified candidates will be considered without regard to legally protected characteristics.
+                      - text: The application window will close in 90 days; applicants are encouraged to apply within 5 - 30 days of the requisition posting date in order to receive optimal consideration.
+                      - text: At Lockheed Martin, we use our passion for purposeful innovation to help keep people safe and solve the world's most complex challenges. Our people are some of the greatest minds in the industry and truly make Lockheed Martin a great place to work.
+                      - text: With our employees as our priority, we provide diverse career opportunities designed to propel, develop, and boost agility. Our flexible schedules, competitive pay, and comprehensive benefits enable our employees to live a healthy, fulfilling life at and outside of work. We place an emphasis on empowering our employees by fostering an inclusive environment built upon integrity and corporate responsibility.
+                      - text: If this sounds like a culture you connect with, you’re invited to apply for this role. Or, if you are unsure whether your experience aligns with the requirements of this position, we encourage you to search on Lockheed Martin Jobs, and apply for roles that align with your qualifications.
+                      - paragraph [ref=e1786]: "Experience Level:"
+                      - text: Experienced Professional
+                      - paragraph [ref=e1787]: "Business Unit:"
+                      - text: RMS
+                      - paragraph [ref=e1788]: "Relocation Available:"
+                      - text: "No"
+                      - paragraph [ref=e1789]: "Career Area:"
+                      - text: Software Engineering
+                      - paragraph [ref=e1790]: "Type:"
+                      - text: Full-Time
+                      - paragraph [ref=e1791]: "Shift:"
+                      - text: First
+                    - generic [ref=e1792]:
+                      - paragraph [ref=e1793]: At Lockheed Martin, we apply our passion for purposeful innovation to keep people safe and solve the world's most complex challenges.
+                      - paragraph [ref=e1794]: "Pioneering Defense Technology: From aerospace to outer space to cyber space, you can innovate mission solutions alongside the best minds in the business."
+                      - paragraph [ref=e1795]: "United By Culture: Excellence, integrity, and collaboration define us. We accelerate change and embrace one another’s perspectives to win for our customers."
+                      - paragraph [ref=e1796]: "Real Impact, Real Growth: Grow your career and skills for life. Our wide array of opportunities and technology-driven learning programs enable your development and agility."
+                      - paragraph [ref=e1797]: "Your Health, Your Wealth, Your Life: Competitive pay, comprehensive benefits and flexible schedules designed so you thrive — at work and beyond."
+                      - paragraph [ref=e1798]: "Empowered to Be Your Best: Use your strengths to make a difference in the lives of one another, our customers, our communities, and our planet."
+                      - paragraph [ref=e1799]: "Here, the possibilities are endless because we offer:"
+                      - list [ref=e1800]:
+                        - generic [ref=e1801]: Flexible Schedules, dependent on role
+                        - generic [ref=e1802]: "Levels: Student, Entry, Mid, Senior, Management"
+                        - generic [ref=e1803]: "Locations: Nationwide & OCONUS Positions"
+                  - separator [ref=e1804]:
+                    - generic [ref=e1805]: "&nbsp;"
+                - button "Report job" [ref=e1812] [cursor=pointer]: Report job
+            - button "Return to Search Result" [ref=e1814]
+      - contentinfo [ref=e1819]:
+        - generic [ref=e1820]:
+          - list [ref=e1821]:
+            - listitem [ref=e1822]:
+              - link "Hiring Lab" [ref=e1824] [cursor=pointer]:
+                - /url: https://www.hiringlab.org
+            - listitem [ref=e1825]:
+              - link "Career advice" [ref=e1827] [cursor=pointer]:
+                - /url: https://www.indeed.com/career-advice
+            - listitem [ref=e1828]:
+              - link "Browse jobs" [ref=e1830] [cursor=pointer]:
+                - /url: https://www.indeed.com/browsejobs
+            - listitem [ref=e1831]:
+              - link "Browse companies" [ref=e1833] [cursor=pointer]:
+                - /url: https://www.indeed.com/companies/browse-companies
+            - listitem [ref=e1834]:
+              - link "Salaries" [ref=e1836] [cursor=pointer]:
+                - /url: https://www.indeed.com/career/salaries
+            - listitem [ref=e1837]:
+              - link "Indeed Events" [ref=e1839] [cursor=pointer]:
+                - /url: https://www.indeedevents.com/
+            - listitem [ref=e1840]:
+              - link "Work at Indeed" [ref=e1842] [cursor=pointer]:
+                - /url: https://www.indeed.com/cmp/Indeed/about
+            - listitem [ref=e1843]:
+              - link "Countries" [ref=e1845] [cursor=pointer]:
+                - /url: https://www.indeed.com/worldwide
+            - listitem [ref=e1846]:
+              - link "About" [ref=e1848] [cursor=pointer]:
+                - /url: https://www.indeed.com/about
+            - listitem [ref=e1849]:
+              - link "Help" [ref=e1851] [cursor=pointer]:
+                - /url: https://www.indeed.com/help/job-seekers?hl=en&co=us
+            - listitem [ref=e1852]:
+              - link "ESG at Indeed" [ref=e1854] [cursor=pointer]:
+                - /url: https://www.indeed.com/esg?from=gnav-jobsearch--indeedmobile
+          - list [ref=e1855]:
+            - listitem [ref=e1856]: © 2026 Indeed
+            - listitem [ref=e1857]:
+              - link "Your Privacy Choices" [ref=e1859] [cursor=pointer]:
+                - /url: https://www.indeed.com/legal/ccpa-dns?hl=en
+                - text: Your Privacy Choices
+                - img [ref=e1861]
+            - listitem [ref=e1866]:
+              - link "Accessibility at Indeed" [ref=e1868] [cursor=pointer]:
+                - /url: https://www.indeed.com/esg/accessibility?hl=en
+            - listitem [ref=e1869]:
+              - link "Privacy Center and Ad Choices" [ref=e1871] [cursor=pointer]:
+                - /url: https://hrtechprivacy.com/brands/indeed#privacypolicy
+            - listitem [ref=e1872]:
+              - link "Terms" [ref=e1874] [cursor=pointer]:
+                - /url: https://www.indeed.com/legal?hl=en
+          - list:
+            - listitem
+  - generic [ref=e1875]:
+    - text: This site is protected by reCAPTCHA and the Google
+    - link "Privacy Policy" [ref=e1876] [cursor=pointer]:
+      - /url: https://policies.google.com/privacy
+    - text: and
+    - link "Terms of Service" [ref=e1877] [cursor=pointer]:
+      - /url: https://policies.google.com/terms
+    - text: apply.

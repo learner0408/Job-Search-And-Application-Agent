@@ -1,0 +1,1151 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#gnav-header-end"
+  - main [ref=e3]:
+    - generic [ref=e5]:
+      - navigation "Primary" [ref=e7]:
+        - generic [ref=e9]:
+          - generic [ref=e10]:
+            - generic [ref=e11]:
+              - link "Indeed Home" [ref=e12] [cursor=pointer]:
+                - /url: /?from=gnav-jobsearch--indeedmobile
+                - img [ref=e14]
+              - list [ref=e16]:
+                - listitem [ref=e17]:
+                  - link "Home" [ref=e19] [cursor=pointer]:
+                    - /url: https://www.indeed.com/
+                - listitem [ref=e20]:
+                  - link "Company reviews" [ref=e22] [cursor=pointer]:
+                    - /url: https://www.indeed.com/companies
+                - listitem [ref=e23]:
+                  - link "Find salaries" [ref=e25] [cursor=pointer]:
+                    - /url: https://www.indeed.com/career/salaries
+            - generic [ref=e26]:
+              - list [ref=e27]:
+                - listitem [ref=e28]:
+                  - link "Sign in" [ref=e31] [cursor=pointer]:
+                    - /url: https://secure.indeed.com/auth?hl=en_US&co=US&continue=https%3A%2F%2Fwww.indeed.com%3A443%2Fq-staff-frontend-engineer-jobs.html%3Fq%3Dstaff+frontend+engineer&tmpl=desktop&from=gnav-util-jobsearch--indeedmobile&jsContinue=https%3A%2F%2Fwww.indeed.com%3A443%2Fq-staff-frontend-engineer-jobs.html%3Fq%3Dstaff+frontend+engineer&empContinue=https%3A%2F%2Faccount.indeed.com%2Fmyaccess
+              - link "Employers / Post Job" [ref=e36] [cursor=pointer]:
+                - /url: https://www.indeed.com/hire?co=US&hl=en
+          - generic [ref=e37]: Start of main content
+      - generic [ref=e39]:
+        - search [ref=e44]:
+          - generic [ref=e47]:
+            - generic [ref=e49]:
+              - generic [ref=e50]:
+                - generic [ref=e51]: "Keyword : all jobs"
+                - generic [ref=e54]:
+                  - img [ref=e56]
+                  - 'combobox "search: Job title, keywords, or company" [ref=e58]': staff frontend engineer
+                  - button "Clear what input" [ref=e60] [cursor=pointer]:
+                    - img [ref=e61]
+              - separator [ref=e63]:
+                - generic [ref=e64]: "&nbsp;"
+              - generic [ref=e65]:
+                - generic [ref=e66]: Edit location input box label
+                - generic [ref=e69]:
+                  - img [ref=e71]
+                  - combobox "Edit location" [ref=e73]
+            - group [ref=e74]:
+              - img [ref=e76]
+              - generic [ref=e79]:
+                - text: "Tip: Enter your city or zip code in the \"where\" box to show results in your area."
+                - generic [ref=e80]: .
+              - button "Close" [ref=e81] [cursor=pointer]:
+                - img [ref=e82]
+            - button "Search" [ref=e85] [cursor=pointer]
+          - list [ref=e88]:
+            - button "Pay filter" [ref=e90] [cursor=pointer]: Pay
+            - button "Remote filter" [ref=e92] [cursor=pointer]: Remote
+            - button "Job Type filter" [ref=e94] [cursor=pointer]: Job Type
+            - button "Experience level filter" [ref=e96] [cursor=pointer]: Experience level
+            - button "Education filter" [ref=e98] [cursor=pointer]: Education
+            - button "Encouraged to apply filter" [ref=e100] [cursor=pointer]: Encouraged to apply
+            - button "Date posted filter" [ref=e102] [cursor=pointer]: Date posted
+        - generic [ref=e108]:
+          - generic [ref=e109]:
+            - generic [ref=e110]:
+              - link "Upload your resume" [ref=e111] [cursor=pointer]:
+                - /url: /promo/resume?from=serptop3&subfrom=resprmrtop&trk.origin=jobsearch&trk.variant=resprmrtop&trk.tk=1jrq5ji56j1df800
+              - text: "- Let employers find you"
+              - separator [ref=e112]:
+                - generic [ref=e113]: "&nbsp;"
+            - generic [ref=e114]:
+              - generic [ref=e115]:
+                - heading "staff frontend engineer jobs" [level=1] [ref=e116]
+                - button "More information about job results" [ref=e119] [cursor=pointer]:
+                  - img "More information about job results" [ref=e120]
+              - generic [ref=e124]:
+                - generic [ref=e125]: "Sort by:"
+                - generic [ref=e126]: relevance - date
+            - list [ref=e130]:
+              - listitem
+              - listitem [ref=e131]:
+                - generic [ref=e133]:
+                  - generic:
+                    - generic [ref=e136]:
+                      - heading "full details of Frontend Engineer, Fauna" [level=3] [ref=e138]:
+                        - button "full details of Frontend Engineer, Fauna" [ref=e139] [cursor=pointer]: Frontend Engineer, Fauna
+                      - generic [ref=e140]:
+                        - generic [ref=e142]:
+                          - generic [ref=e144]: Amazon.com Services LLC
+                          - generic [ref=e145]: New York, NY
+                        - list [ref=e147]:
+                          - listitem [ref=e148]:
+                            - generic [ref=e151]: AD&D insurance
+                          - listitem [ref=e152]:
+                            - generic [ref=e155]: Parental leave
+                          - listitem [ref=e156]:
+                            - generic [ref=e159]: Health insurance
+                          - listitem [ref=e160]:
+                            - generic [ref=e163]: 401(k) matching
+                          - listitem [ref=e164]:
+                            - generic [ref=e167]: Paid time off
+                          - listitem [ref=e168]:
+                            - generic [ref=e171]: Vision insurance
+                      - button "Save job Toggle" [ref=e173] [cursor=pointer]:
+                        - img [ref=e174]
+                    - generic [ref=e176]:
+                      - list [ref=e178]:
+                        - listitem [ref=e179]: Optimize frontend performance for low-latency, real-time interactions.
+                        - listitem [ref=e180]: You will own end-to-end delivery of web and native applications spanning interactive…
+                      - list [ref=e184]:
+                        - listitem [ref=e185]:
+                          - generic [ref=e186]:
+                            - text: View all
+                            - link "Amazon.com Services LLC jobs in New York, NY" [ref=e187] [cursor=pointer]:
+                              - /url: /q-amazon-com-services-llc-l-new-york,-ny-jobs.html
+                            - text: "-"
+                            - link "New York jobs" [ref=e188] [cursor=pointer]:
+                              - /url: /l-new-york,-ny-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in New York, NY" [ref=e189] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-new-york,-ny-jobs.html
+                        - listitem [ref=e190]:
+                          - generic [ref=e191]:
+                            - text: "Salary Search:"
+                            - link "Frontend Engineer, Fauna salaries in New York, NY" [ref=e192] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/New-York--NY?campaignid=serp-more&fromjk=d344cdb0e582a75b&from=serp-more
+                        - listitem [ref=e193]:
+                          - generic [ref=e194]:
+                            - text: See popular
+                            - link "questions & answers about Amazon.com Services LLC" [ref=e195] [cursor=pointer]:
+                              - /url: /cmp/Amazon.com/faq
+              - listitem [ref=e197]:
+                - generic [ref=e201]:
+                  - generic:
+                    - generic [ref=e204]:
+                      - heading "full details of Front-End Engineer III, AWS SSO" [level=3] [ref=e206]:
+                        - button "full details of Front-End Engineer III, AWS SSO" [ref=e207] [cursor=pointer]: Front-End Engineer III, AWS SSO
+                      - generic [ref=e208]:
+                        - generic [ref=e210]:
+                          - generic [ref=e212]: Amazon Development Center U.S., Inc.
+                          - generic [ref=e213]: Arlington, VA
+                        - list [ref=e215]:
+                          - listitem [ref=e216]:
+                            - generic [ref=e219]: AD&D insurance
+                          - listitem [ref=e220]:
+                            - generic [ref=e223]: Parental leave
+                          - listitem [ref=e224]:
+                            - generic [ref=e227]: Health insurance
+                          - listitem [ref=e228]:
+                            - generic [ref=e231]: 401(k) matching
+                          - listitem [ref=e232]:
+                            - generic [ref=e235]: Paid time off
+                          - listitem [ref=e236]:
+                            - generic [ref=e239]: Vision insurance
+                      - link "View similar jobs with this employer" [ref=e241] [cursor=pointer]:
+                        - /url: /addlLoc/redirect?tk=1jrq5ji56j1df800&jk=05f3c423bd6fdbe6&dest=%2Fjobs%3Fq%3Dstaff%2Bfrontend%2Bengineer%26nl%3D%26grpKey%3DoAEB8gcFdG5mZWy4D4m10gyqECAKCW5vcm10aXRsZRoTZnJvbnQgZW5kIGRldmVsb3Blcg%253D%253D
+                        - text: View similar jobs with this employer
+                        - img [ref=e242]
+                      - button "Save job Toggle" [ref=e245] [cursor=pointer]:
+                        - img [ref=e246]
+                    - generic [ref=e248]:
+                      - list [ref=e250]:
+                        - listitem [ref=e251]: Mentor and grow other front-end engineers, helping define the engineering culture and raise the technical capability of the team.
+                      - list [ref=e255]:
+                        - listitem [ref=e256]:
+                          - generic [ref=e257]:
+                            - text: View all
+                            - link "Amazon Development Center U.S., Inc. jobs in Arlington, VA" [ref=e258] [cursor=pointer]:
+                              - /url: /q-amazon-development-center-u-s-,-inc-l-arlington,-va-jobs.html
+                            - text: "-"
+                            - link "Arlington jobs" [ref=e259] [cursor=pointer]:
+                              - /url: /l-arlington,-va-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Arlington, VA" [ref=e260] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-arlington,-va-jobs.html
+                        - listitem [ref=e261]:
+                          - generic [ref=e262]:
+                            - text: "Salary Search:"
+                            - link "Front-End Engineer III, AWS SSO salaries in Arlington, VA" [ref=e263] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Arlington--VA?campaignid=serp-more&fromjk=05f3c423bd6fdbe6&from=serp-more
+                        - listitem [ref=e264]:
+                          - generic [ref=e265]:
+                            - text: See popular
+                            - link "questions & answers about Amazon Development Center U.S., Inc." [ref=e266] [cursor=pointer]:
+                              - /url: /cmp/Amazon-Web-Services-05cb4ad1/faq
+              - listitem [ref=e268]:
+                - generic [ref=e270]:
+                  - generic:
+                    - generic [ref=e273]:
+                      - heading "full details of Front End Engineer II, AWS Marketplace" [level=3] [ref=e275]:
+                        - button "full details of Front End Engineer II, AWS Marketplace" [ref=e276] [cursor=pointer]: Front End Engineer II, AWS Marketplace
+                      - generic [ref=e277]:
+                        - generic [ref=e279]:
+                          - generic [ref=e281]: Amazon Web Services, Inc.
+                          - generic [ref=e282]: Seattle, WA
+                        - list [ref=e284]:
+                          - listitem [ref=e285]:
+                            - generic [ref=e288]: AD&D insurance
+                          - listitem [ref=e289]:
+                            - generic [ref=e292]: Parental leave
+                          - listitem [ref=e293]:
+                            - generic [ref=e296]: Health insurance
+                          - listitem [ref=e297]:
+                            - generic [ref=e300]: 401(k) matching
+                          - listitem [ref=e301]:
+                            - generic [ref=e304]: Paid time off
+                          - listitem [ref=e305]:
+                            - generic [ref=e308]: Vision insurance
+                      - button "Save job Toggle" [ref=e310] [cursor=pointer]:
+                        - img [ref=e311]
+                    - generic [ref=e313]:
+                      - list [ref=e315]:
+                        - listitem [ref=e316]: Mentor other engineers, define the technical culture, and help grow the team.
+                        - listitem [ref=e317]: Together they provide our customers with the expertise and scale needed to build…
+                      - list [ref=e321]:
+                        - listitem [ref=e322]:
+                          - generic [ref=e323]:
+                            - text: View all
+                            - link "Amazon Web Services, Inc. jobs in Seattle, WA" [ref=e324] [cursor=pointer]:
+                              - /url: /q-amazon-web-services,-inc-l-seattle,-wa-jobs.html
+                            - text: "-"
+                            - link "Seattle jobs" [ref=e325] [cursor=pointer]:
+                              - /url: /l-seattle,-wa-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Seattle, WA" [ref=e326] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-seattle,-wa-jobs.html
+                        - listitem [ref=e327]:
+                          - generic [ref=e328]:
+                            - text: "Salary Search:"
+                            - link "Front End Engineer II, AWS Marketplace salaries in Seattle, WA" [ref=e329] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Seattle--WA?campaignid=serp-more&fromjk=a2afabe4e49d6619&from=serp-more
+                        - listitem [ref=e330]:
+                          - generic [ref=e331]:
+                            - text: See popular
+                            - link "questions & answers about Amazon Web Services, Inc." [ref=e332] [cursor=pointer]:
+                              - /url: /cmp/Amazon-Web-Services-05cb4ad1/faq
+              - listitem [ref=e334]:
+                - generic [ref=e338]:
+                  - generic:
+                    - generic [ref=e341]:
+                      - heading "full details of Frontend Engineer, AI Business Automation, Prime Video" [level=3] [ref=e343]:
+                        - button "full details of Frontend Engineer, AI Business Automation, Prime Video" [ref=e344] [cursor=pointer]: Frontend Engineer, AI Business Automation, Prime Video
+                      - generic [ref=e345]:
+                        - generic [ref=e347]:
+                          - generic [ref=e349]: Amazon.com Services LLC
+                          - generic [ref=e350]: Seattle, WA
+                        - list [ref=e352]:
+                          - listitem [ref=e353]:
+                            - generic [ref=e356]: AD&D insurance
+                          - listitem [ref=e357]:
+                            - generic [ref=e360]: Parental leave
+                          - listitem [ref=e361]:
+                            - generic [ref=e364]: Health insurance
+                          - listitem [ref=e365]:
+                            - generic [ref=e368]: 401(k) matching
+                          - listitem [ref=e369]:
+                            - generic [ref=e372]: Paid time off
+                          - listitem [ref=e373]:
+                            - generic [ref=e376]: Vision insurance
+                      - link "View similar jobs with this employer" [ref=e378] [cursor=pointer]:
+                        - /url: /addlLoc/redirect?tk=1jrq5ji56j1df800&jk=082fda488ab670ca&dest=%2Fjobs%3Fq%3Dstaff%2Bfrontend%2Bengineer%26nl%3D%26grpKey%3DoAEB8gcFdG5mZWy4D-kNqhAbCglub3JtdGl0bGUaDnZpZGVvIGVuZ2luZWVy
+                        - text: View similar jobs with this employer
+                        - img [ref=e379]
+                      - button "Save job Toggle" [ref=e382] [cursor=pointer]:
+                        - img [ref=e383]
+                    - generic [ref=e385]:
+                      - list [ref=e387]:
+                        - listitem [ref=e388]: Collaborate with backend engineers, applied scientists, and product managers to deliver on our product roadmap and solve customer problems across the full…
+                      - list [ref=e392]:
+                        - listitem [ref=e393]:
+                          - generic [ref=e394]:
+                            - text: View all
+                            - link "Amazon.com Services LLC jobs in Seattle, WA" [ref=e395] [cursor=pointer]:
+                              - /url: /q-amazon-com-services-llc-l-seattle,-wa-jobs.html
+                            - text: "-"
+                            - link "Seattle jobs" [ref=e396] [cursor=pointer]:
+                              - /url: /l-seattle,-wa-jobs.html
+                            - text: "-"
+                            - link "Video Engineer jobs in Seattle, WA" [ref=e397] [cursor=pointer]:
+                              - /url: /q-video-engineer-l-seattle,-wa-jobs.html
+                        - listitem [ref=e398]:
+                          - generic [ref=e399]:
+                            - text: "Salary Search:"
+                            - link "Frontend Engineer, AI Business Automation, Prime Video salaries in Seattle, WA" [ref=e400] [cursor=pointer]:
+                              - /url: /career/video-engineer/salaries/Seattle--WA?campaignid=serp-more&fromjk=082fda488ab670ca&from=serp-more
+                        - listitem [ref=e401]:
+                          - generic [ref=e402]:
+                            - text: See popular
+                            - link "questions & answers about Amazon.com Services LLC" [ref=e403] [cursor=pointer]:
+                              - /url: /cmp/Amazon.com/faq
+              - listitem
+              - listitem [ref=e405]:
+                - generic [ref=e409]:
+                  - generic:
+                    - generic [ref=e412]:
+                      - heading "full details of Front-End Engineer, AWS Security Hub, Security Services" [level=3] [ref=e414]:
+                        - button "full details of Front-End Engineer, AWS Security Hub, Security Services" [ref=e415] [cursor=pointer]: Front-End Engineer, AWS Security Hub, Security Services
+                      - generic [ref=e416]:
+                        - generic [ref=e418]:
+                          - generic [ref=e420]: Amazon Web Services, Inc.
+                          - generic [ref=e421]: Boston, MA
+                        - list [ref=e423]:
+                          - listitem [ref=e424]:
+                            - generic [ref=e427]: AD&D insurance
+                          - listitem [ref=e428]:
+                            - generic [ref=e431]: Parental leave
+                          - listitem [ref=e432]:
+                            - generic [ref=e435]: Health insurance
+                          - listitem [ref=e436]:
+                            - generic [ref=e439]: 401(k) matching
+                          - listitem [ref=e440]:
+                            - generic [ref=e443]: Paid time off
+                          - listitem [ref=e444]:
+                            - generic [ref=e447]: Vision insurance
+                      - link "View similar jobs with this employer" [ref=e449] [cursor=pointer]:
+                        - /url: /addlLoc/redirect?tk=1jrq5ji56j1df800&jk=0d0f970cd8096d38&dest=%2Fjobs%3Fq%3Dstaff%2Bfrontend%2Bengineer%26nl%3D%26grpKey%3DoAEB8gcFdG5mZWy4D4m10gyqECAKCW5vcm10aXRsZRoTZnJvbnQgZW5kIGRldmVsb3Blcg%253D%253D
+                        - text: View similar jobs with this employer
+                        - img [ref=e450]
+                      - button "Save job Toggle" [ref=e453] [cursor=pointer]:
+                        - img [ref=e454]
+                    - generic [ref=e456]:
+                      - list [ref=e458]:
+                        - listitem [ref=e459]: You will build robust commercial web applications, leveraging modern AI technologies and tools.
+                        - listitem [ref=e460]: You will help drive technical decisions around architecture,…
+                      - list [ref=e464]:
+                        - listitem [ref=e465]:
+                          - generic [ref=e466]:
+                            - text: View all
+                            - link "Amazon Web Services, Inc. jobs in Boston, MA" [ref=e467] [cursor=pointer]:
+                              - /url: /q-amazon-web-services,-inc-l-boston,-ma-jobs.html
+                            - text: "-"
+                            - link "Boston jobs" [ref=e468] [cursor=pointer]:
+                              - /url: /l-boston,-ma-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Boston, MA" [ref=e469] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-boston,-ma-jobs.html
+                        - listitem [ref=e470]:
+                          - generic [ref=e471]:
+                            - text: "Salary Search:"
+                            - link "Front-End Engineer, AWS Security Hub, Security Services salaries in Boston, MA" [ref=e472] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Boston--MA?campaignid=serp-more&fromjk=0d0f970cd8096d38&from=serp-more
+                        - listitem [ref=e473]:
+                          - generic [ref=e474]:
+                            - text: See popular
+                            - link "questions & answers about Amazon Web Services, Inc." [ref=e475] [cursor=pointer]:
+                              - /url: /cmp/Amazon-Web-Services-05cb4ad1/faq
+              - listitem
+              - listitem [ref=e477]:
+                - generic [ref=e479]:
+                  - generic:
+                    - generic [ref=e482]:
+                      - heading "full details of Front-End Engineer II, Lambda Developer Experience" [level=3] [ref=e484]:
+                        - button "full details of Front-End Engineer II, Lambda Developer Experience" [ref=e485] [cursor=pointer]: Front-End Engineer II, Lambda Developer Experience
+                      - generic [ref=e486]:
+                        - generic [ref=e488]:
+                          - generic [ref=e490]: Amazon Development Center U.S., Inc.
+                          - generic [ref=e491]: Seattle, WA
+                        - list [ref=e493]:
+                          - listitem [ref=e494]:
+                            - generic [ref=e497]: AD&D insurance
+                          - listitem [ref=e498]:
+                            - generic [ref=e501]: Parental leave
+                          - listitem [ref=e502]:
+                            - generic [ref=e505]: Health insurance
+                          - listitem [ref=e506]:
+                            - generic [ref=e509]: 401(k) matching
+                          - listitem [ref=e510]:
+                            - generic [ref=e513]: Paid time off
+                          - listitem [ref=e514]:
+                            - generic [ref=e517]: Vision insurance
+                      - button "Save job Toggle" [ref=e519] [cursor=pointer]:
+                        - img [ref=e520]
+                    - generic [ref=e522]:
+                      - list [ref=e524]:
+                        - listitem [ref=e525]: Use technology to solve user interface and UX problems.
+                        - listitem [ref=e526]: Transform defined software and UX design into code and deliver it on schedule using languages, libraries…
+                      - list [ref=e530]:
+                        - listitem [ref=e531]:
+                          - generic [ref=e532]:
+                            - text: View all
+                            - link "Amazon Development Center U.S., Inc. jobs in Seattle, WA" [ref=e533] [cursor=pointer]:
+                              - /url: /q-amazon-development-center-u-s-,-inc-l-seattle,-wa-jobs.html
+                            - text: "-"
+                            - link "Seattle jobs" [ref=e534] [cursor=pointer]:
+                              - /url: /l-seattle,-wa-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Seattle, WA" [ref=e535] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-seattle,-wa-jobs.html
+                        - listitem [ref=e536]:
+                          - generic [ref=e537]:
+                            - text: "Salary Search:"
+                            - link "Front-End Engineer II, Lambda Developer Experience salaries in Seattle, WA" [ref=e538] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Seattle--WA?campaignid=serp-more&fromjk=a5f8d61e4b5c7bb1&from=serp-more
+                        - listitem [ref=e539]:
+                          - generic [ref=e540]:
+                            - text: See popular
+                            - link "questions & answers about Amazon Development Center U.S., Inc." [ref=e541] [cursor=pointer]:
+                              - /url: /cmp/Amazon-Web-Services-05cb4ad1/faq
+              - listitem [ref=e543]:
+                - generic [ref=e545]:
+                  - generic:
+                    - generic [ref=e548]:
+                      - heading "full details of Lead Front-end Engineer" [level=3] [ref=e550]:
+                        - button "full details of Lead Front-end Engineer" [ref=e551] [cursor=pointer]: Lead Front-end Engineer
+                      - generic [ref=e552]:
+                        - generic [ref=e554]:
+                          - generic [ref=e556]: JPMorganChase
+                          - generic [ref=e557]:
+                            - text: Jersey City, NJ 07310
+                            - generic [ref=e558]: (The Waterfront area)
+                        - list [ref=e560]:
+                          - listitem [ref=e561]:
+                            - generic [ref=e564]: Tuition reimbursement
+                          - listitem [ref=e565]:
+                            - generic [ref=e568]: Health insurance
+                          - listitem [ref=e569]:
+                            - generic [ref=e572]: Retirement plan
+                      - button "Save job Toggle" [ref=e574] [cursor=pointer]:
+                        - img [ref=e575]
+                    - generic [ref=e577]:
+                      - list [ref=e579]:
+                        - listitem [ref=e580]: Strong understanding of responsible AI use in engineering workflows, including data sensitivity considerations, secure handling of inputs/outputs, and adherence…
+                      - list [ref=e584]:
+                        - listitem [ref=e585]:
+                          - generic [ref=e586]:
+                            - text: View all
+                            - link "JPMorganChase jobs in Jersey City, NJ" [ref=e587] [cursor=pointer]:
+                              - /url: /q-jpmorganchase-l-jersey-city,-nj-jobs.html
+                            - text: "-"
+                            - link "Jersey City jobs" [ref=e588] [cursor=pointer]:
+                              - /url: /l-jersey-city,-nj-jobs.html
+                            - text: "-"
+                            - link "Lead Front End Developer jobs in Jersey City, NJ" [ref=e589] [cursor=pointer]:
+                              - /url: /q-lead-front-end-developer-l-jersey-city,-nj-jobs.html
+                        - listitem [ref=e590]:
+                          - generic [ref=e591]:
+                            - text: "Salary Search:"
+                            - link "Lead Front-end Engineer salaries in Jersey City, NJ" [ref=e592] [cursor=pointer]:
+                              - /url: /career/lead-front-end-developer/salaries/07310--NJ?campaignid=serp-more&fromjk=b2b95814cc2a782b&from=serp-more
+                        - listitem [ref=e593]:
+                          - generic [ref=e594]:
+                            - text: See popular
+                            - link "questions & answers about JPMorganChase" [ref=e595] [cursor=pointer]:
+                              - /url: /cmp/Jpmorganchase-2/faq
+              - listitem [ref=e597]:
+                - generic [ref=e599]:
+                  - generic:
+                    - generic [ref=e602]:
+                      - heading "full details of Staff Software Engineer (Frontend Developer)" [level=3] [ref=e604]:
+                        - button "full details of Staff Software Engineer (Frontend Developer)" [ref=e605] [cursor=pointer]: Staff Software Engineer (Frontend Developer)
+                      - generic [ref=e606]:
+                        - generic [ref=e608]:
+                          - generic [ref=e610]: Lockheed Martin Corporation
+                          - generic [ref=e611]: Remote in Colorado Springs, CO
+                        - list [ref=e613]:
+                          - listitem [ref=e614]:
+                            - generic [ref=e617]: Flextime
+                          - listitem [ref=e618]:
+                            - generic [ref=e621]: Parental leave
+                          - listitem [ref=e622]:
+                            - generic [ref=e625]: 401(k)
+                          - listitem [ref=e626]:
+                            - generic [ref=e629]: Health insurance
+                          - listitem [ref=e630]:
+                            - generic [ref=e633]: 401(k) matching
+                          - listitem [ref=e634]:
+                            - generic [ref=e637]: Paid time off
+                      - button "Save job Toggle" [ref=e639] [cursor=pointer]:
+                        - img [ref=e640]
+                    - generic [ref=e642]:
+                      - list [ref=e644]:
+                        - listitem [ref=e645]: Experience leading software teams through technical planning activities and mentoring junior engineers.
+                        - listitem [ref=e646]: Perform peer reviews for fellow software engineers and…
+                      - list [ref=e650]:
+                        - listitem [ref=e651]:
+                          - generic [ref=e652]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Colorado Springs, CO" [ref=e653] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Colorado Springs jobs" [ref=e654] [cursor=pointer]:
+                              - /url: /l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Software Engineer jobs in Colorado Springs, CO" [ref=e655] [cursor=pointer]:
+                              - /url: /q-software-engineer-l-colorado-springs,-co-jobs.html
+                        - listitem [ref=e656]:
+                          - generic [ref=e657]:
+                            - text: "Salary Search:"
+                            - link "Staff Software Engineer (Frontend Developer) salaries in Colorado Springs, CO" [ref=e658] [cursor=pointer]:
+                              - /url: /career/software-engineer/salaries/Colorado-Springs--CO?campaignid=serp-more&fromjk=4ed791b5fce97e51&from=serp-more
+                        - listitem [ref=e659]:
+                          - generic [ref=e660]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e661] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e663]:
+                - generic [ref=e665]:
+                  - generic:
+                    - generic [ref=e668]:
+                      - heading "full details of Senior Software Engineer (Frontend Developer)" [level=3] [ref=e670]:
+                        - button "full details of Senior Software Engineer (Frontend Developer)" [ref=e671] [cursor=pointer]: Senior Software Engineer (Frontend Developer)
+                      - generic [ref=e672]:
+                        - generic [ref=e674]:
+                          - generic [ref=e676]: Lockheed Martin Corporation
+                          - generic [ref=e677]: Colorado Springs, CO
+                        - list [ref=e679]:
+                          - listitem [ref=e680]:
+                            - generic [ref=e683]: Flextime
+                          - listitem [ref=e684]:
+                            - generic [ref=e687]: Parental leave
+                          - listitem [ref=e688]:
+                            - generic [ref=e691]: 401(k)
+                          - listitem [ref=e692]:
+                            - generic [ref=e695]: Health insurance
+                          - listitem [ref=e696]:
+                            - generic [ref=e699]: 401(k) matching
+                          - listitem [ref=e700]:
+                            - generic [ref=e703]: Paid time off
+                      - button "Save job Toggle" [ref=e705] [cursor=pointer]:
+                        - img [ref=e706]
+                    - generic [ref=e708]:
+                      - list [ref=e710]:
+                        - listitem [ref=e711]: Perform peer reviews for fellow software engineers and debug issues as they arise.
+                        - listitem [ref=e712]: Join us and become a part of the team that is actively designing and…
+                      - list [ref=e716]:
+                        - listitem [ref=e717]:
+                          - generic [ref=e718]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Colorado Springs, CO" [ref=e719] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Colorado Springs jobs" [ref=e720] [cursor=pointer]:
+                              - /url: /l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Senior Software Engineer jobs in Colorado Springs, CO" [ref=e721] [cursor=pointer]:
+                              - /url: /q-senior-software-engineer-l-colorado-springs,-co-jobs.html
+                        - listitem [ref=e722]:
+                          - generic [ref=e723]:
+                            - text: "Salary Search:"
+                            - link "Senior Software Engineer (Frontend Developer) salaries in Colorado Springs, CO" [ref=e724] [cursor=pointer]:
+                              - /url: /career/senior-software-engineer/salaries/Colorado-Springs--CO?campaignid=serp-more&fromjk=a34608a7956e2a13&from=serp-more
+                        - listitem [ref=e725]:
+                          - generic [ref=e726]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e727] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e729]:
+                - generic [ref=e731]:
+                  - generic:
+                    - generic [ref=e734]:
+                      - heading "full details of Software Engineer (Frontend Developer)" [level=3] [ref=e736]:
+                        - button "full details of Software Engineer (Frontend Developer)" [ref=e737] [cursor=pointer]: Software Engineer (Frontend Developer)
+                      - generic [ref=e738]:
+                        - generic [ref=e740]:
+                          - generic [ref=e742]: Lockheed Martin Corporation
+                          - generic [ref=e743]: Remote in Colorado Springs, CO
+                        - list [ref=e745]:
+                          - listitem [ref=e746]:
+                            - generic [ref=e749]: Flextime
+                          - listitem [ref=e750]:
+                            - generic [ref=e753]: Parental leave
+                          - listitem [ref=e754]:
+                            - generic [ref=e757]: 401(k)
+                          - listitem [ref=e758]:
+                            - generic [ref=e761]: Health insurance
+                          - listitem [ref=e762]:
+                            - generic [ref=e765]: 401(k) matching
+                          - listitem [ref=e766]:
+                            - generic [ref=e769]: Paid time off
+                      - button "Save job Toggle" [ref=e771] [cursor=pointer]:
+                        - img [ref=e772]
+                    - generic [ref=e774]:
+                      - list [ref=e776]:
+                        - listitem [ref=e777]: Perform peer reviews for fellow software engineers and debug issues as they arise.
+                        - listitem [ref=e778]: Join us and become a part of the team that is actively designing and…
+                      - list [ref=e782]:
+                        - listitem [ref=e783]:
+                          - generic [ref=e784]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Colorado Springs, CO" [ref=e785] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Colorado Springs jobs" [ref=e786] [cursor=pointer]:
+                              - /url: /l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Software Engineer jobs in Colorado Springs, CO" [ref=e787] [cursor=pointer]:
+                              - /url: /q-software-engineer-l-colorado-springs,-co-jobs.html
+                        - listitem [ref=e788]:
+                          - generic [ref=e789]:
+                            - text: "Salary Search:"
+                            - link "Software Engineer (Frontend Developer) salaries in Colorado Springs, CO" [ref=e790] [cursor=pointer]:
+                              - /url: /career/software-engineer/salaries/Colorado-Springs--CO?campaignid=serp-more&fromjk=6b26d5c0f3ff7a2e&from=serp-more
+                        - listitem [ref=e791]:
+                          - generic [ref=e792]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e793] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem
+              - listitem [ref=e795]:
+                - generic [ref=e797]:
+                  - generic:
+                    - generic [ref=e800]:
+                      - heading "full details of UI/UX Software Engineer - Figma Specialist" [level=3] [ref=e802]:
+                        - button "full details of UI/UX Software Engineer - Figma Specialist" [ref=e803] [cursor=pointer]: UI/UX Software Engineer - Figma Specialist
+                      - generic [ref=e804]:
+                        - generic [ref=e806]:
+                          - generic [ref=e808]: Lockheed Martin Corporation
+                          - generic [ref=e809]: Remote in Colorado Springs, CO
+                        - list [ref=e811]:
+                          - listitem [ref=e812]:
+                            - generic [ref=e815]: Flextime
+                          - listitem [ref=e816]:
+                            - generic [ref=e819]: Parental leave
+                          - listitem [ref=e820]:
+                            - generic [ref=e823]: 401(k)
+                          - listitem [ref=e824]:
+                            - generic [ref=e827]: Health insurance
+                          - listitem [ref=e828]:
+                            - generic [ref=e831]: 401(k) matching
+                          - listitem [ref=e832]:
+                            - generic [ref=e835]: Paid time off
+                      - button "Save job Toggle" [ref=e837] [cursor=pointer]:
+                        - img [ref=e838]
+                    - generic [ref=e840]:
+                      - list [ref=e842]:
+                        - listitem [ref=e843]: Perform peer reviews for fellow software engineers and debug issues as they arise.
+                        - listitem [ref=e844]: Join us and become a part of the team that is actively designing and…
+                      - list [ref=e848]:
+                        - listitem [ref=e849]:
+                          - generic [ref=e850]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Colorado Springs, CO" [ref=e851] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Colorado Springs jobs" [ref=e852] [cursor=pointer]:
+                              - /url: /l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Ux/Ui Specialist jobs in Colorado Springs, CO" [ref=e853] [cursor=pointer]:
+                              - /url: /q-ux-ui-specialist-l-colorado-springs,-co-jobs.html
+                        - listitem [ref=e854]:
+                          - generic [ref=e855]:
+                            - text: "Salary Search:"
+                            - link "UI/UX Software Engineer - Figma Specialist salaries" [ref=e856] [cursor=pointer]:
+                              - /url: /career/salaries/Ux%2FUi%20Specialist/Colorado%20Springs,%20CO?campaignid=serp-more&fromjk=ad4be6aef949be23&from=serp-more
+                        - listitem [ref=e857]:
+                          - generic [ref=e858]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e859] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e861]:
+                - generic [ref=e863]:
+                  - generic:
+                    - generic [ref=e866]:
+                      - heading "full details of Senior Software Engineer" [level=3] [ref=e868]:
+                        - button "full details of Senior Software Engineer" [ref=e869] [cursor=pointer]: Senior Software Engineer
+                      - generic [ref=e870]:
+                        - generic [ref=e871]:
+                          - img [ref=e873]
+                          - generic [ref=e874]:
+                            - generic [ref=e876]: Optum
+                            - generic [ref=e877]: Remote in Denver, CO
+                        - list [ref=e879]:
+                          - listitem [ref=e880]:
+                            - generic [ref=e883]: Career development plan
+                      - button "Save job Toggle" [ref=e885] [cursor=pointer]:
+                        - img [ref=e886]
+                    - generic [ref=e888]:
+                      - list [ref=e890]:
+                        - listitem [ref=e891]: You will work on creating responsive, high‑performance UI components, integrating them with robust backend services, and utilizing state-of-the-art AI-assisted…
+                      - list [ref=e895]:
+                        - listitem [ref=e896]:
+                          - generic [ref=e897]:
+                            - text: View all
+                            - link "Optum jobs in Denver, CO" [ref=e898] [cursor=pointer]:
+                              - /url: /q-optum-l-denver,-co-jobs.html
+                            - text: "-"
+                            - link "Denver jobs" [ref=e899] [cursor=pointer]:
+                              - /url: /l-denver,-co-jobs.html
+                        - listitem [ref=e900]:
+                          - generic [ref=e901]:
+                            - text: "Salary Search:"
+                            - link "Senior Software Engineer salaries in Denver, CO" [ref=e902] [cursor=pointer]:
+                              - /url: /career/senior-software-engineer/salaries/Denver--CO?campaignid=serp-more&fromjk=0ccce248056f30a2&from=serp-more
+                        - listitem [ref=e903]:
+                          - generic [ref=e904]:
+                            - text: See popular
+                            - link "questions & answers about Optum" [ref=e905] [cursor=pointer]:
+                              - /url: /cmp/Optum/faq
+              - listitem [ref=e907]:
+                - generic [ref=e909]:
+                  - generic:
+                    - generic [ref=e912]:
+                      - heading "full details of Frontend Software Engineer, Energy Charging" [level=3] [ref=e914]:
+                        - button "full details of Frontend Software Engineer, Energy Charging" [ref=e915] [cursor=pointer]: Frontend Software Engineer, Energy Charging
+                      - generic [ref=e916]:
+                        - generic [ref=e918]:
+                          - generic [ref=e920]: Tesla
+                          - generic [ref=e921]: Fremont, CA 94538
+                        - list [ref=e923]:
+                          - listitem [ref=e924]:
+                            - generic [ref=e927]: Flextime
+                          - listitem [ref=e928]:
+                            - generic [ref=e931]: Pet insurance
+                          - listitem [ref=e932]:
+                            - generic [ref=e935]: AD&D insurance
+                          - listitem [ref=e936]:
+                            - generic [ref=e939]: Health insurance
+                          - listitem [ref=e940]:
+                            - generic [ref=e943]: 401(k) matching
+                          - listitem [ref=e944]:
+                            - generic [ref=e947]: Employee discount
+                      - button "Save job Toggle" [ref=e949] [cursor=pointer]:
+                        - img [ref=e950]
+                    - generic [ref=e952]:
+                      - list [ref=e954]:
+                        - listitem [ref=e955]: Collaborate with a cross-functional team of Software Engineers, Product Managers, UX Designers, QA Engineers, and DevOps to own solutions from concept to…
+                      - list [ref=e959]:
+                        - listitem [ref=e960]:
+                          - generic [ref=e961]:
+                            - text: View all
+                            - link "Tesla jobs in Fremont, CA" [ref=e962] [cursor=pointer]:
+                              - /url: /q-tesla-l-fremont,-ca-jobs.html
+                            - text: "-"
+                            - link "Fremont jobs" [ref=e963] [cursor=pointer]:
+                              - /url: /l-fremont,-ca-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Fremont, CA" [ref=e964] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-fremont,-ca-jobs.html
+                        - listitem [ref=e965]:
+                          - generic [ref=e966]:
+                            - text: "Salary Search:"
+                            - link "Frontend Software Engineer, Energy Charging salaries in Fremont, CA" [ref=e967] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/94538--CA?campaignid=serp-more&fromjk=014d27a49843cee2&from=serp-more
+                        - listitem [ref=e968]:
+                          - generic [ref=e969]:
+                            - text: See popular
+                            - link "questions & answers about Tesla" [ref=e970] [cursor=pointer]:
+                              - /url: /cmp/Tesla/faq
+              - listitem [ref=e972]:
+                - generic [ref=e974]:
+                  - generic:
+                    - generic [ref=e977]:
+                      - heading "full details of Sr. Frontend Engineer, Mobile Ownership Experience" [level=3] [ref=e979]:
+                        - button "full details of Sr. Frontend Engineer, Mobile Ownership Experience" [ref=e980] [cursor=pointer]: Sr. Frontend Engineer, Mobile Ownership Experience
+                      - generic [ref=e981]:
+                        - generic [ref=e983]:
+                          - generic [ref=e985]: Tesla
+                          - generic [ref=e986]: Fremont, CA 94538
+                        - list [ref=e988]:
+                          - listitem [ref=e989]:
+                            - generic [ref=e992]: Flextime
+                          - listitem [ref=e993]:
+                            - generic [ref=e996]: Pet insurance
+                          - listitem [ref=e997]:
+                            - generic [ref=e1000]: AD&D insurance
+                          - listitem [ref=e1001]:
+                            - generic [ref=e1004]: Health insurance
+                          - listitem [ref=e1005]:
+                            - generic [ref=e1008]: 401(k) matching
+                          - listitem [ref=e1009]:
+                            - generic [ref=e1012]: Employee discount
+                      - button "Save job Toggle" [ref=e1014] [cursor=pointer]:
+                        - img [ref=e1015]
+                    - generic [ref=e1017]:
+                      - list [ref=e1019]:
+                        - listitem [ref=e1020]: The Digital experience mobile team is seeking a highly motivated engineer to help shape the future of transportation through exceptional mobile experiences.
+                      - list [ref=e1024]:
+                        - listitem [ref=e1025]:
+                          - generic [ref=e1026]:
+                            - text: View all
+                            - link "Tesla jobs in Fremont, CA" [ref=e1027] [cursor=pointer]:
+                              - /url: /q-tesla-l-fremont,-ca-jobs.html
+                            - text: "-"
+                            - link "Fremont jobs" [ref=e1028] [cursor=pointer]:
+                              - /url: /l-fremont,-ca-jobs.html
+                            - text: "-"
+                            - link "Mobile Developer jobs in Fremont, CA" [ref=e1029] [cursor=pointer]:
+                              - /url: /q-mobile-developer-l-fremont,-ca-jobs.html
+                        - listitem [ref=e1030]:
+                          - generic [ref=e1031]:
+                            - text: "Salary Search:"
+                            - link "Sr. Frontend Engineer, Mobile Ownership Experience salaries in Fremont, CA" [ref=e1032] [cursor=pointer]:
+                              - /url: /career/mobile-developer/salaries/94538--CA?campaignid=serp-more&fromjk=fa568f858a5a2e87&from=serp-more
+                        - listitem [ref=e1033]:
+                          - generic [ref=e1034]:
+                            - text: See popular
+                            - link "questions & answers about Tesla" [ref=e1035] [cursor=pointer]:
+                              - /url: /cmp/Tesla/faq
+              - listitem [ref=e1037]:
+                - generic [ref=e1039]:
+                  - generic:
+                    - generic [ref=e1042]:
+                      - heading "full details of Frontend Software Engineer, Energy Residential" [level=3] [ref=e1044]:
+                        - button "full details of Frontend Software Engineer, Energy Residential" [ref=e1045] [cursor=pointer]: Frontend Software Engineer, Energy Residential
+                      - generic [ref=e1046]:
+                        - generic [ref=e1048]:
+                          - generic [ref=e1050]: Tesla
+                          - generic [ref=e1051]: Fremont, CA 94538
+                        - list [ref=e1053]:
+                          - listitem [ref=e1054]:
+                            - generic [ref=e1057]: Flextime
+                          - listitem [ref=e1058]:
+                            - generic [ref=e1061]: Pet insurance
+                          - listitem [ref=e1062]:
+                            - generic [ref=e1065]: AD&D insurance
+                          - listitem [ref=e1066]:
+                            - generic [ref=e1069]: Health insurance
+                          - listitem [ref=e1070]:
+                            - generic [ref=e1073]: 401(k) matching
+                          - listitem [ref=e1074]:
+                            - generic [ref=e1077]: Employee discount
+                      - button "Save job Toggle" [ref=e1079] [cursor=pointer]:
+                        - img [ref=e1080]
+                    - generic [ref=e1082]:
+                      - list [ref=e1084]:
+                        - listitem [ref=e1085]: We develop intuitive applications that educate homeowners on Tesla Energy products, streamline recommendations and ordering, and support the full fulfillment…
+                      - list [ref=e1089]:
+                        - listitem [ref=e1090]:
+                          - generic [ref=e1091]:
+                            - text: View all
+                            - link "Tesla jobs in Fremont, CA" [ref=e1092] [cursor=pointer]:
+                              - /url: /q-tesla-l-fremont,-ca-jobs.html
+                            - text: "-"
+                            - link "Fremont jobs" [ref=e1093] [cursor=pointer]:
+                              - /url: /l-fremont,-ca-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Fremont, CA" [ref=e1094] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-fremont,-ca-jobs.html
+                        - listitem [ref=e1095]:
+                          - generic [ref=e1096]:
+                            - text: "Salary Search:"
+                            - link "Frontend Software Engineer, Energy Residential salaries in Fremont, CA" [ref=e1097] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/94538--CA?campaignid=serp-more&fromjk=86e2f8d6691196b1&from=serp-more
+                        - listitem [ref=e1098]:
+                          - generic [ref=e1099]:
+                            - text: See popular
+                            - link "questions & answers about Tesla" [ref=e1100] [cursor=pointer]:
+                              - /url: /cmp/Tesla/faq
+              - listitem
+            - navigation "pagination" [ref=e1102]:
+              - list [ref=e1103]:
+                - listitem [ref=e1104]:
+                  - link "1" [ref=e1105] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e1106]:
+                  - link "2" [ref=e1107] [cursor=pointer]:
+                    - /url: /jobs?q=staff+frontend+engineer&start=10
+                - listitem [ref=e1108]:
+                  - link "3" [ref=e1109] [cursor=pointer]:
+                    - /url: /jobs?q=staff+frontend+engineer&start=20
+                - listitem [ref=e1110]:
+                  - link "4" [ref=e1111] [cursor=pointer]:
+                    - /url: /jobs?q=staff+frontend+engineer&start=30
+                - listitem [ref=e1112]:
+                  - link "5" [ref=e1113] [cursor=pointer]:
+                    - /url: /jobs?q=staff+frontend+engineer&start=40
+                - listitem [ref=e1114]:
+                  - link "Next Page" [ref=e1115] [cursor=pointer]:
+                    - /url: /jobs?q=staff+frontend+engineer&start=10
+                    - img [ref=e1116]
+            - generic [ref=e1118]:
+              - heading "People also searched:" [level=3] [ref=e1119]
+              - list [ref=e1120]:
+                - listitem [ref=e1121]:
+                  - link "frontend engineering manager" [ref=e1122] [cursor=pointer]:
+                    - /url: /q-frontend-engineering-manager-jobs.html
+                    - generic [ref=e1124]: frontend engineering manager
+                - listitem [ref=e1125]:
+                  - link "front end" [ref=e1126] [cursor=pointer]:
+                    - /url: /q-front-end-jobs.html
+                    - generic [ref=e1128]: front end
+                - listitem [ref=e1129]:
+                  - link "front end engineer" [ref=e1130] [cursor=pointer]:
+                    - /url: /q-front-end-engineer-jobs.html
+                    - generic [ref=e1132]: front end engineer
+                - listitem [ref=e1133]:
+                  - link "visual merchandising manager" [ref=e1134] [cursor=pointer]:
+                    - /url: /q-visual-merchandising-manager-jobs.html
+                    - generic [ref=e1136]: visual merchandising manager
+                - listitem [ref=e1137]:
+                  - link "warehouse" [ref=e1138] [cursor=pointer]:
+                    - /url: /q-warehouse-jobs.html
+                    - generic [ref=e1140]: warehouse
+                - listitem [ref=e1141]:
+                  - link "web developer" [ref=e1142] [cursor=pointer]:
+                    - /url: /q-web-developer-jobs.html
+                    - generic [ref=e1144]: web developer
+                - listitem [ref=e1145]:
+                  - link "work from home" [ref=e1146] [cursor=pointer]:
+                    - /url: /q-work-from-home-jobs.html
+                    - generic [ref=e1148]: work from home
+                - listitem [ref=e1149]:
+                  - link "aerospace engineer" [ref=e1150] [cursor=pointer]:
+                    - /url: /q-aerospace-engineer-jobs.html
+                    - generic [ref=e1152]: aerospace engineer
+                - listitem [ref=e1153]:
+                  - link "assistant" [ref=e1154] [cursor=pointer]:
+                    - /url: /q-assistant-jobs.html
+                    - generic [ref=e1156]: assistant
+                - listitem [ref=e1157]:
+                  - link "associate" [ref=e1158] [cursor=pointer]:
+                    - /url: /q-associate-jobs.html
+                    - generic [ref=e1160]: associate
+            - generic [ref=e1161]:
+              - heading "Resume Resources:" [level=2] [ref=e1162]
+              - list [ref=e1163]:
+                - listitem [ref=e1164]:
+                  - link "Resume Samples" [ref=e1165] [cursor=pointer]:
+                    - /url: https://www.indeed.com/career-advice/resume-samples?from=jobsearch_footer
+                - text: "-"
+                - listitem [ref=e1166]:
+                  - link "Resume Templates" [ref=e1167] [cursor=pointer]:
+                    - /url: https://www.indeed.com/profile/resume-templates?from=jobsearch_footer
+            - generic [ref=e1168]:
+              - heading "Career Resources:" [level=2] [ref=e1169]
+              - list [ref=e1170]:
+                - listitem [ref=e1171]:
+                  - link "Career Explorer" [ref=e1172] [cursor=pointer]:
+                    - /url: /career/salaries?from=jobsearch_footer
+                - text: "-"
+                - listitem [ref=e1173]:
+                  - link "Explore High Paying Jobs" [ref=e1174] [cursor=pointer]:
+                    - /url: /explorer/
+            - generic [ref=e1175]:
+              - heading "Employer Resources:" [level=2] [ref=e1176]
+              - list [ref=e1177]:
+                - listitem [ref=e1178]:
+                  - link "How to Write a Job Description" [ref=e1179] [cursor=pointer]:
+                    - /url: /hire/how-to-write-a-job-description?from=jobsearch_footer
+                - text: "-"
+                - listitem [ref=e1180]:
+                  - link "How to Hire Employees" [ref=e1181] [cursor=pointer]:
+                    - /url: /hire/how-to-hire?from=jobsearch_footer
+          - generic "Job Post Details" [ref=e1184]:
+            - button "Return to Search Result" [ref=e1185]
+            - heading "Job Post Details" [level=2] [ref=e1186]
+            - generic [ref=e1189]:
+              - generic [ref=e1191]:
+                - generic [ref=e1192]:
+                  - heading "Frontend Engineer, Fauna - job post" [level=2] [ref=e1194]:
+                    - generic [ref=e1195]:
+                      - text: Frontend Engineer, Fauna
+                      - generic [ref=e1196]: "- job post"
+                  - generic [ref=e1200]:
+                    - generic [ref=e1201]:
+                      - link "Amazon.com Services LLC (opens in a new tab)" [ref=e1204] [cursor=pointer]:
+                        - /url: https://www.indeed.com/cmp/Amazon.com?campaignid=mobvjcmp&from=mobviewjob&tk=1jrq5jidej1df801&fromjk=d344cdb0e582a75b
+                        - text: Amazon.com Services LLC
+                        - img [ref=e1205]
+                      - generic [ref=e1207]:
+                        - generic [ref=e1208]: · 3.5
+                        - generic [ref=e1209]: 3.5 out of 5 stars
+                        - img [ref=e1210]
+                    - generic [ref=e1213]: New York, NY
+                - generic [ref=e1216]:
+                  - generic [ref=e1217]: $158,100 - $213,800 a year
+                  - generic [ref=e1218]: "- Full-time"
+                - generic [ref=e1220]:
+                  - generic [ref=e1221]: You must create an Indeed account before continuing to the company website to apply
+                  - button "Apply on company site (opens in a new tab)" [ref=e1227] [cursor=pointer]:
+                    - generic [ref=e1228]: Apply on company site
+                    - img [ref=e1229]
+                  - button "Save job" [ref=e1234] [cursor=pointer]:
+                    - img "save-icon" [ref=e1235]
+                  - button "Share Job" [ref=e1237] [cursor=pointer]
+              - generic [ref=e1240]:
+                - generic [ref=e1241]:
+                  - generic [ref=e1247]:
+                    - generic [ref=e1248]:
+                      - generic [ref=e1249]:
+                        - heading "Profile insights" [level=2] [ref=e1250]
+                        - text: Find out how your skills align with the job description
+                      - generic [ref=e1251]:
+                        - group "Skills" [ref=e1252]:
+                          - img [ref=e1253]
+                          - generic [ref=e1255]:
+                            - heading "Skills" [level=3] [ref=e1256]
+                            - group "Do you have experience in Web applications?" [ref=e1257]:
+                              - generic [ref=e1259]:
+                                - text: Do you have experience in
+                                - strong [ref=e1260]: Web applications
+                                - text: "?"
+                              - generic [ref=e1261]:
+                                - button "Yes" [ref=e1262] [cursor=pointer]:
+                                  - generic [ref=e1263]: "Yes"
+                                - button "No" [ref=e1264] [cursor=pointer]:
+                                  - generic [ref=e1265]: "No"
+                        - group "Education" [ref=e1266]:
+                          - img [ref=e1267]
+                          - generic [ref=e1269]:
+                            - heading "Education" [level=3] [ref=e1270]
+                            - group "Do you have a Bachelor's degree?" [ref=e1271]:
+                              - generic [ref=e1273]:
+                                - text: Do you have a
+                                - strong [ref=e1274]: Bachelor's degree
+                                - text: "?"
+                              - generic [ref=e1275]:
+                                - button "Yes" [ref=e1276] [cursor=pointer]:
+                                  - generic [ref=e1277]: "Yes"
+                                - button "No" [ref=e1278] [cursor=pointer]:
+                                  - generic [ref=e1279]: "No"
+                    - separator [ref=e1280]:
+                      - generic [ref=e1281]: "&nbsp;"
+                  - generic [ref=e1287]:
+                    - generic [ref=e1288]:
+                      - heading "Job details" [level=2] [ref=e1290]
+                      - generic [ref=e1291]:
+                        - group "Pay" [ref=e1292]:
+                          - img [ref=e1293]
+                          - generic [ref=e1295]:
+                            - heading "Pay" [level=3] [ref=e1296]
+                            - list [ref=e1298]:
+                              - listitem [ref=e1299]:
+                                - generic [ref=e1304]: $158,100 - $213,800 a year
+                        - group "Job type" [ref=e1305]:
+                          - img [ref=e1306]
+                          - generic [ref=e1309]:
+                            - heading "Job type" [level=3] [ref=e1310]
+                            - list [ref=e1312]:
+                              - listitem [ref=e1313]:
+                                - generic [ref=e1318]: Full-time
+                      - generic [ref=e1320]:
+                        - heading "Encouraged to apply" [level=3] [ref=e1322]
+                        - list [ref=e1323]:
+                          - listitem [ref=e1324]: Disability friendly
+                    - separator [ref=e1325]:
+                      - generic [ref=e1326]: "&nbsp;"
+                  - generic [ref=e1327]:
+                    - heading "Benefits" [level=3] [ref=e1328]
+                    - paragraph [ref=e1329]: Pulled from the full job description
+                    - list [ref=e1333]:
+                      - listitem [ref=e1334]: AD&D insurance
+                      - listitem [ref=e1335]: Parental leave
+                      - listitem [ref=e1336]: Health insurance
+                      - listitem [ref=e1337]: 401(k) matching
+                      - listitem [ref=e1338]: Paid time off
+                      - listitem [ref=e1339]: Vision insurance
+                      - listitem [ref=e1340]: Dental insurance
+                    - button "Show more" [ref=e1342] [cursor=pointer]:
+                      - generic [ref=e1343]: Show more
+                      - img [ref=e1344]
+                    - separator [ref=e1346]:
+                      - generic [ref=e1347]: "&nbsp;"
+                  - heading "Full job description" [level=2] [ref=e1349]
+                  - generic [ref=e1350]:
+                    - generic [ref=e1351]:
+                      - heading "DESCRIPTION" [level=2] [ref=e1352]
+                      - generic [ref=e1353]:
+                        - text: We are seeking a Frontend Engineer to join our team. You will own end-to-end delivery of web and native applications spanning interactive robot control interfaces, real-time data visualization, and internal developer tooling. Your decisions will directly shape how operators and customers, researchers experience our technology at scale.
+                        - text: You will tackle uniquely complex challenges at the intersection of frontend engineering and advanced robotics—from sub-100ms latency control interfaces to highly-available telemetry pipelines.
+                        - text: Key job responsibilities
+                        - list [ref=e1354]:
+                          - listitem [ref=e1355]: Develop real-time data visualization tools for robotics telemetry and analytics.
+                          - listitem [ref=e1356]: Create internal tools that accelerate development and operations workflows.
+                          - listitem [ref=e1357]: Optimize frontend performance for low-latency, real-time interactions.
+                          - listitem [ref=e1358]: Collaborate with robotics and backend teams to design APIs and data models.
+                          - listitem [ref=e1359]: Contribute to the evolution of our interfaces
+                        - text: About the team
+                        - text: "Fauna Robotics, an Amazon company, is building capable, safe, and genuinely delightful robots for everyday life. Our goal is simple: make robots people actually want to live and interact with in everyday human spaces."
+                        - text: We believe that future won’t arrive until building for robotics becomes far more accessible. Today, too much effort is spent reinventing the fundamentals. We’re changing that by developing tightly integrated hardware and software systems that make it faster, safer, and more intuitive to create real-world robotic products.
+                        - text: "Our work spans the full stack: mechanical design, control systems, dynamic modeling, and intelligent software. The focus is not just functionality, but experience. We’re building robots that feel responsive, expressive, and genuinely useful."
+                        - text: At Fauna, you’ll work at the frontier of this space, helping define how robots move, manipulate, and interact with people in natural environments. It’s an opportunity to solve hard problems across hardware and software with a team focused on making robotics accessible and joyful to build.
+                        - text: If you care about making robotics real for everyone and building systems that are as delightful as they are capable, we’re interested in hearing from you.
+                      - heading "BASIC QUALIFICATIONS" [level=2] [ref=e1360]
+                      - list [ref=e1361]:
+                        - listitem [ref=e1362]: Bachelor's degree in computer science or equivalent, or experience in software development
+                        - listitem [ref=e1363]: 3+ years of professional front end development experience
+                        - listitem [ref=e1364]: Experience building web applications with React and modern web technologies
+                        - listitem [ref=e1365]: Experience with responsive design, as well as cross-browser development and testing
+                        - listitem [ref=e1366]: Experience Experienced with end-to-end ownership of major project deliverables
+                        - listitem [ref=e1367]: Proficiency in TypeScript and Javascript
+                        - listitem [ref=e1368]: Familiarity with REST APIs and WebSocket-based real-time communication.
+                      - heading "PREFERRED QUALIFICATIONS" [level=2] [ref=e1369]
+                      - list [ref=e1370]:
+                        - listitem [ref=e1371]: "Experience in one or more of the following: Native mobile development (Android/iOS), Python, Objective-C, Swift, C#, HTML5/CSS3/JavaScript, web and server programming and Responsive/Adaptive design, Java, SQL"
+                        - listitem [ref=e1372]: Experience with video encoding and streaming media standards
+                        - listitem [ref=e1373]: Experience developing scripts and plugins for 3D applications such as Maya or Blender
+                        - listitem [ref=e1374]: Experience building control interfaces or dashboards for hardware systems.
+                      - text: Amazon is an equal opportunity employer and does not discriminate on the basis of protected veteran status, disability, or other legally protected status.
+                      - text: Our inclusive culture empowers Amazonians to deliver the best results for our customers. If you have a disability and need a workplace accommodation or adjustment during the application and hiring process, including support for the interview or onboarding process, please visit https://amazon.jobs/content/en/how-we-hire/accommodations for more information. If the country/region you’re applying in isn’t listed, please contact your Recruiting Partner.
+                      - paragraph [ref=e1375]: The base salary range for this position is listed below. Your Amazon package will include sign-on payments and restricted stock units (RSUs). Final compensation will be determined based on factors including experience, qualifications, and location. Amazon also offers comprehensive benefits including health insurance (medical, dental, vision, prescription, Basic Life & AD&D insurance and option for Supplemental life plans, EAP, Mental Health Support, Medical Advice Line, Flexible Spending Accounts, Adoption and Surrogacy Reimbursement coverage), 401(k) matching, paid time off, and parental leave. Learn more about our benefits at https://amazon.jobs/en/benefits.
+                      - text: USA, NY, New York - 158,100.00 - 213,800.00 USD annually
+                    - paragraph
+                  - separator [ref=e1376]:
+                    - generic [ref=e1377]: "&nbsp;"
+                - button "Report job" [ref=e1384] [cursor=pointer]: Report job
+            - button "Return to Search Result" [ref=e1386]
+      - contentinfo [ref=e1391]:
+        - generic [ref=e1392]:
+          - list [ref=e1393]:
+            - listitem [ref=e1394]:
+              - link "Hiring Lab" [ref=e1396] [cursor=pointer]:
+                - /url: https://www.hiringlab.org
+            - listitem [ref=e1397]:
+              - link "Career advice" [ref=e1399] [cursor=pointer]:
+                - /url: https://www.indeed.com/career-advice
+            - listitem [ref=e1400]:
+              - link "Browse jobs" [ref=e1402] [cursor=pointer]:
+                - /url: https://www.indeed.com/browsejobs
+            - listitem [ref=e1403]:
+              - link "Browse companies" [ref=e1405] [cursor=pointer]:
+                - /url: https://www.indeed.com/companies/browse-companies
+            - listitem [ref=e1406]:
+              - link "Salaries" [ref=e1408] [cursor=pointer]:
+                - /url: https://www.indeed.com/career/salaries
+            - listitem [ref=e1409]:
+              - link "Indeed Events" [ref=e1411] [cursor=pointer]:
+                - /url: https://www.indeedevents.com/
+            - listitem [ref=e1412]:
+              - link "Work at Indeed" [ref=e1414] [cursor=pointer]:
+                - /url: https://www.indeed.com/cmp/Indeed/about
+            - listitem [ref=e1415]:
+              - link "Countries" [ref=e1417] [cursor=pointer]:
+                - /url: https://www.indeed.com/worldwide
+            - listitem [ref=e1418]:
+              - link "About" [ref=e1420] [cursor=pointer]:
+                - /url: https://www.indeed.com/about
+            - listitem [ref=e1421]:
+              - link "Help" [ref=e1423] [cursor=pointer]:
+                - /url: https://www.indeed.com/help/job-seekers?hl=en&co=us
+            - listitem [ref=e1424]:
+              - link "ESG at Indeed" [ref=e1426] [cursor=pointer]:
+                - /url: https://www.indeed.com/esg?from=gnav-jobsearch--indeedmobile
+          - list [ref=e1427]:
+            - listitem [ref=e1428]: © 2026 Indeed
+            - listitem [ref=e1429]:
+              - link "Your Privacy Choices" [ref=e1431] [cursor=pointer]:
+                - /url: https://www.indeed.com/legal/ccpa-dns?hl=en
+                - text: Your Privacy Choices
+                - img [ref=e1433]
+            - listitem [ref=e1438]:
+              - link "Accessibility at Indeed" [ref=e1440] [cursor=pointer]:
+                - /url: https://www.indeed.com/esg/accessibility?hl=en
+            - listitem [ref=e1441]:
+              - link "Privacy Center and Ad Choices" [ref=e1443] [cursor=pointer]:
+                - /url: https://hrtechprivacy.com/brands/indeed#privacypolicy
+            - listitem [ref=e1444]:
+              - link "Terms" [ref=e1446] [cursor=pointer]:
+                - /url: https://www.indeed.com/legal?hl=en
+          - list:
+            - listitem
+  - generic [ref=e1447]:
+    - text: This site is protected by reCAPTCHA and the Google
+    - link "Privacy Policy" [ref=e1448] [cursor=pointer]:
+      - /url: https://policies.google.com/privacy
+    - text: and
+    - link "Terms of Service" [ref=e1449] [cursor=pointer]:
+      - /url: https://policies.google.com/terms
+    - text: apply.

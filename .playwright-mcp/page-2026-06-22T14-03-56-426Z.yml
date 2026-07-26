@@ -1,0 +1,1018 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - link [ref=e3] [cursor=pointer]:
+      - /url: "#main-content"
+      - text: Skip to main content
+    - banner [ref=e4]:
+      - navigation [ref=e5]:
+        - link [ref=e6] [cursor=pointer]:
+          - /url: /?trk=public_jobs_nav-header-logo
+          - generic [ref=e7]: LinkedIn
+        - generic [ref=e9]:
+          - button [ref=e11] [cursor=pointer]:
+            - generic [ref=e12]: Jobs
+          - tabpanel [ref=e13]:
+            - search [ref=e14]:
+              - generic [ref=e15]:
+                - combobox [ref=e16]: Senior Software Engineer
+                - button [ref=e17] [cursor=pointer]:
+                  - generic [ref=e18]: Clear text
+              - generic [ref=e19]:
+                - combobox [ref=e20]: United States
+                - button [ref=e21] [cursor=pointer]:
+                  - generic [ref=e22]: Clear text
+              - button [ref=e23] [cursor=pointer]
+          - status [ref=e24]
+        - generic [ref=e25]:
+          - link [ref=e26] [cursor=pointer]:
+            - /url: https://www.linkedin.com/login?emailAddress=&fromSignIn=&fromSignIn=true&session_redirect=https%3A%2F%2Fwww.linkedin.com%2Fjobs%2Fsearch-results%3Fkeywords%3DSenior%2BSoftware%2BEngineer&trk=public_jobs_nav-header-signin
+            - text: Sign in
+          - link [ref=e27] [cursor=pointer]:
+            - /url: https://www.linkedin.com/signup/cold-join?source=jobs_registration&session_redirect=https%3A%2F%2Fwww.linkedin.com%2Fjobs%2Fsearch-results%3Fkeywords%3DSenior%2BSoftware%2BEngineer&trk=public_jobs_nav-header-join
+            - text: Join now
+    - generic [ref=e30]:
+      - list [ref=e34]:
+        - listitem [ref=e35]:
+          - button [ref=e38] [cursor=pointer]: Date posted
+        - listitem [ref=e40]:
+          - button [ref=e43] [cursor=pointer]: Company
+        - listitem [ref=e45]:
+          - link [ref=e46] [cursor=pointer]:
+            - /url: https://www.linkedin.com/jobs/search?keywords=Senior+Software+Engineer&f_AL=true&trk=public_jobs_filters_f_AL
+            - text: Easy Apply
+        - listitem [ref=e47]:
+          - link [ref=e48] [cursor=pointer]:
+            - /url: https://www.linkedin.com/jobs/search?keywords=Senior+Software+Engineer&f_EA=true&trk=public_jobs_filters_f_EA
+            - text: Under 10 applicants
+      - button [ref=e50] [cursor=pointer]: Where are the filters?
+    - main [ref=e53]:
+      - generic [ref=e57]:
+        - paragraph [ref=e58]:
+          - text: Get notified about new Senior Software Engineer jobs in
+          - strong [ref=e59]: United States
+          - text: .
+        - link [ref=e60] [cursor=pointer]:
+          - /url: https://www.linkedin.com/login?emailAddress=&fromSignIn=&session_redirect=https%3A%2F%2Fwww.linkedin.com%2Fjobs%2Fsearch-results%3Fkeywords%3DSenior%2BSoftware%2BEngineer&trk=public_jobs_job-alert-guest-redirect-cta
+          - text: Sign in to create job alert
+      - heading [level=1] [ref=e62]: 1,000+ Senior Software Engineer Jobs in United States
+      - list [ref=e64]:
+        - listitem [ref=e65]:
+          - generic [ref=e66]:
+            - link [ref=e67] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-the-home-depot-4428737467?position=1&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=tlL4bs3oauyJlxX%2BEmNTpg%3D%3D
+              - generic [ref=e68]: Senior Software Engineer
+            - img [ref=e70]
+            - generic [ref=e71]:
+              - heading [level=3] [ref=e72]: Senior Software Engineer
+              - heading [level=4] [ref=e73]:
+                - link [ref=e74] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/the-home-depot?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: The Home Depot
+              - generic [ref=e75]:
+                - generic [ref=e76]: Atlanta, GA
+                - generic [ref=e79]: Actively Hiring
+                - time [ref=e80]: 3 days ago
+        - listitem [ref=e81]:
+          - generic [ref=e82]:
+            - link [ref=e83] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-clayton-4422470329?position=2&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=WAN91pGjeRZlCIMvdhVedQ%3D%3D
+              - generic [ref=e84]: Senior Software Engineer
+            - img [ref=e86]
+            - generic [ref=e87]:
+              - heading [level=3] [ref=e88]: Senior Software Engineer
+              - heading [level=4] [ref=e89]:
+                - link [ref=e90] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/clayton-homes?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Clayton
+              - generic [ref=e91]:
+                - generic [ref=e92]: Maryville, TN
+                - generic [ref=e95]: Actively Hiring
+                - time [ref=e96]: 2 weeks ago
+        - listitem [ref=e97]:
+          - generic [ref=e98]:
+            - link [ref=e99] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/platform-senior-engineer-at-youversion-4400789646?position=3&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=SXLfe%2BSHJHGQ60jpxJDXAw%3D%3D
+              - generic [ref=e100]: Platform Senior Engineer
+            - generic [ref=e102]:
+              - heading [level=3] [ref=e103]: Platform Senior Engineer
+              - heading [level=4] [ref=e104]:
+                - link [ref=e105] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/youversion?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: YouVersion
+              - generic [ref=e106]:
+                - generic [ref=e107]: Edmond, OK
+                - time [ref=e108]: 5 days ago
+        - listitem [ref=e109]:
+          - generic [ref=e110]:
+            - link [ref=e111] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-customer-data-platform-at-sweetwater-4418019708?position=4&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=4lV4%2BnWflO%2Bm2MbavtAw7A%3D%3D
+              - generic [ref=e112]: Senior Software Engineer - Customer Data Platform
+            - generic [ref=e114]:
+              - heading [level=3] [ref=e115]: Senior Software Engineer - Customer Data Platform
+              - heading [level=4] [ref=e116]:
+                - link [ref=e117] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/sweetwater?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Sweetwater
+              - generic [ref=e118]:
+                - generic [ref=e119]: Fort Wayne, IN
+                - generic [ref=e122]: Actively Hiring
+                - time [ref=e123]: 1 week ago
+        - listitem [ref=e124]:
+          - generic [ref=e125]:
+            - link [ref=e126] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-neighbor-4410773447?position=5&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=l4kZUnhME8nsti9idbF5Bw%3D%3D
+              - generic [ref=e127]: Senior Software Engineer
+            - generic [ref=e129]:
+              - heading [level=3] [ref=e130]: Senior Software Engineer
+              - heading [level=4] [ref=e131]:
+                - link [ref=e132] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/neighbor?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Neighbor
+              - generic [ref=e133]:
+                - generic [ref=e134]: Lehi, UT
+                - generic [ref=e137]: Be an early applicant
+                - time [ref=e138]: 1 month ago
+        - listitem [ref=e139]:
+          - generic [ref=e140]:
+            - link [ref=e141] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-youversion-4395461174?position=6&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=M8Bayc%2F6D24JXsbmlQXEZQ%3D%3D
+              - generic [ref=e142]: Senior Software Engineer
+            - generic [ref=e144]:
+              - heading [level=3] [ref=e145]: Senior Software Engineer
+              - heading [level=4] [ref=e146]:
+                - link [ref=e147] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/youversion?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: YouVersion
+              - generic [ref=e148]:
+                - generic [ref=e149]: Edmond, OK
+                - time [ref=e150]: 1 week ago
+        - listitem [ref=e151]:
+          - generic [ref=e152]:
+            - link [ref=e153] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/usa-senior-software-engineer-at-walmart-4354233580?position=7&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=1atmEjqUAmSBNmn3GgRyIg%3D%3D
+              - generic [ref=e154]: (USA) Senior, Software Engineer
+            - generic [ref=e156]:
+              - heading [level=3] [ref=e157]: (USA) Senior, Software Engineer
+              - heading [level=4] [ref=e158]:
+                - link [ref=e159] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/walmart?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Walmart
+              - generic [ref=e160]:
+                - generic [ref=e161]: Bentonville, AR
+                - generic [ref=e164]: Actively Hiring
+                - time [ref=e165]: 1 week ago
+        - listitem [ref=e166]:
+          - generic [ref=e167]:
+            - link [ref=e168] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-builders-welcome-at-pmtbox-4386945841?position=8&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=xlEBM%2BGUj63UpmPTQ9UxHg%3D%3D
+              - generic [ref=e169]: Senior Software Engineer (Builders Welcome)
+            - generic [ref=e171]:
+              - heading [level=3] [ref=e172]: Senior Software Engineer (Builders Welcome)
+              - heading [level=4] [ref=e173]:
+                - link [ref=e174] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/pmtbox?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: pmtbox
+              - generic [ref=e175]:
+                - generic [ref=e176]: Orem, UT
+                - time [ref=e177]: 3 months ago
+        - listitem [ref=e178]:
+          - generic [ref=e179]:
+            - link [ref=e180] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-hmsa-4431198268?position=9&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=5r%2BemwhyePglqUzUDbUBRg%3D%3D
+              - generic [ref=e181]: Senior Software Engineer
+            - generic [ref=e183]:
+              - heading [level=3] [ref=e184]: Senior Software Engineer
+              - heading [level=4] [ref=e185]:
+                - link [ref=e186] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/hmsahawaii?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: HMSA
+              - generic [ref=e187]:
+                - generic [ref=e188]: Honolulu, HI
+                - generic [ref=e191]: Be an early applicant
+                - time [ref=e192]: 2 days ago
+        - listitem [ref=e193]:
+          - generic [ref=e194]:
+            - link [ref=e195] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-central-insurance-4427740796?position=10&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=iog2kleUfsIW1s8rODY6Kw%3D%3D
+              - generic [ref=e196]: Senior Software Engineer
+            - generic [ref=e198]:
+              - heading [level=3] [ref=e199]: Senior Software Engineer
+              - heading [level=4] [ref=e200]:
+                - link [ref=e201] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/central-insurance-companie?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Central Insurance
+              - generic [ref=e202]:
+                - generic [ref=e203]: Van Wert, OH
+                - generic [ref=e206]: Actively Hiring
+                - time [ref=e207]: 6 days ago
+        - listitem [ref=e208]:
+          - generic [ref=e209]:
+            - link [ref=e210] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/sr-software-development-engineer-at-cvs-health-4431378913?position=11&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=vuJEJq1BwzbWW%2BBd6xIhkg%3D%3D
+              - generic [ref=e211]: Sr. Software Development Engineer
+            - generic [ref=e213]:
+              - heading [level=3] [ref=e214]: Sr. Software Development Engineer
+              - heading [level=4] [ref=e215]:
+                - link [ref=e216] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/cvshealth?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: CVS Health
+              - generic [ref=e217]:
+                - generic [ref=e218]: Scottsdale, AZ
+                - generic [ref=e221]: Actively Hiring
+                - time [ref=e222]: 1 hour ago
+        - listitem [ref=e223]:
+          - generic [ref=e224]:
+            - link [ref=e225] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-cubesmart-4384439263?position=12&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=qAIbD1xwdQcnJpiSZrML2Q%3D%3D
+              - generic [ref=e226]: Senior Software Engineer
+            - generic [ref=e228]:
+              - heading [level=3] [ref=e229]: Senior Software Engineer
+              - heading [level=4] [ref=e230]:
+                - link [ref=e231] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/cubesmart?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: CubeSmart
+              - generic [ref=e232]:
+                - generic [ref=e233]: Malvern, PA
+                - generic [ref=e236]: Actively Hiring
+                - time [ref=e237]: 1 week ago
+        - listitem [ref=e238]:
+          - generic [ref=e239]:
+            - link [ref=e240] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-oclc-4427112516?position=13&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=aCISB1BV8Jupy8Idi4HN2Q%3D%3D
+              - generic [ref=e241]: Senior Software Engineer
+            - generic [ref=e243]:
+              - heading [level=3] [ref=e244]: Senior Software Engineer
+              - heading [level=4] [ref=e245]:
+                - link [ref=e246] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/oclc?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: OCLC
+              - generic [ref=e247]:
+                - generic [ref=e248]: Dublin, OH
+                - generic [ref=e251]: Actively Hiring
+                - time [ref=e252]: 1 week ago
+        - listitem [ref=e253]:
+          - generic [ref=e254]:
+            - link [ref=e255] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-bentley-systems-4427248734?position=14&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=JyMz88BUYO61EThq7b650w%3D%3D
+              - generic [ref=e256]: Senior Software Engineer
+            - generic [ref=e258]:
+              - heading [level=3] [ref=e259]: Senior Software Engineer
+              - heading [level=4] [ref=e260]:
+                - link [ref=e261] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/bentley-systems?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Bentley Systems
+              - generic [ref=e262]:
+                - generic [ref=e263]: Exton, PA
+                - generic [ref=e266]: Be an early applicant
+                - time [ref=e267]: 1 week ago
+        - listitem [ref=e268]:
+          - generic [ref=e269]:
+            - link [ref=e270] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-developer-tools-for-cloud-at-nvidia-ai-4413670281?position=15&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=XXrLoYmLD7pUeyztjs2PWA%3D%3D
+              - generic [ref=e271]: Senior Software Engineer, Developer Tools for Cloud
+            - generic [ref=e273]:
+              - heading [level=3] [ref=e274]: Senior Software Engineer, Developer Tools for Cloud
+              - heading [level=4] [ref=e275]:
+                - link [ref=e276] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/showcase/nvidia-ai/?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: NVIDIA AI
+              - generic [ref=e277]:
+                - generic [ref=e278]: Redmond, OR
+                - generic [ref=e281]: Be an early applicant
+                - time [ref=e282]: 1 month ago
+        - listitem [ref=e283]:
+          - generic [ref=e284]:
+            - link [ref=e285] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/sr-software-development-engineer-at-clearwater-analytics-4416715858?position=16&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=rE5WmBm7lMX1GQAfc52ZcA%3D%3D
+              - generic [ref=e286]: Sr. Software Development Engineer
+            - generic [ref=e288]:
+              - heading [level=3] [ref=e289]: Sr. Software Development Engineer
+              - heading [level=4] [ref=e290]:
+                - link [ref=e291] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/clearwateranalytics?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Clearwater Analytics
+              - generic [ref=e292]:
+                - generic [ref=e293]: Chicago, IL
+                - generic [ref=e296]: Actively Hiring
+                - time [ref=e297]: 1 week ago
+        - listitem [ref=e298]:
+          - generic [ref=e299]:
+            - link [ref=e300] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-pgh-at-blinkrx-4270742401?position=17&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=15ubElQyfeEkulynxoWqiQ%3D%3D
+              - generic [ref=e301]: Senior Software Engineer (PGH)
+            - generic [ref=e303]:
+              - heading [level=3] [ref=e304]: Senior Software Engineer (PGH)
+              - heading [level=4] [ref=e305]:
+                - link [ref=e306] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/blinkrx?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: BlinkRx
+              - generic [ref=e307]:
+                - generic [ref=e308]: Pittsburgh, PA
+                - generic [ref=e311]: Actively Hiring
+                - time [ref=e312]: 1 week ago
+        - listitem [ref=e313]:
+          - generic [ref=e314]:
+            - link [ref=e315] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-podium-4400318240?position=18&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=sJu5AGyQwlfRlrEF%2F7OgqQ%3D%3D
+              - generic [ref=e316]: Senior Software Engineer
+            - generic [ref=e318]:
+              - heading [level=3] [ref=e319]: Senior Software Engineer
+              - heading [level=4] [ref=e320]:
+                - link [ref=e321] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/podium?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Podium
+              - generic [ref=e322]:
+                - generic [ref=e323]: Lehi, UT
+                - generic [ref=e326]: Actively Hiring
+                - time [ref=e327]: 1 week ago
+        - listitem [ref=e328]:
+          - generic [ref=e329]:
+            - link [ref=e330] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-adobe-4394713970?position=19&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=vm8EMPKDestIfxl95K4Wsw%3D%3D
+              - generic [ref=e331]: Senior Software Engineer
+            - generic [ref=e333]:
+              - heading [level=3] [ref=e334]: Senior Software Engineer
+              - heading [level=4] [ref=e335]:
+                - link [ref=e336] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/adobe?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Adobe
+              - generic [ref=e337]:
+                - generic [ref=e338]: Lehi, UT
+                - generic [ref=e341]: Actively Hiring
+                - time [ref=e342]: 1 week ago
+        - listitem [ref=e343]:
+          - generic [ref=e344]:
+            - link [ref=e345] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-specializedsoft-com-4431655737?position=20&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=UBLloze3NaqSMns5jhau8Q%3D%3D
+              - generic [ref=e346]: Senior Software Engineer
+            - generic [ref=e348]:
+              - heading [level=3] [ref=e349]: Senior Software Engineer
+              - heading [level=4] [ref=e350]:
+                - link [ref=e351] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/sharereferrals?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Specializedsoft.com
+              - generic [ref=e352]:
+                - generic [ref=e353]: Chicago, IL
+                - generic [ref=e356]: Be an early applicant
+                - time [ref=e357]: 7 hours ago
+        - listitem [ref=e358]:
+          - generic [ref=e359]:
+            - link [ref=e360] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-slant-crm-4335581071?position=21&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=oAgsVTj38UumGz6w0CbQuQ%3D%3D
+              - generic [ref=e361]: Senior Software Engineer
+            - generic [ref=e363]:
+              - heading [level=3] [ref=e364]: Senior Software Engineer
+              - heading [level=4] [ref=e365]:
+                - link [ref=e366] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/slantcrmforadvisors?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Slant CRM
+              - generic [ref=e367]:
+                - generic [ref=e368]: Lehi, UT
+                - time [ref=e369]: 7 months ago
+        - listitem [ref=e370]:
+          - generic [ref=e371]:
+            - link [ref=e372] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/sr-software-engineer-enterprise-technology-at-rivian-4409713667?position=22&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=Zl5v07VexQV6RepimlvLbw%3D%3D
+              - generic [ref=e373]: Sr. Software Engineer, Enterprise Technology
+            - generic [ref=e375]:
+              - heading [level=3] [ref=e376]: Sr. Software Engineer, Enterprise Technology
+              - heading [level=4] [ref=e377]:
+                - link [ref=e378] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/rivian?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Rivian
+              - generic [ref=e379]:
+                - generic [ref=e380]: Normal, IL
+                - generic [ref=e383]: Actively Hiring
+                - time [ref=e384]: 5 days ago
+        - listitem [ref=e385]:
+          - generic [ref=e386]:
+            - link [ref=e387] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-predict-at-pattern-4383821165?position=23&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=%2FWMmSV6Ru0TAr3IANoWotw%3D%3D
+              - generic [ref=e388]: Senior Software Engineer, Predict
+            - generic [ref=e390]:
+              - heading [level=3] [ref=e391]: Senior Software Engineer, Predict
+              - heading [level=4] [ref=e392]:
+                - link [ref=e393] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/pattern-hq?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Pattern
+              - generic [ref=e394]:
+                - generic [ref=e395]: Lehi, UT
+                - generic [ref=e398]: Actively Hiring
+                - time [ref=e399]: 2 weeks ago
+        - listitem [ref=e400]:
+          - generic [ref=e401]:
+            - link [ref=e402] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/sr-software-engineer-resident-concierge-at-appfolio-4415555957?position=24&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=hjb2ppc7CPKhCDKt83ssyg%3D%3D
+              - generic [ref=e403]: Sr. Software Engineer - Resident Concierge
+            - generic [ref=e405]:
+              - heading [level=3] [ref=e406]: Sr. Software Engineer - Resident Concierge
+              - heading [level=4] [ref=e407]:
+                - link [ref=e408] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/appfolio?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: AppFolio
+              - generic [ref=e409]:
+                - generic [ref=e410]: Santa Barbara, CA
+                - generic [ref=e413]: Be an early applicant
+                - time [ref=e414]: 2 weeks ago
+        - listitem [ref=e415]:
+          - generic [ref=e416]:
+            - link [ref=e417] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-zelis-4412845299?position=25&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=CGC8%2F6O5VvIixfcc0srBvA%3D%3D
+              - generic [ref=e418]: Senior Software Engineer
+            - generic [ref=e420]:
+              - heading [level=3] [ref=e421]: Senior Software Engineer
+              - heading [level=4] [ref=e422]:
+                - link [ref=e423] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/zelis?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Zelis
+              - generic [ref=e424]:
+                - generic [ref=e425]: Utah, United States
+                - generic [ref=e428]: Actively Hiring
+                - time [ref=e429]: 1 week ago
+        - listitem [ref=e430]:
+          - generic [ref=e431]:
+            - link [ref=e432] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-dematic-4421167785?position=26&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=H07vIRFsCN%2Fyd5aiYmu4kQ%3D%3D
+              - generic [ref=e433]: Senior Software Engineer
+            - generic [ref=e435]:
+              - heading [level=3] [ref=e436]: Senior Software Engineer
+              - heading [level=4] [ref=e437]:
+                - link [ref=e438] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/dematic?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Dematic
+              - generic [ref=e439]:
+                - generic [ref=e440]: Holland, MI
+                - generic [ref=e443]: Actively Hiring
+                - time [ref=e444]: 2 weeks ago
+        - listitem [ref=e445]:
+          - generic [ref=e446]:
+            - link [ref=e447] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-development-engineer-at-adobe-4396379356?position=27&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=GnHm44WC3nmZtO7vfSGAjA%3D%3D
+              - generic [ref=e448]: Senior Software Development Engineer
+            - generic [ref=e450]:
+              - heading [level=3] [ref=e451]: Senior Software Development Engineer
+              - heading [level=4] [ref=e452]:
+                - link [ref=e453] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/adobe?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Adobe
+              - generic [ref=e454]:
+                - generic [ref=e455]: Lehi, UT
+                - generic [ref=e458]: Actively Hiring
+                - time [ref=e459]: 1 week ago
+        - listitem [ref=e460]:
+          - generic [ref=e461]:
+            - link [ref=e462] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-hp-4421253297?position=28&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=gEIDKRy4YQTtTdEMbdMzdg%3D%3D
+              - generic [ref=e463]: Senior Software Engineer
+            - generic [ref=e465]:
+              - heading [level=3] [ref=e466]: Senior Software Engineer
+              - heading [level=4] [ref=e467]:
+                - link [ref=e468] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/hp?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: HP
+              - generic [ref=e469]:
+                - generic [ref=e470]: Spring, TX
+                - generic [ref=e473]: Actively Hiring
+                - time [ref=e474]: 3 weeks ago
+        - listitem [ref=e475]:
+          - generic [ref=e476]:
+            - link [ref=e477] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-backend-engineer-at-xage-security-4422714056?position=29&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=4c71WListNn1ZIq8SxZ69w%3D%3D
+              - generic [ref=e478]: Senior Backend Engineer
+            - generic [ref=e480]:
+              - heading [level=3] [ref=e481]: Senior Backend Engineer
+              - heading [level=4] [ref=e482]:
+                - link [ref=e483] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/xage-security?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Xage Security
+              - generic [ref=e484]:
+                - generic [ref=e485]: Lincoln, NE
+                - generic [ref=e488]: Be an early applicant
+                - time [ref=e489]: 1 week ago
+        - listitem [ref=e490]:
+          - generic [ref=e491]:
+            - link [ref=e492] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-inrhythm-4263669462?position=30&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=d%2Bivf0PznDEQdOwMoP%2FyDw%3D%3D
+              - generic [ref=e493]: Senior Software Engineer
+            - generic [ref=e495]:
+              - heading [level=3] [ref=e496]: Senior Software Engineer
+              - heading [level=4] [ref=e497]:
+                - link [ref=e498] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/getinrhythm?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: InRhythm
+              - generic [ref=e499]:
+                - generic [ref=e500]: St Louis, MO
+                - generic [ref=e503]: Actively Hiring
+                - time [ref=e504]: 11 months ago
+        - listitem [ref=e505]:
+          - generic [ref=e506]:
+            - link [ref=e507] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-reporting-experience-at-ridgeline-4405168498?position=31&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=%2FdLfQJ3cAHp%2BbMtrqI126g%3D%3D
+              - generic [ref=e508]: Senior Software Engineer, Reporting Experience
+            - generic [ref=e510]:
+              - heading [level=3] [ref=e511]: Senior Software Engineer, Reporting Experience
+              - heading [level=4] [ref=e512]:
+                - link [ref=e513] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/ridgelineai?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Ridgeline
+              - generic [ref=e514]:
+                - generic [ref=e515]: Reno, NV
+                - time [ref=e516]: 1 week ago
+        - listitem [ref=e517]:
+          - generic [ref=e518]:
+            - link [ref=e519] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-full-stack-software-engineer-at-mariana-minerals-4407937721?position=32&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=GQSoUQB%2F%2B06crFiWlJZR4A%3D%3D
+              - generic [ref=e520]: Senior Full Stack Software Engineer
+            - generic [ref=e522]:
+              - heading [level=3] [ref=e523]: Senior Full Stack Software Engineer
+              - heading [level=4] [ref=e524]:
+                - link [ref=e525] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/mariana-minerals?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Mariana Minerals
+              - generic [ref=e526]:
+                - generic [ref=e527]: Moab, UT
+                - time [ref=e528]: 1 month ago
+        - listitem [ref=e529]:
+          - generic [ref=e530]:
+            - link [ref=e531] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-candid-health-4308239159?position=33&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=dxh2dj88GFgmmxJWcCDn%2BQ%3D%3D
+              - generic [ref=e532]: Senior Software Engineer
+            - generic [ref=e534]:
+              - heading [level=3] [ref=e535]: Senior Software Engineer
+              - heading [level=4] [ref=e536]:
+                - link [ref=e537] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/candid-health?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Candid Health
+              - generic [ref=e538]:
+                - generic [ref=e539]: New York, NY
+                - time [ref=e540]: 8 months ago
+        - listitem [ref=e541]:
+          - generic [ref=e542]:
+            - link [ref=e543] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-full-stack-at-thomson-reuters-4397274754?position=34&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=drKn3sCL%2F08zBnJBu4oUFA%3D%3D
+              - generic [ref=e544]: Senior Software Engineer, Full Stack
+            - generic [ref=e546]:
+              - heading [level=3] [ref=e547]: Senior Software Engineer, Full Stack
+              - heading [level=4] [ref=e548]:
+                - link [ref=e549] [cursor=pointer]:
+                  - /url: https://ca.linkedin.com/company/thomson-reuters?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Thomson Reuters
+              - generic [ref=e550]:
+                - generic [ref=e551]: Eagan, MN
+                - generic [ref=e554]: Actively Hiring
+                - time [ref=e555]: 1 week ago
+        - listitem [ref=e556]:
+          - generic [ref=e557]:
+            - link [ref=e558] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-ncr-voyix-4414033954?position=35&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=8PNC6DDML9TRVzvDwYWSYA%3D%3D
+              - generic [ref=e559]: Senior Software Engineer
+            - generic [ref=e561]:
+              - heading [level=3] [ref=e562]: Senior Software Engineer
+              - heading [level=4] [ref=e563]:
+                - link [ref=e564] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/ncrvoyix?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: NCR Voyix
+              - generic [ref=e565]:
+                - generic [ref=e566]: Rogers, AR
+                - generic [ref=e569]: Actively Hiring
+                - time [ref=e570]: 1 week ago
+        - listitem [ref=e571]:
+          - generic [ref=e572]:
+            - link [ref=e573] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-valon-4366508880?position=36&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=ghN3JlFouXAAmuZkbd8q9A%3D%3D
+              - generic [ref=e574]: Senior Software Engineer
+            - generic [ref=e576]:
+              - heading [level=3] [ref=e577]: Senior Software Engineer
+              - heading [level=4] [ref=e578]:
+                - link [ref=e579] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/valon-technologies?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Valon
+              - generic [ref=e580]:
+                - generic [ref=e581]: New York, NY
+                - time [ref=e582]: 2 weeks ago
+        - listitem [ref=e583]:
+          - generic [ref=e584]:
+            - link [ref=e585] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-life-church-4397299812?position=37&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=ylL0qEx2H2RpIPyojph0vg%3D%3D
+              - generic [ref=e586]: Senior Software Engineer
+            - generic [ref=e588]:
+              - heading [level=3] [ref=e589]: Senior Software Engineer
+              - heading [level=4] [ref=e590]:
+                - link [ref=e591] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/lifechurch?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Life.Church
+              - generic [ref=e592]:
+                - generic [ref=e593]: Edmond, OK
+                - time [ref=e594]: 1 week ago
+        - listitem [ref=e595]:
+          - generic [ref=e596]:
+            - link [ref=e597] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-walmart-4390543766?position=38&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=95ykWuXyNjJesP5W33y9bQ%3D%3D
+              - generic [ref=e598]: Senior, Software Engineer
+            - generic [ref=e600]:
+              - heading [level=3] [ref=e601]: Senior, Software Engineer
+              - heading [level=4] [ref=e602]:
+                - link [ref=e603] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/walmart?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Walmart
+              - generic [ref=e604]:
+                - generic [ref=e605]: Bentonville, AR
+                - generic [ref=e608]: Actively Hiring
+                - time [ref=e609]: 2 weeks ago
+        - listitem [ref=e610]:
+          - generic [ref=e611]:
+            - link [ref=e612] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/usa-senior-software-engineer-content-apps-at-vizio-4411776394?position=39&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=CSTuHUUPFEb144%2BJFxgiGw%3D%3D
+              - generic [ref=e613]: (USA) Senior, Software Engineer - Content Apps
+            - generic [ref=e615]:
+              - heading [level=3] [ref=e616]: (USA) Senior, Software Engineer - Content Apps
+              - heading [level=4] [ref=e617]:
+                - link [ref=e618] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/vizio?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: VIZIO
+              - generic [ref=e619]:
+                - generic [ref=e620]: Denver, CO
+                - generic [ref=e623]: Actively Hiring
+                - time [ref=e624]: 2 days ago
+        - listitem [ref=e625]:
+          - generic [ref=e626]:
+            - link [ref=e627] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/software-engineer-senior-at-candid-health-4339358900?position=40&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=1gW2Dfn%2FuOiXKM0hedcbqg%3D%3D
+              - generic [ref=e628]: Software Engineer (Senior)
+            - generic [ref=e630]:
+              - heading [level=3] [ref=e631]: Software Engineer (Senior)
+              - heading [level=4] [ref=e632]:
+                - link [ref=e633] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/candid-health?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Candid Health
+              - generic [ref=e634]:
+                - generic [ref=e635]: New York, NY
+                - time [ref=e636]: 3 months ago
+        - listitem [ref=e637]:
+          - generic [ref=e638]:
+            - link [ref=e639] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-adp-4413361745?position=41&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=ONqaETm2GG%2B3%2FSwCST6Lkw%3D%3D
+              - generic [ref=e640]: Senior Software Engineer
+            - generic [ref=e642]:
+              - heading [level=3] [ref=e643]: Senior Software Engineer
+              - heading [level=4] [ref=e644]:
+                - link [ref=e645] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/adp?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: ADP
+              - generic [ref=e646]:
+                - generic [ref=e647]: Norfolk, VA
+                - generic [ref=e650]: Actively Hiring
+                - time [ref=e651]: 1 week ago
+        - listitem [ref=e652]:
+          - generic [ref=e653]:
+            - link [ref=e654] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-wealth-com-4412986417?position=42&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=%2B4aiufsZIjElabJGP0Qv%2Bg%3D%3D
+              - generic [ref=e655]: Senior Software Engineer
+            - generic [ref=e657]:
+              - heading [level=3] [ref=e658]: Senior Software Engineer
+              - heading [level=4] [ref=e659]:
+                - link [ref=e660] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/wearewealth?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Wealth.com
+              - generic [ref=e661]:
+                - generic [ref=e662]: New York, NY
+                - time [ref=e663]: 2 weeks ago
+        - listitem [ref=e664]:
+          - generic [ref=e665]:
+            - link [ref=e666] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-samaritan-ministries-international-4429317342?position=43&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=JSeF1as15GHKJ6oJGaJByw%3D%3D
+              - generic [ref=e667]: Senior Software Engineer
+            - generic [ref=e669]:
+              - heading [level=3] [ref=e670]: Senior Software Engineer
+              - heading [level=4] [ref=e671]:
+                - link [ref=e672] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/samaritanministries?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Samaritan Ministries International
+              - generic [ref=e673]:
+                - generic [ref=e674]: Peoria, IL
+                - time [ref=e675]: 3 days ago
+        - listitem [ref=e676]:
+          - generic [ref=e677]:
+            - link [ref=e678] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-hp-4421242504?position=44&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=bmUX8lpWMI4AoSxZbhSQrQ%3D%3D
+              - generic [ref=e679]: Senior Software Engineer
+            - generic [ref=e681]:
+              - heading [level=3] [ref=e682]: Senior Software Engineer
+              - heading [level=4] [ref=e683]:
+                - link [ref=e684] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/hp?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: HP
+              - generic [ref=e685]:
+                - generic [ref=e686]: Fort Collins, CO
+                - generic [ref=e689]: Actively Hiring
+                - time [ref=e690]: 3 weeks ago
+        - listitem [ref=e691]:
+          - generic [ref=e692]:
+            - link [ref=e693] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-swivel-4367318804?position=45&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=aR%2F8278B0YsHBGSiMZhilg%3D%3D
+              - generic [ref=e694]: Senior Software Engineer
+            - generic [ref=e696]:
+              - heading [level=3] [ref=e697]: Senior Software Engineer
+              - heading [level=4] [ref=e698]:
+                - link [ref=e699] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/getswivel?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: SWIVEL
+              - generic [ref=e700]:
+                - generic [ref=e701]: Grand Rapids, MI
+                - time [ref=e702]: 2 weeks ago
+        - listitem [ref=e703]:
+          - generic [ref=e704]:
+            - link [ref=e705] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-%E2%80%93-go-golang-at-general-motors-4419969671?position=46&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=sZ8xfSQpeRvA3sgLLh2dBg%3D%3D
+              - generic [ref=e706]: Senior Software Engineer – Go (Golang)
+            - generic [ref=e708]:
+              - heading [level=3] [ref=e709]: Senior Software Engineer – Go (Golang)
+              - heading [level=4] [ref=e710]:
+                - link [ref=e711] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/general-motors?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: General Motors
+              - generic [ref=e712]:
+                - generic [ref=e713]: Warren, MI
+                - generic [ref=e716]: Actively Hiring
+                - time [ref=e717]: 4 days ago
+        - listitem [ref=e718]:
+          - generic [ref=e719]:
+            - link [ref=e720] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-rilla-4427289497?position=47&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=UE0oIvLAMeMlT%2FayaliKSQ%3D%3D
+              - generic [ref=e721]: Senior Software Engineer
+            - generic [ref=e723]:
+              - heading [level=3] [ref=e724]: Senior Software Engineer
+              - heading [level=4] [ref=e725]:
+                - link [ref=e726] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/rilla-co?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Rilla
+              - generic [ref=e727]:
+                - generic [ref=e728]: New York, NY
+                - time [ref=e729]: 1 week ago
+        - listitem [ref=e730]:
+          - generic [ref=e731]:
+            - link [ref=e732] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-aviture-4410596968?position=48&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=CXa76DVK8Khgs2x8phgcXg%3D%3D
+              - generic [ref=e733]: Senior Software Engineer
+            - generic [ref=e735]:
+              - heading [level=3] [ref=e736]: Senior Software Engineer
+              - heading [level=4] [ref=e737]:
+                - link [ref=e738] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/aviture?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Aviture
+              - generic [ref=e739]:
+                - generic [ref=e740]: Omaha, NE
+                - generic [ref=e743]: Be an early applicant
+                - time [ref=e744]: 2 months ago
+        - listitem [ref=e745]:
+          - generic [ref=e746]:
+            - link [ref=e747] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-snyk-4411525237?position=49&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=mDwUl7yBtLMC9v8y0x%2BScA%3D%3D
+              - generic [ref=e748]: Senior Software Engineer
+            - generic [ref=e750]:
+              - heading [level=3] [ref=e751]: Senior Software Engineer
+              - heading [level=4] [ref=e752]:
+                - link [ref=e753] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/snyk?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Snyk
+              - generic [ref=e754]:
+                - generic [ref=e755]: Boston, MA
+                - generic [ref=e758]: Actively Hiring
+                - time [ref=e759]: 2 weeks ago
+        - listitem [ref=e760]:
+          - generic [ref=e761]:
+            - link [ref=e762] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/sr-software-engineer-backend-at-augustine-institute-4412197060?position=50&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=gOaoXIr2R5gqy%2Fv3%2FqJpYw%3D%3D
+              - generic [ref=e763]: Sr Software Engineer - Backend
+            - generic [ref=e765]:
+              - heading [level=3] [ref=e766]: Sr Software Engineer - Backend
+              - heading [level=4] [ref=e767]:
+                - link [ref=e768] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/school/augustine-institute/?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Augustine Institute
+              - generic [ref=e769]:
+                - generic [ref=e770]: Florissant, MO
+                - generic [ref=e773]: Be an early applicant
+                - time [ref=e774]: 1 month ago
+        - listitem [ref=e775]:
+          - generic [ref=e776]:
+            - link [ref=e777] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/software-engineer-iii-senior-at-scientific-research-corporation-4311314498?position=51&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=OQRY2sV9Zn0NVECpT%2FQeTQ%3D%3D
+              - generic [ref=e778]: Software Engineer III / Senior
+            - generic [ref=e780]:
+              - heading [level=3] [ref=e781]: Software Engineer III / Senior
+              - heading [level=4] [ref=e782]:
+                - link [ref=e783] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/scientific-research-corporation?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Scientific Research Corporation
+              - generic [ref=e784]:
+                - generic [ref=e785]: Eglin Air Force Base, FL
+                - generic [ref=e788]: Actively Hiring
+                - time [ref=e789]: 1 day ago
+        - listitem [ref=e790]:
+          - generic [ref=e791]:
+            - link [ref=e792] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-springs-window-fashions-4349656149?position=52&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=tIN%2FTm1esAlfyumOFrkmjw%3D%3D
+              - generic [ref=e793]: Senior Software Engineer
+            - generic [ref=e795]:
+              - heading [level=3] [ref=e796]: Senior Software Engineer
+              - heading [level=4] [ref=e797]:
+                - link [ref=e798] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/springs-window-fashions?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Springs Window Fashions
+              - generic [ref=e799]:
+                - generic [ref=e800]: New York, NY
+                - time [ref=e801]: 4 hours ago
+        - listitem [ref=e802]:
+          - generic [ref=e803]:
+            - link [ref=e804] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-oclc-4342702745?position=53&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=%2Bdn8it6i1akR4E%2BwNTEpuA%3D%3D
+              - generic [ref=e805]: Senior Software Engineer
+            - generic [ref=e807]:
+              - heading [level=3] [ref=e808]: Senior Software Engineer
+              - heading [level=4] [ref=e809]:
+                - link [ref=e810] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/oclc?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: OCLC
+              - generic [ref=e811]:
+                - generic [ref=e812]: Minnesota, United States
+                - generic [ref=e815]: Actively Hiring
+                - time [ref=e816]: 2 days ago
+        - listitem [ref=e817]:
+          - generic [ref=e818]:
+            - link [ref=e819] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-backend-engineer-product-at-mercury-4210753899?position=54&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=K7Ahqup%2Byy1rNiOYey%2Fsiw%3D%3D
+              - generic [ref=e820]: Senior Backend Engineer - Product
+            - generic [ref=e822]:
+              - heading [level=3] [ref=e823]: Senior Backend Engineer - Product
+              - heading [level=4] [ref=e824]:
+                - link [ref=e825] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/mercuryhq?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Mercury
+              - generic [ref=e826]:
+                - generic [ref=e827]: Portland, OR
+                - generic [ref=e830]: Actively Hiring
+                - time [ref=e831]: 2 days ago
+        - listitem [ref=e832]:
+          - generic [ref=e833]:
+            - link [ref=e834] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-carnegie-mellon-university-4415945750?position=55&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=x98TOdRL2F%2FrejuFgKYyuA%3D%3D
+              - generic [ref=e835]: Senior Software Engineer
+            - generic [ref=e837]:
+              - heading [level=3] [ref=e838]: Senior Software Engineer
+              - heading [level=4] [ref=e839]:
+                - link [ref=e840] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/school/carnegie-mellon-university/?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Carnegie Mellon University
+              - generic [ref=e841]:
+                - generic [ref=e842]: Pittsburgh, PA
+                - generic [ref=e845]: Be an early applicant
+                - time [ref=e846]: 1 month ago
+        - listitem [ref=e847]:
+          - generic [ref=e848]:
+            - link [ref=e849] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/software-engineer-%E2%80%93-systems-experienced-and-senior-at-boeing-4400417721?position=56&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=Xa1MwGkLODhu5VZYmnb5eQ%3D%3D
+              - generic [ref=e850]: Software Engineer – Systems (Experienced and Senior)
+            - generic [ref=e852]:
+              - heading [level=3] [ref=e853]: Software Engineer – Systems (Experienced and Senior)
+              - heading [level=4] [ref=e854]:
+                - link [ref=e855] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/boeing?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Boeing
+              - generic [ref=e856]:
+                - generic [ref=e857]: Berkeley, MO
+                - generic [ref=e860]: Be an early applicant
+                - time [ref=e861]: 2 weeks ago
+        - listitem [ref=e862]:
+          - generic [ref=e863]:
+            - link [ref=e864] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-investment-performance-and-analytics-at-ridgeline-4372680545?position=57&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=v9Ondacr1R4I1hmkaHeQWA%3D%3D
+              - generic [ref=e865]: Senior Software Engineer, Investment Performance and Analytics
+            - generic [ref=e867]:
+              - heading [level=3] [ref=e868]: Senior Software Engineer, Investment Performance and Analytics
+              - heading [level=4] [ref=e869]:
+                - link [ref=e870] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/ridgelineai?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Ridgeline
+              - generic [ref=e871]:
+                - generic [ref=e872]: Reno, NV
+                - time [ref=e873]: 2 weeks ago
+        - listitem [ref=e874]:
+          - generic [ref=e875]:
+            - link [ref=e876] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-product-ai-4430735682?position=58&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=89zvMZ%2Fg1WlmDlkxn6YoUQ%3D%3D
+              - generic [ref=e877]: Senior Software Engineer
+            - generic [ref=e879]:
+              - heading [level=3] [ref=e880]: Senior Software Engineer
+              - heading [level=4] [ref=e881]:
+                - link [ref=e882] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/askproductai?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Product.ai
+              - generic [ref=e883]:
+                - generic [ref=e884]: Los Angeles, CA
+                - generic [ref=e887]: Be an early applicant +7 benefits
+                - time [ref=e888]: 3 days ago
+        - listitem [ref=e889]:
+          - generic [ref=e890]:
+            - link [ref=e891] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/sr-engineer-enterprise-collaboration-productivity-at-target-4389985605?position=59&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=rain6jCXCbXlvIffz6EtrA%3D%3D
+              - generic [ref=e892]: Sr Engineer - Enterprise Collaboration & Productivity
+            - generic [ref=e894]:
+              - heading [level=3] [ref=e895]: Sr Engineer - Enterprise Collaboration & Productivity
+              - heading [level=4] [ref=e896]:
+                - link [ref=e897] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/target?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Target
+              - generic [ref=e898]:
+                - generic [ref=e899]: Brooklyn Park, MN
+                - generic [ref=e902]: Be an early applicant
+                - time [ref=e903]: 3 months ago
+        - listitem [ref=e904]:
+          - generic [ref=e905]:
+            - link [ref=e906] [cursor=pointer]:
+              - /url: https://www.linkedin.com/jobs/view/senior-software-engineer-at-arkana-laboratories-4430123398?position=60&pageNum=0&refId=nA4vZWKpi4Hdylot9BZLVA%3D%3D&trackingId=Nu9WiE1ke183luMfFFRKXQ%3D%3D
+              - generic [ref=e907]: Senior Software Engineer
+            - generic [ref=e909]:
+              - heading [level=3] [ref=e910]: Senior Software Engineer
+              - heading [level=4] [ref=e911]:
+                - link [ref=e912] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/company/arkanalabs?trk=public_jobs_jserp-result_job-search-card-subtitle
+                  - text: Arkana Laboratories
+              - generic [ref=e913]:
+                - generic [ref=e914]: Little Rock, AR
+                - generic [ref=e917]: Actively Hiring
+                - time [ref=e918]: 4 days ago
+    - contentinfo [ref=e921]:
+      - list [ref=e922]:
+        - listitem [ref=e923]:
+          - generic [ref=e924]: LinkedIn
+          - generic [ref=e926]: © 2026
+        - listitem [ref=e927]:
+          - link [ref=e928] [cursor=pointer]:
+            - /url: https://about.linkedin.com?trk=public_jobs_footer-about
+            - text: About
+        - listitem [ref=e929]:
+          - link [ref=e930] [cursor=pointer]:
+            - /url: https://www.linkedin.com/accessibility?trk=public_jobs_footer-accessibility
+            - text: Accessibility
+        - listitem [ref=e931]:
+          - link [ref=e932] [cursor=pointer]:
+            - /url: https://www.linkedin.com/legal/user-agreement?trk=public_jobs_footer-user-agreement
+            - text: User Agreement
+        - listitem [ref=e933]:
+          - link [ref=e934] [cursor=pointer]:
+            - /url: https://www.linkedin.com/legal/privacy-policy?trk=public_jobs_footer-privacy-policy
+            - text: Privacy Policy
+        - listitem [ref=e935]:
+          - link [ref=e936] [cursor=pointer]:
+            - /url: https://www.linkedin.com/legal/cookie-policy?trk=public_jobs_footer-cookie-policy
+            - text: Cookie Policy
+        - listitem [ref=e937]:
+          - link [ref=e938] [cursor=pointer]:
+            - /url: https://www.linkedin.com/legal/copyright-policy?trk=public_jobs_footer-copyright-policy
+            - text: Copyright Policy
+        - listitem [ref=e939]:
+          - link [ref=e940] [cursor=pointer]:
+            - /url: https://brand.linkedin.com/policies?trk=public_jobs_footer-brand-policy
+            - text: Brand Policy
+        - listitem [ref=e941]:
+          - link [ref=e942] [cursor=pointer]:
+            - /url: https://www.linkedin.com/psettings/guest-controls?trk=public_jobs_footer-guest-controls
+            - text: Guest Controls
+        - listitem [ref=e943]:
+          - link [ref=e944] [cursor=pointer]:
+            - /url: https://www.linkedin.com/legal/professional-community-policies?trk=public_jobs_footer-community-guide
+            - text: Community Guidelines
+        - listitem [ref=e945]:
+          - button [ref=e947]: Language
+  - dialog "Sign in to view more jobs" [active] [ref=e950]:
+    - button "Dismiss" [ref=e951] [cursor=pointer]
+    - generic [ref=e953]:
+      - generic [ref=e954]:
+        - img [ref=e955]
+        - heading "Sign in to view more jobs" [level=2] [ref=e956]
+      - generic [ref=e957]:
+        - generic:
+          - generic:
+            - button "Continue with google"
+        - button "Sign in with Email" [ref=e958] [cursor=pointer]:
+          - generic [ref=e960]: Sign in with Email
+        - paragraph [ref=e962]: or
+        - generic:
+          - generic:
+            - button "Continue with google"
+        - paragraph [ref=e963]:
+          - text: New to LinkedIn?
+          - link "Join now" [ref=e964] [cursor=pointer]:
+            - /url: https://www.linkedin.com/signup/cold-join?source=jobs_registration&trk=public_jobs_contextual-sign-in-modal_join-link
+        - paragraph [ref=e965]:
+          - text: By clicking Continue to join or sign in, you agree to LinkedIn’s
+          - link "User Agreement" [ref=e966] [cursor=pointer]:
+            - /url: /legal/user-agreement?trk=linkedin-tc_auth-button_user-agreement
+          - text: ","
+          - link "Privacy Policy" [ref=e967] [cursor=pointer]:
+            - /url: /legal/privacy-policy?trk=linkedin-tc_auth-button_privacy-policy
+          - text: ", and"
+          - link "Cookie Policy" [ref=e968] [cursor=pointer]:
+            - /url: /legal/cookie-policy?trk=linkedin-tc_auth-button_cookie-policy
+          - text: .

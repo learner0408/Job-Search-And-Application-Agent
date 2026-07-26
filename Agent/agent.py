@@ -5,6 +5,7 @@ import time
 from typing import Any, Optional
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
+from langchain_core.messages import AIMessage
 from langgraph.prebuilt import create_react_agent
 
 load_dotenv()
@@ -19,6 +20,19 @@ _SYSTEM_PROMPT = (
     "Use query_database for any questions about saved data (profile, applications, search history). "
     "Be concise."
 )
+
+
+def _safe_text(content: Any) -> str:
+    if not content:
+        return ""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return "".join(
+            b.get("text", "") for b in content
+            if isinstance(b, dict) and b.get("type") == "text"
+        )
+    return str(content)
 
 
 def _parse_search_result(tool_content: str) -> dict[str, Any]:
@@ -44,9 +58,9 @@ def _parse_search_result(tool_content: str) -> dict[str, Any]:
 def run_agent(message: str, session_id: Optional[str] = None) -> dict[str, Any]:
     logger.info("Agent message: '%s'", message[:120])
 
-    model_name = os.getenv("CHAT_LLM_MODEL", "llama-3.3-70b-versatile")
-    provider = os.getenv("CHAT_LLM_PROVIDER", "groq")
-    llm = init_chat_model(model_name, model_provider=provider, temperature=0)
+    model_name = os.getenv("CHAT_LLM_MODEL", "claude-sonnet-5")
+    provider = os.getenv("CHAT_LLM_PROVIDER", "anthropic")
+    llm = init_chat_model(model_name, model_provider=provider)
 
     from tools import (
         search_jobs, update_profile, update_application_status,
@@ -96,18 +110,31 @@ def run_agent(message: str, session_id: Optional[str] = None) -> dict[str, Any]:
             return {"reply": f"Sorry, something went wrong: {e}", "jobs": None}
 
     messages = result.get("messages", [])
-    reply = ""
     search_result = None
 
-    for msg in messages:
-        if hasattr(msg, "content") and msg.content:
-            if msg.type == "ai" and not reply:
-                reply = msg.content
-            elif msg.type == "tool" and msg.name == "search_jobs":
-                search_result = _parse_search_result(msg.content)
-
+    last = messages[-1] if messages else None
+    reply = ""
+    if isinstance(last, AIMessage) and not last.tool_calls and last.content:
+        reply = _safe_text(last.content)
     if not reply:
-        reply = messages[-1].content if messages else "No response."
+        for msg in reversed(messages):
+            if isinstance(msg, AIMessage) and not msg.tool_calls and msg.content:
+                reply = _safe_text(msg.content)
+                break
+        if not reply:
+            reply = _safe_text(last.content if last else None) or "No response."
+
+    for msg in messages:
+        if msg.type == "tool" and msg.name == "search_jobs":
+            if isinstance(msg.content, list):
+                text = "".join(
+                    b.get("text", "") for b in msg.content
+                    if isinstance(b, dict) and b.get("type") == "text"
+                )
+                if text:
+                    search_result = _parse_search_result(text)
+            elif msg.content:
+                search_result = _parse_search_result(msg.content)
 
     logger.info("Agent reply: '%s'", reply[:120])
 

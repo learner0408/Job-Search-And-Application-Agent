@@ -1,40 +1,47 @@
-import sqlite3
-import json
 import os
+import json
 import uuid
 import logging
-from datetime import datetime
-from typing import Optional
+from typing import Optional, Any
+
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 logger = logging.getLogger(__name__)
 
-DB_PATH = os.getenv("DB_PATH", os.path.join(os.path.dirname(__file__), "data", "history.db"))
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
-def _get_conn() -> sqlite3.Connection:
-    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA foreign_keys=ON")
-    conn.execute("PRAGMA busy_timeout=5000")
+def _get_conn() -> psycopg2.extensions.connection:
+    conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+    conn.autocommit = False
     return conn
 
 
 def init_db() -> None:
-    """Create tables if they don't exist."""
     conn = _get_conn()
     try:
-        conn.executescript("""
+        cur = conn.cursor()
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS sessions (
+                id TEXT PRIMARY KEY,
+                preview TEXT NOT NULL DEFAULT '',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        cur.execute("""
             CREATE TABLE IF NOT EXISTS searches (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id SERIAL PRIMARY KEY,
                 query TEXT NOT NULL,
                 location TEXT,
                 source_trigger TEXT NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-
+            )
+        """)
+        cur.execute("""
             CREATE TABLE IF NOT EXISTS search_results (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id SERIAL PRIMARY KEY,
                 search_id INTEGER NOT NULL REFERENCES searches(id) ON DELETE CASCADE,
                 title TEXT NOT NULL,
                 description TEXT,
@@ -42,46 +49,55 @@ def init_db() -> None:
                 salary TEXT,
                 link TEXT NOT NULL,
                 source TEXT NOT NULL
-            );
-
+            )
+        """)
+        cur.execute("""
             CREATE TABLE IF NOT EXISTS chat_messages (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id SERIAL PRIMARY KEY,
                 role TEXT NOT NULL,
                 content TEXT NOT NULL,
                 search_id INTEGER REFERENCES searches(id),
+                session_id TEXT REFERENCES sessions(id),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-
-            CREATE INDEX IF NOT EXISTS idx_search_results_search_id ON search_results(search_id);
-            CREATE INDEX IF NOT EXISTS idx_chat_messages_created_at ON chat_messages(created_at);
-
-            CREATE TABLE IF NOT EXISTS sessions (
-                id TEXT PRIMARY KEY,
-                preview TEXT NOT NULL DEFAULT '',
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-
-            CREATE INDEX IF NOT EXISTS idx_applications_status ON applications(status);
+            )
         """)
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS user_profile (
+                id INTEGER PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+                full_name TEXT NOT NULL DEFAULT '',
+                email TEXT NOT NULL DEFAULT '',
+                phone TEXT NOT NULL DEFAULT '',
+                linkedin_url TEXT NOT NULL DEFAULT '',
+                github_url TEXT NOT NULL DEFAULT '',
+                website TEXT NOT NULL DEFAULT '',
+                skills TEXT NOT NULL DEFAULT '[]',
+                work_history TEXT NOT NULL DEFAULT '[]',
+                education TEXT NOT NULL DEFAULT '[]',
+                resume_name TEXT NOT NULL DEFAULT '',
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS applications (
+                id SERIAL PRIMARY KEY,
+                job_title TEXT NOT NULL,
+                company TEXT NOT NULL DEFAULT '',
+                location TEXT NOT NULL DEFAULT '',
+                salary TEXT NOT NULL DEFAULT '',
+                link TEXT NOT NULL DEFAULT '',
+                source TEXT NOT NULL DEFAULT '',
+                status TEXT NOT NULL DEFAULT 'preparing',
+                cover_letter TEXT NOT NULL DEFAULT '',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                applied_at TIMESTAMP
+            )
+        """)
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_search_results_search_id ON search_results(search_id)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_chat_messages_created_at ON chat_messages(created_at)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_chat_messages_session ON chat_messages(session_id)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_applications_status ON applications(status)")
         conn.commit()
-
-        # Migration: add session_id to chat_messages if not present
-        cols = [r[1] for r in conn.execute("PRAGMA table_info(chat_messages)").fetchall()]
-        if "session_id" not in cols:
-            conn.executescript("""
-                ALTER TABLE chat_messages ADD COLUMN session_id TEXT REFERENCES sessions(id);
-                CREATE INDEX IF NOT EXISTS idx_chat_messages_session ON chat_messages(session_id);
-            """)
-            orphan_count = conn.execute("SELECT COUNT(*) FROM chat_messages WHERE session_id IS NULL").fetchone()[0]
-            if orphan_count > 0:
-                legacy_id = str(uuid.uuid4())
-                conn.execute("INSERT OR IGNORE INTO sessions (id, preview) VALUES (?, 'Legacy conversation')", (legacy_id,))
-                conn.execute("UPDATE chat_messages SET session_id = ? WHERE session_id IS NULL", (legacy_id,))
-            conn.commit()
-            logger.info("Migrated chat_messages: added session_id column")
-        conn.commit()
-        logger.info("Database initialised at %s", DB_PATH)
+        logger.info("Database initialised")
     finally:
         conn.close()
 
@@ -94,19 +110,20 @@ def save_search(
 ) -> int:
     conn = _get_conn()
     try:
-        cur = conn.execute(
-            "INSERT INTO searches (query, location, source_trigger) VALUES (?, ?, ?)",
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO searches (query, location, source_trigger) VALUES (%s, %s, %s) RETURNING id",
             (query, location, source_trigger),
         )
-        search_id = cur.lastrowid
+        search_id = cur.fetchone()["id"]
         rows = [
             (search_id, j.get("title", ""), j.get("description", ""),
              j.get("location", ""), j.get("salary", ""), j.get("link", ""), j.get("source", ""))
             for j in jobs
         ]
-        conn.executemany(
+        cur.executemany(
             "INSERT INTO search_results (search_id, title, description, location, salary, link, source) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            "VALUES (%s, %s, %s, %s, %s, %s, %s)",
             rows,
         )
         conn.commit()
@@ -118,18 +135,20 @@ def save_search(
 def get_history(page: int = 1, per_page: int = 10) -> tuple[list[dict], int]:
     conn = _get_conn()
     try:
+        cur = conn.cursor()
         offset = (page - 1) * per_page
-        total = conn.execute("SELECT COUNT(*) FROM searches").fetchone()[0]
-        rows = conn.execute(
+        cur.execute("SELECT COUNT(*) AS cnt FROM searches")
+        total = cur.fetchone()["cnt"]
+        cur.execute(
             """SELECT s.*, COUNT(sr.id) AS result_count
                FROM searches s
                LEFT JOIN search_results sr ON sr.search_id = s.id
                GROUP BY s.id
                ORDER BY s.created_at DESC
-               LIMIT ? OFFSET ?""",
+               LIMIT %s OFFSET %s""",
             (per_page, offset),
-        ).fetchall()
-        return [dict(r) for r in rows], total
+        )
+        return [dict(r) for r in cur.fetchall()], total
     finally:
         conn.close()
 
@@ -137,17 +156,17 @@ def get_history(page: int = 1, per_page: int = 10) -> tuple[list[dict], int]:
 def get_search(search_id: int) -> Optional[dict]:
     conn = _get_conn()
     try:
-        row = conn.execute(
-            "SELECT * FROM searches WHERE id = ?", (search_id,)
-        ).fetchone()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM searches WHERE id = %s", (search_id,))
+        row = cur.fetchone()
         if not row:
             return None
         search = dict(row)
-        results = conn.execute(
-            "SELECT title, description, location, salary, link, source FROM search_results WHERE search_id = ?",
+        cur.execute(
+            "SELECT title, description, location, salary, link, source FROM search_results WHERE search_id = %s",
             (search_id,),
-        ).fetchall()
-        search["results"] = [dict(r) for r in results]
+        )
+        search["results"] = [dict(r) for r in cur.fetchall()]
         return search
     finally:
         conn.close()
@@ -156,8 +175,9 @@ def get_search(search_id: int) -> Optional[dict]:
 def delete_search(search_id: int) -> bool:
     conn = _get_conn()
     try:
-        conn.execute("UPDATE chat_messages SET search_id = NULL WHERE search_id = ?", (search_id,))
-        cur = conn.execute("DELETE FROM searches WHERE id = ?", (search_id,))
+        cur = conn.cursor()
+        cur.execute("UPDATE chat_messages SET search_id = NULL WHERE search_id = %s", (search_id,))
+        cur.execute("DELETE FROM searches WHERE id = %s", (search_id,))
         conn.commit()
         return cur.rowcount > 0
     finally:
@@ -167,8 +187,13 @@ def delete_search(search_id: int) -> bool:
 def clear_history() -> int:
     conn = _get_conn()
     try:
-        deleted = conn.execute("SELECT COUNT(*) FROM searches").fetchone()[0]
-        conn.executescript("DELETE FROM chat_messages; DELETE FROM search_results; DELETE FROM searches; DELETE FROM sessions;")
+        cur = conn.cursor()
+        cur.execute("SELECT COUNT(*) AS cnt FROM searches")
+        deleted = cur.fetchone()["cnt"]
+        cur.execute("DELETE FROM chat_messages")
+        cur.execute("DELETE FROM search_results")
+        cur.execute("DELETE FROM searches")
+        cur.execute("DELETE FROM sessions")
         conn.commit()
         return deleted
     finally:
@@ -178,9 +203,10 @@ def clear_history() -> int:
 def create_session(preview: str = "") -> str:
     conn = _get_conn()
     try:
+        cur = conn.cursor()
         sid = str(uuid.uuid4())
-        conn.execute(
-            "INSERT INTO sessions (id, preview) VALUES (?, ?)",
+        cur.execute(
+            "INSERT INTO sessions (id, preview) VALUES (%s, %s)",
             (sid, preview or ""),
         )
         conn.commit()
@@ -192,17 +218,20 @@ def create_session(preview: str = "") -> str:
 def update_session(session_id: str) -> None:
     conn = _get_conn()
     try:
-        first = conn.execute(
-            "SELECT content FROM chat_messages WHERE session_id = ? AND role = 'user' ORDER BY created_at ASC LIMIT 1",
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT content FROM chat_messages WHERE session_id = %s AND role = 'user' ORDER BY created_at ASC LIMIT 1",
             (session_id,),
-        ).fetchone()
-        preview = (first["content"][:80] if first else "") if first else ""
-        count = conn.execute(
-            "SELECT COUNT(*) FROM chat_messages WHERE session_id = ?",
+        )
+        first = cur.fetchone()
+        preview = first["content"][:80] if first else ""
+        cur.execute(
+            "SELECT COUNT(*) AS cnt FROM chat_messages WHERE session_id = %s",
             (session_id,),
-        ).fetchone()[0]
-        conn.execute(
-            "UPDATE sessions SET preview = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?",
+        )
+        count = cur.fetchone()["cnt"]
+        cur.execute(
+            "UPDATE sessions SET preview = %s, updated_at = CURRENT_TIMESTAMP WHERE id = %s",
             (preview, session_id),
         )
         conn.commit()
@@ -213,15 +242,16 @@ def update_session(session_id: str) -> None:
 def list_sessions(limit: int = 5) -> list[dict]:
     conn = _get_conn()
     try:
-        rows = conn.execute(
+        cur = conn.cursor()
+        cur.execute(
             """SELECT s.id, s.preview, s.created_at,
                       (SELECT COUNT(*) FROM chat_messages WHERE session_id = s.id) AS msg_count
                FROM sessions s
                ORDER BY s.updated_at DESC
-               LIMIT ?""",
+               LIMIT %s""",
             (limit,),
-        ).fetchall()
-        return [dict(r) for r in rows]
+        )
+        return [dict(r) for r in cur.fetchall()]
     finally:
         conn.close()
 
@@ -229,11 +259,12 @@ def list_sessions(limit: int = 5) -> list[dict]:
 def get_session_messages(session_id: str) -> list[dict]:
     conn = _get_conn()
     try:
-        rows = conn.execute(
-            "SELECT role, content, created_at FROM chat_messages WHERE session_id = ? ORDER BY created_at ASC",
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT role, content, created_at FROM chat_messages WHERE session_id = %s ORDER BY created_at ASC",
             (session_id,),
-        ).fetchall()
-        return [dict(r) for r in rows]
+        )
+        return [dict(r) for r in cur.fetchall()]
     finally:
         conn.close()
 
@@ -241,10 +272,11 @@ def get_session_messages(session_id: str) -> list[dict]:
 def delete_session(session_id: str) -> bool:
     conn = _get_conn()
     try:
-        cur = conn.execute("DELETE FROM chat_messages WHERE session_id = ?", (session_id,))
-        conn.execute("DELETE FROM sessions WHERE id = ?", (session_id,))
+        cur = conn.cursor()
+        cur.execute("DELETE FROM chat_messages WHERE session_id = %s", (session_id,))
+        cur.execute("DELETE FROM sessions WHERE id = %s", (session_id,))
         conn.commit()
-        return cur.rowcount > 0 or True
+        return True
     finally:
         conn.close()
 
@@ -252,12 +284,13 @@ def delete_session(session_id: str) -> bool:
 def save_chat_message(role: str, content: str, search_id: Optional[int] = None, session_id: Optional[str] = None) -> int:
     conn = _get_conn()
     try:
-        cur = conn.execute(
-            "INSERT INTO chat_messages (role, content, search_id, session_id) VALUES (?, ?, ?, ?)",
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO chat_messages (role, content, search_id, session_id) VALUES (%s, %s, %s, %s) RETURNING id",
             (role, content, search_id, session_id),
         )
         conn.commit()
-        return cur.lastrowid
+        return cur.fetchone()["id"]
     finally:
         conn.close()
 
@@ -265,17 +298,18 @@ def save_chat_message(role: str, content: str, search_id: Optional[int] = None, 
 def get_recent_chat_messages(limit: int = 6, session_id: Optional[str] = None) -> list[dict]:
     conn = _get_conn()
     try:
+        cur = conn.cursor()
         if session_id:
-            rows = conn.execute(
-                "SELECT role, content, created_at FROM chat_messages WHERE session_id = ? ORDER BY created_at DESC LIMIT ?",
+            cur.execute(
+                "SELECT role, content, created_at FROM chat_messages WHERE session_id = %s ORDER BY created_at DESC LIMIT %s",
                 (session_id, limit),
-            ).fetchall()
+            )
         else:
-            rows = conn.execute(
-                "SELECT role, content, created_at FROM chat_messages ORDER BY created_at DESC LIMIT ?",
+            cur.execute(
+                "SELECT role, content, created_at FROM chat_messages ORDER BY created_at DESC LIMIT %s",
                 (limit,),
-            ).fetchall()
-        rows.reverse()
+            )
+        rows = list(reversed(cur.fetchall()))
         return [dict(r) for r in rows]
     finally:
         conn.close()
@@ -284,10 +318,22 @@ def get_recent_chat_messages(limit: int = 6, session_id: Optional[str] = None) -
 def save_profile(data: dict) -> None:
     conn = _get_conn()
     try:
-        conn.execute(
-            """INSERT OR REPLACE INTO user_profile
-               (id, full_name, email, phone, linkedin_url, github_url, website, skills, work_history, education, resume_name, updated_at)
-               VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)""",
+        cur = conn.cursor()
+        cur.execute(
+            """INSERT INTO user_profile (id, full_name, email, phone, linkedin_url, github_url, website, skills, work_history, education, resume_name, updated_at)
+               VALUES (1, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
+               ON CONFLICT (id) DO UPDATE SET
+                 full_name = EXCLUDED.full_name,
+                 email = EXCLUDED.email,
+                 phone = EXCLUDED.phone,
+                 linkedin_url = EXCLUDED.linkedin_url,
+                 github_url = EXCLUDED.github_url,
+                 website = EXCLUDED.website,
+                 skills = EXCLUDED.skills,
+                 work_history = EXCLUDED.work_history,
+                 education = EXCLUDED.education,
+                 resume_name = EXCLUDED.resume_name,
+                 updated_at = CURRENT_TIMESTAMP""",
             (
                 data.get("full_name", ""),
                 data.get("email", ""),
@@ -309,7 +355,9 @@ def save_profile(data: dict) -> None:
 def get_profile() -> Optional[dict]:
     conn = _get_conn()
     try:
-        row = conn.execute("SELECT * FROM user_profile WHERE id = 1").fetchone()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM user_profile WHERE id = 1")
+        row = cur.fetchone()
         if not row:
             return None
         p = dict(row)
@@ -324,9 +372,10 @@ def get_profile() -> Optional[dict]:
 def save_application(data: dict) -> int:
     conn = _get_conn()
     try:
-        cur = conn.execute(
+        cur = conn.cursor()
+        cur.execute(
             """INSERT INTO applications (job_title, company, location, salary, link, source, status, cover_letter)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id""",
             (
                 data.get("job_title", ""),
                 data.get("company", ""),
@@ -339,7 +388,7 @@ def save_application(data: dict) -> int:
             ),
         )
         conn.commit()
-        return cur.lastrowid
+        return cur.fetchone()["id"]
     finally:
         conn.close()
 
@@ -347,7 +396,9 @@ def save_application(data: dict) -> int:
 def get_application(app_id: int) -> Optional[dict]:
     conn = _get_conn()
     try:
-        row = conn.execute("SELECT * FROM applications WHERE id = ?", (app_id,)).fetchone()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM applications WHERE id = %s", (app_id,))
+        row = cur.fetchone()
         return dict(row) if row else None
     finally:
         conn.close()
@@ -356,16 +407,17 @@ def get_application(app_id: int) -> Optional[dict]:
 def get_applications(status: Optional[str] = None) -> list[dict]:
     conn = _get_conn()
     try:
+        cur = conn.cursor()
         if status:
-            rows = conn.execute(
-                "SELECT * FROM applications WHERE status = ? ORDER BY created_at DESC",
+            cur.execute(
+                "SELECT * FROM applications WHERE status = %s ORDER BY created_at DESC",
                 (status,),
-            ).fetchall()
+            )
         else:
-            rows = conn.execute(
+            cur.execute(
                 "SELECT * FROM applications ORDER BY created_at DESC"
-            ).fetchall()
-        return [dict(r) for r in rows]
+            )
+        return [dict(r) for r in cur.fetchall()]
     finally:
         conn.close()
 
@@ -373,14 +425,15 @@ def get_applications(status: Optional[str] = None) -> list[dict]:
 def update_application_status(app_id: int, status: str, applied_at: Optional[str] = None) -> bool:
     conn = _get_conn()
     try:
+        cur = conn.cursor()
         if applied_at:
-            cur = conn.execute(
-                "UPDATE applications SET status = ?, applied_at = ? WHERE id = ?",
+            cur.execute(
+                "UPDATE applications SET status = %s, applied_at = %s WHERE id = %s",
                 (status, applied_at, app_id),
             )
         else:
-            cur = conn.execute(
-                "UPDATE applications SET status = ? WHERE id = ?",
+            cur.execute(
+                "UPDATE applications SET status = %s WHERE id = %s",
                 (status, app_id),
             )
         conn.commit()
@@ -451,23 +504,49 @@ _COLUMN_DESCRIPTIONS: dict[str, dict[str, str]] = {
 }
 
 
+def _get_pk_columns(conn, tname: str) -> set[str]:
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT kcu.column_name
+        FROM information_schema.table_constraints tc
+        JOIN information_schema.key_column_usage kcu
+            ON tc.constraint_name = kcu.constraint_name
+            AND tc.table_schema = kcu.table_schema
+        WHERE tc.constraint_type = 'PRIMARY KEY'
+            AND tc.table_name = %s
+            AND tc.table_schema = 'public'
+    """, (tname,))
+    return {row["column_name"] for row in cur.fetchall()}
+
+
 def get_schema_metadata() -> dict:
     conn = _get_conn()
     try:
-        rows = conn.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' AND name NOT IN ('sqlite_sequence') ORDER BY name"
-        ).fetchall()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT table_name FROM information_schema.tables
+            WHERE table_schema = 'public' AND table_type = 'BASE TABLE'
+            ORDER BY table_name
+        """)
         tables = []
-        for (tname,) in rows:
-            cols = conn.execute(f"PRAGMA table_info({tname!r})").fetchall()
+        for row in cur.fetchall():
+            tname = row["table_name"]
+            pk_cols = _get_pk_columns(conn, tname)
+            cur2 = conn.cursor()
+            cur2.execute("""
+                SELECT column_name, data_type, is_nullable
+                FROM information_schema.columns
+                WHERE table_name = %s AND table_schema = 'public'
+                ORDER BY ordinal_position
+            """, (tname,))
             columns = []
-            for cid, cname, ctype, notnull, default, pk in cols:
+            for col in cur2.fetchall():
                 columns.append({
-                    "name": cname,
-                    "type": ctype,
-                    "notnull": bool(notnull),
-                    "pk": bool(pk),
-                    "description": _COLUMN_DESCRIPTIONS.get(tname, {}).get(cname, ""),
+                    "name": col["column_name"],
+                    "type": col["data_type"],
+                    "notnull": col["is_nullable"] == "NO",
+                    "pk": col["column_name"] in pk_cols,
+                    "description": _COLUMN_DESCRIPTIONS.get(tname, {}).get(col["column_name"], ""),
                 })
             tables.append({"name": tname, "columns": columns})
         return {"tables": tables}
@@ -481,7 +560,8 @@ def execute_sql_query(sql: str) -> list[dict]:
         raise ValueError("Only SELECT queries are allowed")
     conn = _get_conn()
     try:
-        cur = conn.execute(stripped)
+        cur = conn.cursor()
+        cur.execute(stripped)
         return [dict(r) for r in cur.fetchall()]
     finally:
         conn.close()

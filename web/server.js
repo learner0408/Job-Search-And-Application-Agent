@@ -3,6 +3,7 @@ const path = require('path');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
+app.set('trust proxy', true);
 const PORT = process.env.PORT || 3000;
 const API_URL = process.env.API_URL || 'http://127.0.0.1:8000';
 

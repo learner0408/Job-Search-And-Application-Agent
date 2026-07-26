@@ -1,0 +1,1126 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#gnav-header-end"
+  - main [ref=e3]:
+    - generic [ref=e5]:
+      - navigation "Primary" [ref=e7]:
+        - generic [ref=e9]:
+          - generic [ref=e10]:
+            - generic [ref=e11]:
+              - link "Indeed Home" [ref=e12] [cursor=pointer]:
+                - /url: /?from=gnav-jobsearch--indeedmobile
+                - img [ref=e14]
+              - list [ref=e16]:
+                - listitem [ref=e17]:
+                  - link "Home" [ref=e19] [cursor=pointer]:
+                    - /url: https://www.indeed.com/
+                - listitem [ref=e20]:
+                  - link "Company reviews" [ref=e22] [cursor=pointer]:
+                    - /url: https://www.indeed.com/companies
+                - listitem [ref=e23]:
+                  - link "Find salaries" [ref=e25] [cursor=pointer]:
+                    - /url: https://www.indeed.com/career/salaries
+            - generic [ref=e26]:
+              - list [ref=e27]:
+                - listitem [ref=e28]:
+                  - link "Sign in" [ref=e31] [cursor=pointer]:
+                    - /url: https://secure.indeed.com/auth?hl=en_US&co=US&continue=https%3A%2F%2Fwww.indeed.com%3A443%2Fq-frontend-engineer-2026-jobs.html%3Fq%3Dfrontend+engineer+2026&tmpl=desktop&from=gnav-util-jobsearch--indeedmobile&jsContinue=https%3A%2F%2Fwww.indeed.com%3A443%2Fq-frontend-engineer-2026-jobs.html%3Fq%3Dfrontend+engineer+2026&empContinue=https%3A%2F%2Faccount.indeed.com%2Fmyaccess
+              - link "Employers / Post Job" [ref=e36] [cursor=pointer]:
+                - /url: https://www.indeed.com/hire?co=US&hl=en
+          - generic [ref=e37]: Start of main content
+      - generic [ref=e39]:
+        - search [ref=e44]:
+          - generic [ref=e47]:
+            - generic [ref=e49]:
+              - generic [ref=e50]:
+                - generic [ref=e51]: "Keyword : all jobs"
+                - generic [ref=e54]:
+                  - img [ref=e56]
+                  - 'combobox "search: Job title, keywords, or company" [ref=e58]': frontend engineer 2026
+                  - button "Clear what input" [ref=e60] [cursor=pointer]:
+                    - img [ref=e61]
+              - separator [ref=e63]:
+                - generic [ref=e64]: "&nbsp;"
+              - generic [ref=e65]:
+                - generic [ref=e66]: Edit location input box label
+                - generic [ref=e69]:
+                  - img [ref=e71]
+                  - combobox "Edit location" [ref=e73]
+            - button "Search" [ref=e75] [cursor=pointer]
+          - list [ref=e78]:
+            - button "Date posted filter" [ref=e80] [cursor=pointer]: Date posted
+            - button "Remote filter" [ref=e82] [cursor=pointer]: Remote
+            - button "Company sector filter" [ref=e84] [cursor=pointer]: Company sector
+            - button "Job Type filter" [ref=e86] [cursor=pointer]: Job Type
+            - button "Experience level filter" [ref=e88] [cursor=pointer]: Experience level
+            - button "Pay filter" [ref=e90] [cursor=pointer]: Pay
+            - button "Education filter" [ref=e92] [cursor=pointer]: Education
+            - button "Developer skill filter" [ref=e94] [cursor=pointer]: Developer skill
+            - button "Clearance type filter" [ref=e96] [cursor=pointer]: Clearance type
+            - button "Developer type filter" [ref=e98] [cursor=pointer]: Developer type
+        - generic [ref=e104]:
+          - generic [ref=e105]:
+            - generic [ref=e106]:
+              - link "Upload your resume" [ref=e107] [cursor=pointer]:
+                - /url: /promo/resume?from=serptop3&subfrom=resprmrtop&trk.origin=jobsearch&trk.variant=resprmrtop&trk.tk=1jrq9d77hhidv800
+              - text: "- Let employers find you"
+              - separator [ref=e108]:
+                - generic [ref=e109]: "&nbsp;"
+            - generic [ref=e110]:
+              - generic [ref=e111]:
+                - heading "frontend engineer 2026 jobs" [level=1] [ref=e112]
+                - button "More information about job results" [ref=e115] [cursor=pointer]:
+                  - img "More information about job results" [ref=e116]
+              - generic [ref=e120]:
+                - generic [ref=e121]: "Sort by:"
+                - generic [ref=e122]: relevance - date
+            - list [ref=e126]:
+              - listitem
+              - listitem [ref=e127]:
+                - generic [ref=e129]:
+                  - generic:
+                    - generic [ref=e132]:
+                      - heading "full details of Staff Software Engineer (Frontend Developer)" [level=3] [ref=e134]:
+                        - button "full details of Staff Software Engineer (Frontend Developer)" [ref=e135] [cursor=pointer]: Staff Software Engineer (Frontend Developer)
+                      - generic [ref=e136]:
+                        - generic [ref=e138]:
+                          - generic [ref=e140]: Lockheed Martin Corporation
+                          - generic [ref=e141]: Remote in Colorado Springs, CO
+                        - list [ref=e143]:
+                          - listitem [ref=e144]:
+                            - generic [ref=e147]: Flextime
+                          - listitem [ref=e148]:
+                            - generic [ref=e151]: Parental leave
+                          - listitem [ref=e152]:
+                            - generic [ref=e155]: 401(k)
+                          - listitem [ref=e156]:
+                            - generic [ref=e159]: Health insurance
+                          - listitem [ref=e160]:
+                            - generic [ref=e163]: 401(k) matching
+                          - listitem [ref=e164]:
+                            - generic [ref=e167]: Paid time off
+                      - button "Save job Toggle" [ref=e169] [cursor=pointer]:
+                        - img [ref=e170]
+                    - generic [ref=e172]:
+                      - list [ref=e174]:
+                        - listitem [ref=e175]: Experience leading software teams through technical planning activities and mentoring junior engineers.
+                        - listitem [ref=e176]: Perform peer reviews for fellow software engineers and…
+                      - list [ref=e180]:
+                        - listitem [ref=e181]:
+                          - generic [ref=e182]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Colorado Springs, CO" [ref=e183] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Colorado Springs jobs" [ref=e184] [cursor=pointer]:
+                              - /url: /l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Software Engineer jobs in Colorado Springs, CO" [ref=e185] [cursor=pointer]:
+                              - /url: /q-software-engineer-l-colorado-springs,-co-jobs.html
+                        - listitem [ref=e186]:
+                          - generic [ref=e187]:
+                            - text: "Salary Search:"
+                            - link "Staff Software Engineer (Frontend Developer) salaries in Colorado Springs, CO" [ref=e188] [cursor=pointer]:
+                              - /url: /career/software-engineer/salaries/Colorado-Springs--CO?campaignid=serp-more&fromjk=4ed791b5fce97e51&from=serp-more
+                        - listitem [ref=e189]:
+                          - generic [ref=e190]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e191] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e193]:
+                - generic [ref=e195]:
+                  - generic:
+                    - generic [ref=e198]:
+                      - heading "full details of UI/UX Software Engineer (AI-Specialty)" [level=3] [ref=e200]:
+                        - button "full details of UI/UX Software Engineer (AI-Specialty)" [ref=e201] [cursor=pointer]: UI/UX Software Engineer (AI-Specialty)
+                      - generic [ref=e202]:
+                        - generic [ref=e204]:
+                          - generic [ref=e206]: Lockheed Martin Corporation
+                          - generic [ref=e207]: Remote in Colorado Springs, CO
+                        - list [ref=e209]:
+                          - listitem [ref=e210]:
+                            - generic [ref=e213]: Flextime
+                          - listitem [ref=e214]:
+                            - generic [ref=e217]: Parental leave
+                          - listitem [ref=e218]:
+                            - generic [ref=e221]: 401(k)
+                          - listitem [ref=e222]:
+                            - generic [ref=e225]: Health insurance
+                          - listitem [ref=e226]:
+                            - generic [ref=e229]: 401(k) matching
+                          - listitem [ref=e230]:
+                            - generic [ref=e233]: Paid time off
+                      - button "Save job Toggle" [ref=e235] [cursor=pointer]:
+                        - img [ref=e236]
+                    - generic [ref=e238]:
+                      - list [ref=e240]:
+                        - listitem [ref=e241]: Perform peer reviews for fellow software engineers and debug issues as they arise.
+                        - listitem [ref=e242]: Join us and become a part of the team that is actively designing and…
+                      - list [ref=e246]:
+                        - listitem [ref=e247]:
+                          - generic [ref=e248]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Colorado Springs, CO" [ref=e249] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Colorado Springs jobs" [ref=e250] [cursor=pointer]:
+                              - /url: /l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Colorado Springs, CO" [ref=e251] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-colorado-springs,-co-jobs.html
+                        - listitem [ref=e252]:
+                          - generic [ref=e253]:
+                            - text: "Salary Search:"
+                            - link "UI/UX Software Engineer (AI-Specialty) salaries in Colorado Springs, CO" [ref=e254] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Colorado-Springs--CO?campaignid=serp-more&fromjk=472693d88b40f85d&from=serp-more
+                        - listitem [ref=e255]:
+                          - generic [ref=e256]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e257] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e259]:
+                - generic [ref=e261]:
+                  - generic:
+                    - generic [ref=e264]:
+                      - heading "full details of Senior Software Engineer (Frontend Developer)" [level=3] [ref=e266]:
+                        - button "full details of Senior Software Engineer (Frontend Developer)" [ref=e267] [cursor=pointer]: Senior Software Engineer (Frontend Developer)
+                      - generic [ref=e268]:
+                        - generic [ref=e270]:
+                          - generic [ref=e272]: Lockheed Martin Corporation
+                          - generic [ref=e273]: Colorado Springs, CO
+                        - list [ref=e275]:
+                          - listitem [ref=e276]:
+                            - generic [ref=e279]: Flextime
+                          - listitem [ref=e280]:
+                            - generic [ref=e283]: Parental leave
+                          - listitem [ref=e284]:
+                            - generic [ref=e287]: 401(k)
+                          - listitem [ref=e288]:
+                            - generic [ref=e291]: Health insurance
+                          - listitem [ref=e292]:
+                            - generic [ref=e295]: 401(k) matching
+                          - listitem [ref=e296]:
+                            - generic [ref=e299]: Paid time off
+                      - button "Save job Toggle" [ref=e301] [cursor=pointer]:
+                        - img [ref=e302]
+                    - generic [ref=e304]:
+                      - list [ref=e306]:
+                        - listitem [ref=e307]: Perform peer reviews for fellow software engineers and debug issues as they arise.
+                        - listitem [ref=e308]: Join us and become a part of the team that is actively designing and…
+                      - list [ref=e312]:
+                        - listitem [ref=e313]:
+                          - generic [ref=e314]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Colorado Springs, CO" [ref=e315] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Colorado Springs jobs" [ref=e316] [cursor=pointer]:
+                              - /url: /l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Senior Software Engineer jobs in Colorado Springs, CO" [ref=e317] [cursor=pointer]:
+                              - /url: /q-senior-software-engineer-l-colorado-springs,-co-jobs.html
+                        - listitem [ref=e318]:
+                          - generic [ref=e319]:
+                            - text: "Salary Search:"
+                            - link "Senior Software Engineer (Frontend Developer) salaries in Colorado Springs, CO" [ref=e320] [cursor=pointer]:
+                              - /url: /career/senior-software-engineer/salaries/Colorado-Springs--CO?campaignid=serp-more&fromjk=a34608a7956e2a13&from=serp-more
+                        - listitem [ref=e321]:
+                          - generic [ref=e322]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e323] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e325]:
+                - generic [ref=e327]:
+                  - generic:
+                    - generic [ref=e330]:
+                      - heading "full details of Software Engineer (Frontend Developer)" [level=3] [ref=e332]:
+                        - button "full details of Software Engineer (Frontend Developer)" [ref=e333] [cursor=pointer]: Software Engineer (Frontend Developer)
+                      - generic [ref=e334]:
+                        - generic [ref=e336]:
+                          - generic [ref=e338]: Lockheed Martin Corporation
+                          - generic [ref=e339]: Remote in Colorado Springs, CO
+                        - list [ref=e341]:
+                          - listitem [ref=e342]:
+                            - generic [ref=e345]: Flextime
+                          - listitem [ref=e346]:
+                            - generic [ref=e349]: Parental leave
+                          - listitem [ref=e350]:
+                            - generic [ref=e353]: 401(k)
+                          - listitem [ref=e354]:
+                            - generic [ref=e357]: Health insurance
+                          - listitem [ref=e358]:
+                            - generic [ref=e361]: 401(k) matching
+                          - listitem [ref=e362]:
+                            - generic [ref=e365]: Paid time off
+                      - button "Save job Toggle" [ref=e367] [cursor=pointer]:
+                        - img [ref=e368]
+                    - generic [ref=e370]:
+                      - list [ref=e372]:
+                        - listitem [ref=e373]: Perform peer reviews for fellow software engineers and debug issues as they arise.
+                        - listitem [ref=e374]: Join us and become a part of the team that is actively designing and…
+                      - list [ref=e378]:
+                        - listitem [ref=e379]:
+                          - generic [ref=e380]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Colorado Springs, CO" [ref=e381] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Colorado Springs jobs" [ref=e382] [cursor=pointer]:
+                              - /url: /l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Software Engineer jobs in Colorado Springs, CO" [ref=e383] [cursor=pointer]:
+                              - /url: /q-software-engineer-l-colorado-springs,-co-jobs.html
+                        - listitem [ref=e384]:
+                          - generic [ref=e385]:
+                            - text: "Salary Search:"
+                            - link "Software Engineer (Frontend Developer) salaries in Colorado Springs, CO" [ref=e386] [cursor=pointer]:
+                              - /url: /career/software-engineer/salaries/Colorado-Springs--CO?campaignid=serp-more&fromjk=6b26d5c0f3ff7a2e&from=serp-more
+                        - listitem [ref=e387]:
+                          - generic [ref=e388]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e389] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e391]:
+                - generic [ref=e393]:
+                  - generic:
+                    - generic [ref=e396]:
+                      - heading "full details of Front-End Software Developer" [level=3] [ref=e398]:
+                        - button "full details of Front-End Software Developer" [ref=e399] [cursor=pointer]: Front-End Software Developer
+                      - generic [ref=e400]:
+                        - generic [ref=e402]:
+                          - generic [ref=e404]: Lockheed Martin Corporation
+                          - generic [ref=e405]: Hanover, MD
+                        - list [ref=e407]:
+                          - listitem [ref=e408]:
+                            - generic [ref=e411]: Flextime
+                          - listitem [ref=e412]:
+                            - generic [ref=e415]: Parental leave
+                          - listitem [ref=e416]:
+                            - generic [ref=e419]: 401(k)
+                          - listitem [ref=e420]:
+                            - generic [ref=e423]: Health insurance
+                          - listitem [ref=e424]:
+                            - generic [ref=e427]: 401(k) matching
+                          - listitem [ref=e428]:
+                            - generic [ref=e431]: Paid time off
+                      - button "Save job Toggle" [ref=e433] [cursor=pointer]:
+                        - img [ref=e434]
+                    - generic [ref=e436]:
+                      - list [ref=e438]:
+                        - listitem [ref=e439]: In this role you’ll provide analytical expertise to drive process improvements, conduct specialized studies, and define clear requirements while developing…
+                      - list [ref=e443]:
+                        - listitem [ref=e444]:
+                          - generic [ref=e445]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Hanover, MD" [ref=e446] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-hanover,-md-jobs.html
+                            - text: "-"
+                            - link "Hanover jobs" [ref=e447] [cursor=pointer]:
+                              - /url: /l-hanover,-md-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Hanover, MD" [ref=e448] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-hanover,-md-jobs.html
+                        - listitem [ref=e449]:
+                          - generic [ref=e450]:
+                            - text: "Salary Search:"
+                            - link "Front-End Software Developer salaries in Hanover, MD" [ref=e451] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Hanover--MD?campaignid=serp-more&fromjk=a0ad69525c4a78aa&from=serp-more
+                        - listitem [ref=e452]:
+                          - generic [ref=e453]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e454] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem
+              - listitem
+              - listitem [ref=e456]:
+                - generic [ref=e458]:
+                  - generic:
+                    - generic [ref=e461]:
+                      - heading "full details of IT Specialist (0078375)" [level=3] [ref=e463]:
+                        - button "full details of IT Specialist (0078375)" [ref=e464] [cursor=pointer]: IT Specialist (0078375)
+                      - generic [ref=e467]:
+                        - generic [ref=e469]: University of Hawaii
+                        - generic [ref=e470]:
+                          - text: Honolulu, HI 96822
+                          - generic [ref=e471]: (Makiki area)
+                      - button "Save job Toggle" [ref=e473] [cursor=pointer]:
+                        - img [ref=e474]
+                    - generic [ref=e476]:
+                      - list [ref=e478]:
+                        - listitem [ref=e479]: "Hiring Unit: Information Technology Services, Client Service and Operations Center."
+                        - listitem [ref=e480]: "Full Time/Part Time: Full-time."
+                      - list [ref=e484]:
+                        - listitem [ref=e485]:
+                          - generic [ref=e486]:
+                            - text: View all
+                            - link "University of Hawaii jobs in Honolulu, HI" [ref=e487] [cursor=pointer]:
+                              - /url: /q-university-of-hawaii-l-honolulu,-hi-jobs.html
+                            - text: "-"
+                            - link "Honolulu jobs" [ref=e488] [cursor=pointer]:
+                              - /url: /l-honolulu,-hi-jobs.html
+                            - text: "-"
+                            - link "IT Technician jobs in Honolulu, HI" [ref=e489] [cursor=pointer]:
+                              - /url: /q-it-technician-l-honolulu,-hi-jobs.html
+                        - listitem [ref=e490]:
+                          - generic [ref=e491]:
+                            - text: "Salary Search:"
+                            - link "IT Specialist (0078375) salaries in Honolulu, HI" [ref=e492] [cursor=pointer]:
+                              - /url: /career/it-technician/salaries/96822--HI?campaignid=serp-more&fromjk=eb116f1c20f804bb&from=serp-more
+                        - listitem [ref=e493]:
+                          - generic [ref=e494]:
+                            - text: See popular
+                            - link "questions & answers about University of Hawaii" [ref=e495] [cursor=pointer]:
+                              - /url: /cmp/University-of-Hawaii-System/faq
+              - listitem [ref=e497]:
+                - generic [ref=e499]:
+                  - generic:
+                    - generic [ref=e502]:
+                      - heading "full details of Full Stack Software Engineer" [level=3] [ref=e504]:
+                        - button "full details of Full Stack Software Engineer" [ref=e505] [cursor=pointer]: Full Stack Software Engineer
+                      - generic [ref=e506]:
+                        - generic [ref=e508]:
+                          - generic [ref=e510]: Lockheed Martin Corporation
+                          - generic [ref=e511]: Herndon, VA
+                        - list [ref=e513]:
+                          - listitem [ref=e514]:
+                            - generic [ref=e517]: Flextime
+                          - listitem [ref=e518]:
+                            - generic [ref=e521]: Parental leave
+                          - listitem [ref=e522]:
+                            - generic [ref=e525]: 401(k)
+                          - listitem [ref=e526]:
+                            - generic [ref=e529]: Health insurance
+                          - listitem [ref=e530]:
+                            - generic [ref=e533]: 401(k) matching
+                          - listitem [ref=e534]:
+                            - generic [ref=e537]: Paid time off
+                      - button "Save job Toggle" [ref=e539] [cursor=pointer]:
+                        - img [ref=e540]
+                    - generic [ref=e542]:
+                      - list [ref=e544]:
+                        - listitem [ref=e545]: Ability to collaborate effectively with subcontractors, local engineers, and geographically dispersed teammates.
+                        - listitem [ref=e546]: Active TS/SCI clearance with CI Polygraph.
+                      - list [ref=e550]:
+                        - listitem [ref=e551]:
+                          - generic [ref=e552]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Herndon, VA" [ref=e553] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-herndon,-va-jobs.html
+                            - text: "-"
+                            - link "Herndon jobs" [ref=e554] [cursor=pointer]:
+                              - /url: /l-herndon,-va-jobs.html
+                            - text: "-"
+                            - link "Full Stack Developer jobs in Herndon, VA" [ref=e555] [cursor=pointer]:
+                              - /url: /q-full-stack-developer-l-herndon,-va-jobs.html
+                        - listitem [ref=e556]:
+                          - generic [ref=e557]:
+                            - text: "Salary Search:"
+                            - link "Full Stack Software Engineer salaries in Herndon, VA" [ref=e558] [cursor=pointer]:
+                              - /url: /career/full-stack-developer/salaries/Herndon--VA?campaignid=serp-more&fromjk=cde579c1b3ce7f80&from=serp-more
+                        - listitem [ref=e559]:
+                          - generic [ref=e560]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e561] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e563]:
+                - generic [ref=e565]:
+                  - generic:
+                    - generic [ref=e568]:
+                      - heading "full details of Front-End Software Developer" [level=3] [ref=e570]:
+                        - button "full details of Front-End Software Developer" [ref=e571] [cursor=pointer]: Front-End Software Developer
+                      - generic [ref=e572]:
+                        - generic [ref=e574]:
+                          - generic [ref=e576]: Lockheed Martin Corporation
+                          - generic [ref=e577]: Hanover, MD
+                        - list [ref=e579]:
+                          - listitem [ref=e580]:
+                            - generic [ref=e583]: Flextime
+                          - listitem [ref=e584]:
+                            - generic [ref=e587]: Parental leave
+                          - listitem [ref=e588]:
+                            - generic [ref=e591]: 401(k)
+                          - listitem [ref=e592]:
+                            - generic [ref=e595]: Health insurance
+                          - listitem [ref=e596]:
+                            - generic [ref=e599]: 401(k) matching
+                          - listitem [ref=e600]:
+                            - generic [ref=e603]: Paid time off
+                      - button "Save job Toggle" [ref=e605] [cursor=pointer]:
+                        - img [ref=e606]
+                    - generic [ref=e608]:
+                      - list [ref=e610]:
+                        - listitem [ref=e611]: In this role you’ll provide analytical expertise to drive process improvements, conduct specialized studies, and define clear requirements while developing…
+                      - list [ref=e615]:
+                        - listitem [ref=e616]:
+                          - generic [ref=e617]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Hanover, MD" [ref=e618] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-hanover,-md-jobs.html
+                            - text: "-"
+                            - link "Hanover jobs" [ref=e619] [cursor=pointer]:
+                              - /url: /l-hanover,-md-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Hanover, MD" [ref=e620] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-hanover,-md-jobs.html
+                        - listitem [ref=e621]:
+                          - generic [ref=e622]:
+                            - text: "Salary Search:"
+                            - link "Front-End Software Developer salaries in Hanover, MD" [ref=e623] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Hanover--MD?campaignid=serp-more&fromjk=2097396af5fb301d&from=serp-more
+                        - listitem [ref=e624]:
+                          - generic [ref=e625]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e626] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e628]:
+                - generic [ref=e630]:
+                  - generic:
+                    - generic [ref=e633]:
+                      - heading "full details of Software Engineer - Angular Focus" [level=3] [ref=e635]:
+                        - button "full details of Software Engineer - Angular Focus" [ref=e636] [cursor=pointer]: Software Engineer - Angular Focus
+                      - generic [ref=e637]:
+                        - generic [ref=e639]:
+                          - generic [ref=e641]: Lockheed Martin Corporation
+                          - generic [ref=e642]: Herndon, VA
+                        - list [ref=e644]:
+                          - listitem [ref=e645]:
+                            - generic [ref=e648]: Flextime
+                          - listitem [ref=e649]:
+                            - generic [ref=e652]: Parental leave
+                          - listitem [ref=e653]:
+                            - generic [ref=e656]: 401(k)
+                          - listitem [ref=e657]:
+                            - generic [ref=e660]: Health insurance
+                          - listitem [ref=e661]:
+                            - generic [ref=e664]: 401(k) matching
+                          - listitem [ref=e665]:
+                            - generic [ref=e668]: Paid time off
+                      - button "Save job Toggle" [ref=e670] [cursor=pointer]:
+                        - img [ref=e671]
+                    - generic [ref=e673]:
+                      - list [ref=e675]:
+                        - listitem [ref=e676]: Candidate is expected to collaborate cross-functionally with subcontractors, local engineers, and geographically dispersed teammates.
+                      - list [ref=e680]:
+                        - listitem [ref=e681]:
+                          - generic [ref=e682]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Herndon, VA" [ref=e683] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-herndon,-va-jobs.html
+                            - text: "-"
+                            - link "Herndon jobs" [ref=e684] [cursor=pointer]:
+                              - /url: /l-herndon,-va-jobs.html
+                            - text: "-"
+                            - link "Software Engineer jobs in Herndon, VA" [ref=e685] [cursor=pointer]:
+                              - /url: /q-software-engineer-l-herndon,-va-jobs.html
+                        - listitem [ref=e686]:
+                          - generic [ref=e687]:
+                            - text: "Salary Search:"
+                            - link "Software Engineer - Angular Focus salaries in Herndon, VA" [ref=e688] [cursor=pointer]:
+                              - /url: /career/software-engineer/salaries/Herndon--VA?campaignid=serp-more&fromjk=bbb164ff07c29fbd&from=serp-more
+                        - listitem [ref=e689]:
+                          - generic [ref=e690]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e691] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e693]:
+                - generic [ref=e695]:
+                  - generic:
+                    - generic [ref=e698]:
+                      - heading "full details of UI/UX Software Engineer - Figma Specialist" [level=3] [ref=e700]:
+                        - button "full details of UI/UX Software Engineer - Figma Specialist" [ref=e701] [cursor=pointer]: UI/UX Software Engineer - Figma Specialist
+                      - generic [ref=e702]:
+                        - generic [ref=e704]:
+                          - generic [ref=e706]: Lockheed Martin Corporation
+                          - generic [ref=e707]: Remote in Colorado Springs, CO
+                        - list [ref=e709]:
+                          - listitem [ref=e710]:
+                            - generic [ref=e713]: Flextime
+                          - listitem [ref=e714]:
+                            - generic [ref=e717]: Parental leave
+                          - listitem [ref=e718]:
+                            - generic [ref=e721]: 401(k)
+                          - listitem [ref=e722]:
+                            - generic [ref=e725]: Health insurance
+                          - listitem [ref=e726]:
+                            - generic [ref=e729]: 401(k) matching
+                          - listitem [ref=e730]:
+                            - generic [ref=e733]: Paid time off
+                      - button "Save job Toggle" [ref=e735] [cursor=pointer]:
+                        - img [ref=e736]
+                    - generic [ref=e738]:
+                      - list [ref=e740]:
+                        - listitem [ref=e741]: Perform peer reviews for fellow software engineers and debug issues as they arise.
+                        - listitem [ref=e742]: Join us and become a part of the team that is actively designing and…
+                      - list [ref=e746]:
+                        - listitem [ref=e747]:
+                          - generic [ref=e748]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Colorado Springs, CO" [ref=e749] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Colorado Springs jobs" [ref=e750] [cursor=pointer]:
+                              - /url: /l-colorado-springs,-co-jobs.html
+                            - text: "-"
+                            - link "Ux/Ui Specialist jobs in Colorado Springs, CO" [ref=e751] [cursor=pointer]:
+                              - /url: /q-ux-ui-specialist-l-colorado-springs,-co-jobs.html
+                        - listitem [ref=e752]:
+                          - generic [ref=e753]:
+                            - text: "Salary Search:"
+                            - link "UI/UX Software Engineer - Figma Specialist salaries" [ref=e754] [cursor=pointer]:
+                              - /url: /career/salaries/Ux%2FUi%20Specialist/Colorado%20Springs,%20CO?campaignid=serp-more&fromjk=ad4be6aef949be23&from=serp-more
+                        - listitem [ref=e755]:
+                          - generic [ref=e756]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e757] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem
+              - listitem [ref=e759]:
+                - generic [ref=e761]:
+                  - generic:
+                    - generic [ref=e764]:
+                      - heading "full details of AI Tooling Front End Developer" [level=3] [ref=e766]:
+                        - button "full details of AI Tooling Front End Developer" [ref=e767] [cursor=pointer]: AI Tooling Front End Developer
+                      - generic [ref=e768]:
+                        - generic [ref=e770]:
+                          - generic [ref=e772]: Lockheed Martin Corporation
+                          - generic [ref=e773]: Puerto Rico
+                        - list [ref=e775]:
+                          - listitem [ref=e776]:
+                            - generic [ref=e779]: Flextime
+                          - listitem [ref=e780]:
+                            - generic [ref=e783]: Parental leave
+                          - listitem [ref=e784]:
+                            - generic [ref=e787]: 401(k)
+                          - listitem [ref=e788]:
+                            - generic [ref=e791]: Health insurance
+                          - listitem [ref=e792]:
+                            - generic [ref=e795]: 401(k) matching
+                          - listitem [ref=e796]:
+                            - generic [ref=e799]: Paid time off
+                      - button "Save job Toggle" [ref=e801] [cursor=pointer]:
+                        - img [ref=e802]
+                    - generic [ref=e804]:
+                      - list [ref=e806]:
+                        - listitem [ref=e807]: Collaborate with product owners, UX designers, and back‑end engineers in an Agile environment.
+                        - listitem [ref=e808]: Our skilled engineers have discipline and domain‑specific…
+                      - list [ref=e812]:
+                        - listitem [ref=e813]:
+                          - generic [ref=e814]:
+                            - text: View all
+                            - link "Lockheed Martin Corporation jobs in Puerto Rico" [ref=e815] [cursor=pointer]:
+                              - /url: /q-lockheed-martin-corporation-l-puerto-rico-jobs.html
+                            - text: "-"
+                            - link "Puerto Rico jobs" [ref=e816] [cursor=pointer]:
+                              - /url: /l-puerto-rico-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Puerto Rico" [ref=e817] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-puerto-rico-jobs.html
+                        - listitem [ref=e818]:
+                          - generic [ref=e819]:
+                            - text: "Salary Search:"
+                            - link "AI Tooling Front End Developer salaries in Puerto Rico" [ref=e820] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/PR?campaignid=serp-more&fromjk=fbee6904d515775f&from=serp-more
+                        - listitem [ref=e821]:
+                          - generic [ref=e822]:
+                            - text: See popular
+                            - link "questions & answers about Lockheed Martin Corporation" [ref=e823] [cursor=pointer]:
+                              - /url: /cmp/Lockheed-Martin/faq
+              - listitem [ref=e825]:
+                - generic [ref=e827]:
+                  - generic:
+                    - generic [ref=e830]:
+                      - heading "full details of Web Front-End Developer – Agentic AI Applications" [level=3] [ref=e832]:
+                        - button "full details of Web Front-End Developer – Agentic AI Applications" [ref=e833] [cursor=pointer]: Web Front-End Developer – Agentic AI Applications
+                      - generic [ref=e834]:
+                        - generic [ref=e835]:
+                          - img [ref=e837]
+                          - generic [ref=e838]:
+                            - generic [ref=e840]: Lenovo
+                            - generic [ref=e841]: Hybrid work in Morrisville, NC
+                        - list [ref=e843]:
+                          - listitem [ref=e844]:
+                            - generic [ref=e847]: Work from home
+                      - button "Save job Toggle" [ref=e849] [cursor=pointer]:
+                        - img [ref=e850]
+                    - generic [ref=e852]:
+                      - list [ref=e854]:
+                        - listitem [ref=e855]: In this role, you will collaborate with AI engineers and backend developers to create seamless front-end experiences that enhance the functionality of AI-driven…
+                      - list [ref=e859]:
+                        - listitem [ref=e860]:
+                          - generic [ref=e861]:
+                            - text: View all
+                            - link "Lenovo jobs in Morrisville, NC" [ref=e862] [cursor=pointer]:
+                              - /url: /q-lenovo-l-morrisville,-nc-jobs.html
+                            - text: "-"
+                            - link "Morrisville jobs" [ref=e863] [cursor=pointer]:
+                              - /url: /l-morrisville,-nc-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Morrisville, NC" [ref=e864] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-morrisville,-nc-jobs.html
+                        - listitem [ref=e865]:
+                          - generic [ref=e866]:
+                            - text: "Salary Search:"
+                            - link "Web Front-End Developer – Agentic AI Applications salaries in Morrisville, NC" [ref=e867] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Morrisville--NC?campaignid=serp-more&fromjk=6932eac5c8127278&from=serp-more
+                        - listitem [ref=e868]:
+                          - generic [ref=e869]:
+                            - text: See popular
+                            - link "questions & answers about Lenovo" [ref=e870] [cursor=pointer]:
+                              - /url: /cmp/Lenovo/faq
+              - listitem [ref=e872]:
+                - generic [ref=e874]:
+                  - generic:
+                    - generic [ref=e877]:
+                      - heading "full details of Front End Web Developer (UL491)" [level=3] [ref=e879]:
+                        - button "full details of Front End Web Developer (UL491)" [ref=e880] [cursor=pointer]: Front End Web Developer (UL491)
+                      - generic [ref=e881]:
+                        - generic [ref=e883]:
+                          - generic [ref=e885]: University of Minnesota
+                          - generic [ref=e886]: Minneapolis, MN
+                        - list [ref=e888]:
+                          - listitem [ref=e889]:
+                            - generic [ref=e892]: Green card sponsorship
+                      - button "Save job Toggle" [ref=e894] [cursor=pointer]:
+                        - img [ref=e895]
+                    - generic [ref=e897]:
+                      - list [ref=e899]:
+                        - listitem [ref=e900]: BA/BS plus at least two years experience, or master’s degree.
+                        - listitem [ref=e901]: Demonstrated experience developing front-end web interfaces using modern web technologies,…
+                      - list [ref=e905]:
+                        - listitem [ref=e906]:
+                          - generic [ref=e907]:
+                            - text: View all
+                            - link "University of Minnesota jobs in Minneapolis, MN" [ref=e908] [cursor=pointer]:
+                              - /url: /q-university-of-minnesota-l-minneapolis,-mn-jobs.html
+                            - text: "-"
+                            - link "Minneapolis jobs" [ref=e909] [cursor=pointer]:
+                              - /url: /l-minneapolis,-mn-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in Minneapolis, MN" [ref=e910] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-minneapolis,-mn-jobs.html
+                        - listitem [ref=e911]:
+                          - generic [ref=e912]:
+                            - text: "Salary Search:"
+                            - link "Front End Web Developer (UL491) salaries in Minneapolis, MN" [ref=e913] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/Minneapolis--MN?campaignid=serp-more&fromjk=0312f52d025c1114&from=serp-more
+                        - listitem [ref=e914]:
+                          - generic [ref=e915]:
+                            - text: See popular
+                            - link "questions & answers about University of Minnesota" [ref=e916] [cursor=pointer]:
+                              - /url: /cmp/University-of-Minnesota/faq
+              - listitem [ref=e918]:
+                - generic [ref=e920]:
+                  - generic:
+                    - generic [ref=e923]:
+                      - generic [ref=e924]:
+                        - heading "full details of Sr. Software Engineer - UI/UX (Qt/QML)" [level=3] [ref=e925]:
+                          - button "full details of Sr. Software Engineer - UI/UX (Qt/QML)" [ref=e926] [cursor=pointer]: Sr. Software Engineer - UI/UX (Qt/QML)
+                        - generic [ref=e931]: Often replies in 3 days
+                      - generic [ref=e932]:
+                        - generic [ref=e933]:
+                          - img [ref=e935]
+                          - generic [ref=e936]:
+                            - generic [ref=e938]: Medtronic
+                            - generic [ref=e939]: Newton, MA
+                        - list [ref=e941]:
+                          - listitem [ref=e942]:
+                            - generic [ref=e945]: Tuition reimbursement
+                          - listitem [ref=e946]:
+                            - generic [ref=e949]: Employee stock purchase plan
+                          - listitem [ref=e950]:
+                            - generic [ref=e953]: 401(k)
+                          - listitem [ref=e954]:
+                            - generic [ref=e957]: Health insurance
+                          - listitem [ref=e958]:
+                            - generic [ref=e961]: 401(k) matching
+                          - listitem [ref=e962]:
+                            - generic [ref=e965]: Paid time off
+                      - button "Save job Toggle" [ref=e967] [cursor=pointer]:
+                        - img [ref=e968]
+                    - generic [ref=e970]:
+                      - list [ref=e972]:
+                        - listitem [ref=e973]: You'll make architecture decisions about UI state, data binding, and interaction patterns; mentor newer UI engineers; and set the standard for what a high-…
+                      - list [ref=e977]:
+                        - listitem [ref=e978]:
+                          - generic [ref=e979]:
+                            - text: View all
+                            - link "Medtronic jobs in Newton, MA" [ref=e980] [cursor=pointer]:
+                              - /url: /q-medtronic-l-newton,-ma-jobs.html
+                            - text: "-"
+                            - link "Newton jobs" [ref=e981] [cursor=pointer]:
+                              - /url: /l-newton,-ma-jobs.html
+                            - text: "-"
+                            - link "Senior Software Engineer jobs in Newton, MA" [ref=e982] [cursor=pointer]:
+                              - /url: /q-senior-software-engineer-l-newton,-ma-jobs.html
+                        - listitem [ref=e983]:
+                          - generic [ref=e984]:
+                            - text: "Salary Search:"
+                            - link "Sr. Software Engineer - UI/UX (Qt/QML) salaries in Newton, MA" [ref=e985] [cursor=pointer]:
+                              - /url: /career/senior-software-engineer/salaries/Newton--MA?campaignid=serp-more&fromjk=cc0e95b05cfc9f05&from=serp-more
+                        - listitem [ref=e986]:
+                          - generic [ref=e987]:
+                            - text: See popular
+                            - link "questions & answers about Medtronic" [ref=e988] [cursor=pointer]:
+                              - /url: /cmp/Medtronic/faq
+              - listitem [ref=e990]:
+                - generic [ref=e992]:
+                  - generic:
+                    - generic [ref=e995]:
+                      - heading "full details of Senior iOS UI Engineer" [level=3] [ref=e997]:
+                        - button "full details of Senior iOS UI Engineer" [ref=e998] [cursor=pointer]: Senior iOS UI Engineer
+                      - generic [ref=e1001]:
+                        - generic [ref=e1003]: Adobe
+                        - generic [ref=e1004]:
+                          - text: New York, NY 10301
+                          - generic [ref=e1005]: (New Brighton area)
+                      - button "Save job Toggle" [ref=e1007] [cursor=pointer]:
+                        - img [ref=e1008]
+                    - generic [ref=e1010]:
+                      - list [ref=e1012]:
+                        - listitem [ref=e1013]: Contribute to a growing team of engineers on sustainable engineering practices balancing beauty and performance.
+                      - list [ref=e1017]:
+                        - listitem [ref=e1018]:
+                          - generic [ref=e1019]:
+                            - text: View all
+                            - link "Adobe jobs in New York, NY" [ref=e1020] [cursor=pointer]:
+                              - /url: /q-adobe-l-new-york,-ny-jobs.html
+                            - text: "-"
+                            - link "New York jobs" [ref=e1021] [cursor=pointer]:
+                              - /url: /l-new-york,-ny-jobs.html
+                            - text: "-"
+                            - link "Front End Developer jobs in New York, NY" [ref=e1022] [cursor=pointer]:
+                              - /url: /q-front-end-developer-l-new-york,-ny-jobs.html
+                        - listitem [ref=e1023]:
+                          - generic [ref=e1024]:
+                            - text: "Salary Search:"
+                            - link "Senior iOS UI Engineer salaries in New York, NY" [ref=e1025] [cursor=pointer]:
+                              - /url: /career/front-end-developer/salaries/New-York--NY?campaignid=serp-more&fromjk=2c5a6d41f850c8d2&from=serp-more
+                        - listitem [ref=e1026]:
+                          - generic [ref=e1027]:
+                            - text: See popular
+                            - link "questions & answers about Adobe" [ref=e1028] [cursor=pointer]:
+                              - /url: /cmp/Adobe/faq
+              - listitem
+            - navigation "pagination" [ref=e1030]:
+              - list [ref=e1031]:
+                - listitem [ref=e1032]:
+                  - link "1" [ref=e1033] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e1034]:
+                  - link "2" [ref=e1035] [cursor=pointer]:
+                    - /url: /jobs?q=frontend+engineer+2026&start=10
+                - listitem [ref=e1036]:
+                  - link "3" [ref=e1037] [cursor=pointer]:
+                    - /url: /jobs?q=frontend+engineer+2026&start=20
+                - listitem [ref=e1038]:
+                  - link "4" [ref=e1039] [cursor=pointer]:
+                    - /url: /jobs?q=frontend+engineer+2026&start=30
+                - listitem [ref=e1040]:
+                  - link "5" [ref=e1041] [cursor=pointer]:
+                    - /url: /jobs?q=frontend+engineer+2026&start=40
+                - listitem [ref=e1042]:
+                  - link "Next Page" [ref=e1043] [cursor=pointer]:
+                    - /url: /jobs?q=frontend+engineer+2026&start=10
+                    - img [ref=e1044]
+            - generic [ref=e1046]:
+              - heading "Resume Resources:" [level=2] [ref=e1047]
+              - list [ref=e1048]:
+                - listitem [ref=e1049]:
+                  - link "Resume Samples" [ref=e1050] [cursor=pointer]:
+                    - /url: https://www.indeed.com/career-advice/resume-samples?from=jobsearch_footer
+                - text: "-"
+                - listitem [ref=e1051]:
+                  - link "Resume Templates" [ref=e1052] [cursor=pointer]:
+                    - /url: https://www.indeed.com/profile/resume-templates?from=jobsearch_footer
+            - generic [ref=e1053]:
+              - heading "Career Resources:" [level=2] [ref=e1054]
+              - list [ref=e1055]:
+                - listitem [ref=e1056]:
+                  - link "Career Explorer" [ref=e1057] [cursor=pointer]:
+                    - /url: /career/salaries?from=jobsearch_footer
+                - text: "-"
+                - listitem [ref=e1058]:
+                  - link "Explore High Paying Jobs" [ref=e1059] [cursor=pointer]:
+                    - /url: /explorer/
+            - generic [ref=e1060]:
+              - heading "Employer Resources:" [level=2] [ref=e1061]
+              - list [ref=e1062]:
+                - listitem [ref=e1063]:
+                  - link "How to Write a Job Description" [ref=e1064] [cursor=pointer]:
+                    - /url: /hire/how-to-write-a-job-description?from=jobsearch_footer
+                - text: "-"
+                - listitem [ref=e1065]:
+                  - link "How to Hire Employees" [ref=e1066] [cursor=pointer]:
+                    - /url: /hire/how-to-hire?from=jobsearch_footer
+          - generic "Job Post Details" [ref=e1069]:
+            - button "Return to Search Result" [ref=e1070]
+            - heading "Job Post Details" [level=2] [ref=e1071]
+            - generic [ref=e1074]:
+              - generic [ref=e1076]:
+                - generic [ref=e1077]:
+                  - heading "Staff Software Engineer (Frontend Developer) - job post" [level=2] [ref=e1079]:
+                    - generic [ref=e1080]:
+                      - text: Staff Software Engineer (Frontend Developer)
+                      - generic [ref=e1081]: "- job post"
+                  - generic [ref=e1085]:
+                    - generic [ref=e1086]:
+                      - link "Lockheed Martin Corporation (opens in a new tab)" [ref=e1089] [cursor=pointer]:
+                        - /url: https://www.indeed.com/cmp/Lockheed-Martin?campaignid=mobvjcmp&from=mobviewjob&tk=1jrq9d7e9hidv800&fromjk=4ed791b5fce97e51
+                        - text: Lockheed Martin Corporation
+                        - img [ref=e1090]
+                      - generic [ref=e1092]:
+                        - generic [ref=e1093]: · 4.0
+                        - generic [ref=e1094]: 4.0 out of 5 stars
+                        - img [ref=e1095]
+                    - generic [ref=e1098]: Colorado Springs, CO•Remote
+                - generic [ref=e1101]:
+                  - generic [ref=e1102]: $113,900 - $200,905 a year
+                  - generic [ref=e1103]: "- Full-time"
+                - generic [ref=e1105]:
+                  - generic [ref=e1106]: You must create an Indeed account before continuing to the company website to apply
+                  - button "Apply on company site (opens in a new tab)" [ref=e1112] [cursor=pointer]:
+                    - generic [ref=e1113]: Apply on company site
+                    - img [ref=e1114]
+                  - button "Save job" [ref=e1119] [cursor=pointer]:
+                    - img "save-icon" [ref=e1120]
+                  - button "Share Job" [ref=e1122] [cursor=pointer]
+              - generic [ref=e1125]:
+                - generic [ref=e1126]:
+                  - generic [ref=e1132]:
+                    - generic [ref=e1133]:
+                      - generic [ref=e1134]:
+                        - heading "Profile insights" [level=2] [ref=e1135]
+                        - text: Find out how your skills align with the job description
+                      - group "Skills" [ref=e1137]:
+                        - img [ref=e1138]
+                        - generic [ref=e1140]:
+                          - heading "Skills" [level=3] [ref=e1141]
+                          - group "Do you have experience in UX implementation?" [ref=e1142]:
+                            - generic [ref=e1144]:
+                              - text: Do you have experience in
+                              - strong [ref=e1145]: UX implementation
+                              - text: "?"
+                            - generic [ref=e1146]:
+                              - button "Yes" [ref=e1147] [cursor=pointer]:
+                                - generic [ref=e1148]: "Yes"
+                              - button "No" [ref=e1149] [cursor=pointer]:
+                                - generic [ref=e1150]: "No"
+                    - separator [ref=e1151]:
+                      - generic [ref=e1152]: "&nbsp;"
+                  - generic [ref=e1158]:
+                    - generic [ref=e1159]:
+                      - heading "Job details" [level=2] [ref=e1161]
+                      - generic [ref=e1162]:
+                        - group "Pay" [ref=e1163]:
+                          - img [ref=e1164]
+                          - generic [ref=e1166]:
+                            - heading "Pay" [level=3] [ref=e1167]
+                            - list [ref=e1169]:
+                              - listitem [ref=e1170]:
+                                - generic [ref=e1175]: $113,900 - $200,905 a year
+                        - group "Job type" [ref=e1176]:
+                          - img [ref=e1177]
+                          - generic [ref=e1180]:
+                            - heading "Job type" [level=3] [ref=e1181]
+                            - list [ref=e1183]:
+                              - listitem [ref=e1184]:
+                                - generic [ref=e1189]: Full-time
+                        - group "Shift and schedule" [ref=e1190]:
+                          - img [ref=e1191]
+                          - generic [ref=e1193]:
+                            - heading "Shift and schedule" [level=3] [ref=e1194]
+                            - list [ref=e1196]:
+                              - listitem [ref=e1197]:
+                                - generic [ref=e1202]: 4x10
+                              - listitem [ref=e1203]:
+                                - generic [ref=e1208]: Flextime
+                        - group "Work setting" [ref=e1209]:
+                          - img [ref=e1210]
+                          - generic [ref=e1212]:
+                            - heading "Work setting" [level=3] [ref=e1213]
+                            - list [ref=e1215]:
+                              - listitem [ref=e1216]:
+                                - generic [ref=e1221]: Remote
+                    - separator [ref=e1222]:
+                      - generic [ref=e1223]: "&nbsp;"
+                  - generic [ref=e1224]:
+                    - heading "Benefits" [level=3] [ref=e1225]
+                    - paragraph [ref=e1226]: Pulled from the full job description
+                    - list [ref=e1230]:
+                      - listitem [ref=e1231]: Flextime
+                      - listitem [ref=e1232]: Parental leave
+                      - listitem [ref=e1233]: 401(k)
+                      - listitem [ref=e1234]: Health insurance
+                      - listitem [ref=e1235]: 401(k) matching
+                      - listitem [ref=e1236]: Paid time off
+                      - listitem [ref=e1237]: Vision insurance
+                    - button "Show more" [ref=e1239] [cursor=pointer]:
+                      - generic [ref=e1240]: Show more
+                      - img [ref=e1241]
+                    - separator [ref=e1243]:
+                      - generic [ref=e1244]: "&nbsp;"
+                  - heading "Full job description" [level=2] [ref=e1246]
+                  - generic [ref=e1247]:
+                    - generic [ref=e1248]:
+                      - paragraph [ref=e1249]: "JOB ID: 732605BR"
+                      - paragraph [ref=e1250]: "Date posted: Jun. 17, 2026"
+                      - paragraph [ref=e1251]: "Description:"
+                      - paragraph [ref=e1252]: WHAT WE'RE DOING
+                      - text: Come join the CommandIQ® (CIQ) team – a product line established in 2025 with sizable investment and support from RMS senior leadership. We are developing mission critical Battle Management and Command & Control capabilities for a complete Command and Control mission suite. Our solution provides the open architecture as well as mission apps that can be customized to each user’s needs. Customers can also easily integrate their favorite tools into a single CommandIQ® Common Operating Picture (COP) to meet their own, specialized mission requirements.
+                      - text: Join us and become a part of the team that is actively designing and developing the initial baseline which has already generated significant customer interest both domestically and internationally!
+                      - text: "Check out these links for more information about our exciting suite of products:"
+                      - text: https://www.lockheedmartin.com/en-us/products/command-and-control.html
+                      - text: https://www.youtube.com/watch?v=mYu06sRV398
+                      - paragraph [ref=e1253]: THE WORK
+                      - text: "CommandIQ® is seeking a software engineer to join one of our agile development teams. In this role, you will:"
+                      - list [ref=e1254]:
+                        - listitem [ref=e1255]: Decompose higher-level roadmap features into actionable work items
+                        - listitem [ref=e1256]: Design, Implement, and integrate/test software features
+                        - listitem [ref=e1257]: Perform peer reviews for fellow software engineers and debug issues as they arise
+                        - listitem [ref=e1258]: Participate in technical discussions to define/solve overarching software architecture needs
+                        - listitem [ref=e1259]: Collaborate with cross-functional peers to better understand project requirements and customer/stakeholder needs
+                      - paragraph [ref=e1260]: WHO WE ARE
+                      - text: CommandIQ® is a geographically dispersed project team that executes in an agile – scrum setting. The team readily adapts to changing priorities as new information is discovered and project milestones shift to meet the various stakeholder needs. It has the opportunity to be fast-paced environment but also presents a highly-desirable opportunity for team members to gain exposure to various subject areas and hone their technical skills across various tools and frameworks. Additionally, team members have the ability to interface with an array of different customer groups and present thoughtful solutions to meet the various customer/stakeholder needs. If the desire to succeed in an actively changing and complex problem space excites you, CommandIQ® is the place to be!
+                      - text: For this role specifically, candidates who are local to Colorado Springs, CO or King of Prussia, PA are preferred. Strong candidates who exceptionally match the roles and responsibilities will be considered for a fully-remote work schedule. The specific weekly work schedule will be discussed during the hiring process.
+                      - paragraph [ref=e1261]: WHY JOIN US
+                      - text: Your Health, Your Wealth, Your Life - At Lockheed Martin, we prioritize the well-being of our employees. We offer flexible schedules, competitive pay, and a comprehensive benefits package to support your healthy, fulfilling life both at and outside of work.
+                      - paragraph [ref=e1262]: "Basic Qualifications:"
+                      - list [ref=e1263]:
+                        - listitem [ref=e1264]: Frontend framework development experience using Angular, javascript, CSS, and HTML
+                      - list [ref=e1265]:
+                        - listitem [ref=e1266]: Experience using REST API's and Docker
+                      - list [ref=e1267]:
+                        - listitem [ref=e1268]: Experience with UI/UX Design & Iteration Process/Tools (Figma, MockFlow, UXPin, Axure)
+                      - list [ref=e1269]:
+                        - listitem [ref=e1270]: Experience performing verification-level testing on UI/UX components and applications using recognized UI/UX Test Frameworks (Cypress, Selenium, Playwright, Jest)
+                      - list [ref=e1271]:
+                        - listitem [ref=e1272]: Experience across the full Software Development Life Cycle (SDLC)
+                      - list [ref=e1273]:
+                        - listitem [ref=e1274]: 5+ years of relevant work experience (Advanced Degree may be substituted for 2 years of experience)
+                      - paragraph [ref=e1275]: "Desired Skills:"
+                      - list [ref=e1276]:
+                        - listitem [ref=e1277]: Experience in Agile Methodologies & Tools
+                      - list [ref=e1278]:
+                        - listitem [ref=e1279]: Experience leading software teams through technical planning activities and mentoring junior engineers
+                      - list [ref=e1280]:
+                        - listitem [ref=e1281]: Experience in a Full-Stack engineering role
+                      - list [ref=e1282]:
+                        - listitem [ref=e1283]: Experience with container management using Kubernetes/Helm
+                      - list [ref=e1284]:
+                        - listitem [ref=e1285]: "Experience with any of the following: Gitlab CI/CD, gRPC, Python, Flask"
+                      - list [ref=e1286]:
+                        - listitem [ref=e1287]: Previous IRAD experience
+                      - list [ref=e1288]:
+                        - listitem [ref=e1289]: Active Secret Clearance
+                      - paragraph [ref=e1290]: "Security Clearance Statement:"
+                      - text: This position requires a government security clearance, you must be a US Citizen for consideration.
+                      - paragraph [ref=e1291]: "Clearance Level:"
+                      - text: Secret
+                      - paragraph [ref=e1292]: Other Important Information You Should Know
+                      - paragraph [ref=e1293]: "Expression of Interest:"
+                      - text: By applying to this job, you are expressing interest in this position and could be considered for other career opportunities where similar skills and requirements have been identified as a match. Should this match be identified you may be contacted for this and future openings.
+                      - paragraph [ref=e1294]: "Ability to Work Remotely:"
+                      - text: "Part-time Remote Telework: The employee selected for this position will work part of their work schedule remotely and part of their work schedule at a designated Lockheed Martin facility. The specific weekly schedule will be discussed during the hiring process."
+                      - paragraph [ref=e1295]: "Work Schedules:"
+                      - text: Lockheed Martin supports a variety of alternate work schedules that provide additional flexibility to our employees. Schedules range from standard 40 hours over a five day work week while others may be condensed. These condensed schedules provide employees with additional time away from the office and are in addition to our Paid Time off benefits.
+                      - paragraph [ref=e1296]: "Schedule for this Position:"
+                      - text: 4x10 hour day, 3 days off per week
+                      - text: "Pay Rate: The annual base salary range for this position in California, Massachusetts, and New York (excluding most major metropolitan areas), Colorado, Hawaii, Illinois, Maryland, Minnesota, New Jersey, Vermont, Washington or Washington DC is $113,900 - $200,905. For states not referenced above, the salary range for this position will reflect the candidate’s final work location. Please note that the salary information is a general guideline only. Lockheed Martin considers factors such as (but not limited to) scope and responsibilities of the position, candidate's work experience, education/ training, key skills as well as market and business considerations when extending an offer."
+                      - text: "Benefits offered: Medical, Dental, Vision, Life Insurance, Short-Term Disability, Long-Term Disability, 401(k) match, Flexible Spending Accounts, EAP, Education Assistance, Parental Leave, Paid time off, and Holidays."
+                      - text: "(Washington state applicants only) Non-represented full-time employees: accrue at least 10 hours per month of Paid Time Off (PTO) to be used for incidental absences and other reasons; receive at least 90 hours for holidays. Represented full time employees accrue 6.67 hours of Vacation per month; accrue up to 52 hours of sick leave annually; receive at least 96 hours for holidays. PTO, Vacation, sick leave, and holiday hours are prorated based on start date during the calendar year."
+                      - text: This position is incentive plan eligible.
+                      - text: Lockheed Martin is an equal opportunity employer. Qualified candidates will be considered without regard to legally protected characteristics.
+                      - text: The application window will close in 90 days; applicants are encouraged to apply within 5 - 30 days of the requisition posting date in order to receive optimal consideration.
+                      - text: At Lockheed Martin, we use our passion for purposeful innovation to help keep people safe and solve the world's most complex challenges. Our people are some of the greatest minds in the industry and truly make Lockheed Martin a great place to work.
+                      - text: With our employees as our priority, we provide diverse career opportunities designed to propel, develop, and boost agility. Our flexible schedules, competitive pay, and comprehensive benefits enable our employees to live a healthy, fulfilling life at and outside of work. We place an emphasis on empowering our employees by fostering an inclusive environment built upon integrity and corporate responsibility.
+                      - text: If this sounds like a culture you connect with, you’re invited to apply for this role. Or, if you are unsure whether your experience aligns with the requirements of this position, we encourage you to search on Lockheed Martin Jobs, and apply for roles that align with your qualifications.
+                      - paragraph [ref=e1297]: "Experience Level:"
+                      - text: Experienced Professional
+                      - paragraph [ref=e1298]: "Business Unit:"
+                      - text: RMS
+                      - paragraph [ref=e1299]: "Relocation Available:"
+                      - text: "No"
+                      - paragraph [ref=e1300]: "Career Area:"
+                      - text: Software Engineering
+                      - paragraph [ref=e1301]: "Type:"
+                      - text: Full-Time
+                      - paragraph [ref=e1302]: "Shift:"
+                      - text: First
+                    - generic [ref=e1303]:
+                      - paragraph [ref=e1304]: At Lockheed Martin, we apply our passion for purposeful innovation to keep people safe and solve the world's most complex challenges.
+                      - paragraph [ref=e1305]: "Pioneering Defense Technology: From aerospace to outer space to cyber space, you can innovate mission solutions alongside the best minds in the business."
+                      - paragraph [ref=e1306]: "United By Culture: Excellence, integrity, and collaboration define us. We accelerate change and embrace one another’s perspectives to win for our customers."
+                      - paragraph [ref=e1307]: "Real Impact, Real Growth: Grow your career and skills for life. Our wide array of opportunities and technology-driven learning programs enable your development and agility."
+                      - paragraph [ref=e1308]: "Your Health, Your Wealth, Your Life: Competitive pay, comprehensive benefits and flexible schedules designed so you thrive — at work and beyond."
+                      - paragraph [ref=e1309]: "Empowered to Be Your Best: Use your strengths to make a difference in the lives of one another, our customers, our communities, and our planet."
+                      - paragraph [ref=e1310]: "Here, the possibilities are endless because we offer:"
+                      - list [ref=e1311]:
+                        - generic [ref=e1312]: Flexible Schedules, dependent on role
+                        - generic [ref=e1313]: "Levels: Student, Entry, Mid, Senior, Management"
+                        - generic [ref=e1314]: "Locations: Nationwide & OCONUS Positions"
+                  - separator [ref=e1315]:
+                    - generic [ref=e1316]: "&nbsp;"
+                - button "Report job" [ref=e1323] [cursor=pointer]: Report job
+            - button "Return to Search Result" [ref=e1325]
+      - contentinfo [ref=e1330]:
+        - generic [ref=e1331]:
+          - list [ref=e1332]:
+            - listitem [ref=e1333]:
+              - link "Hiring Lab" [ref=e1335] [cursor=pointer]:
+                - /url: https://www.hiringlab.org
+            - listitem [ref=e1336]:
+              - link "Career advice" [ref=e1338] [cursor=pointer]:
+                - /url: https://www.indeed.com/career-advice
+            - listitem [ref=e1339]:
+              - link "Browse jobs" [ref=e1341] [cursor=pointer]:
+                - /url: https://www.indeed.com/browsejobs
+            - listitem [ref=e1342]:
+              - link "Browse companies" [ref=e1344] [cursor=pointer]:
+                - /url: https://www.indeed.com/companies/browse-companies
+            - listitem [ref=e1345]:
+              - link "Salaries" [ref=e1347] [cursor=pointer]:
+                - /url: https://www.indeed.com/career/salaries
+            - listitem [ref=e1348]:
+              - link "Indeed Events" [ref=e1350] [cursor=pointer]:
+                - /url: https://www.indeedevents.com/
+            - listitem [ref=e1351]:
+              - link "Work at Indeed" [ref=e1353] [cursor=pointer]:
+                - /url: https://www.indeed.com/cmp/Indeed/about
+            - listitem [ref=e1354]:
+              - link "Countries" [ref=e1356] [cursor=pointer]:
+                - /url: https://www.indeed.com/worldwide
+            - listitem [ref=e1357]:
+              - link "About" [ref=e1359] [cursor=pointer]:
+                - /url: https://www.indeed.com/about
+            - listitem [ref=e1360]:
+              - link "Help" [ref=e1362] [cursor=pointer]:
+                - /url: https://www.indeed.com/help/job-seekers?hl=en&co=us
+            - listitem [ref=e1363]:
+              - link "ESG at Indeed" [ref=e1365] [cursor=pointer]:
+                - /url: https://www.indeed.com/esg?from=gnav-jobsearch--indeedmobile
+          - list [ref=e1366]:
+            - listitem [ref=e1367]: © 2026 Indeed
+            - listitem [ref=e1368]:
+              - link "Your Privacy Choices" [ref=e1370] [cursor=pointer]:
+                - /url: https://www.indeed.com/legal/ccpa-dns?hl=en
+                - text: Your Privacy Choices
+                - img [ref=e1372]
+            - listitem [ref=e1377]:
+              - link "Accessibility at Indeed" [ref=e1379] [cursor=pointer]:
+                - /url: https://www.indeed.com/esg/accessibility?hl=en
+            - listitem [ref=e1380]:
+              - link "Privacy Center and Ad Choices" [ref=e1382] [cursor=pointer]:
+                - /url: https://hrtechprivacy.com/brands/indeed#privacypolicy
+            - listitem [ref=e1383]:
+              - link "Terms" [ref=e1385] [cursor=pointer]:
+                - /url: https://www.indeed.com/legal?hl=en
+          - list:
+            - listitem
+  - generic [ref=e1386]:
+    - text: This site is protected by reCAPTCHA and the Google
+    - link "Privacy Policy" [ref=e1387] [cursor=pointer]:
+      - /url: https://policies.google.com/privacy
+    - text: and
+    - link "Terms of Service" [ref=e1388] [cursor=pointer]:
+      - /url: https://policies.google.com/terms
+    - text: apply.

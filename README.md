@@ -6,13 +6,15 @@ Search job listings from Indeed, LinkedIn, and Y Combinator startups, chat with 
 
 ### Backend (K8s pod)
 - **`api/main.py`** — FastAPI server on port 8000. Endpoints: `POST /api/search`, `POST /api/chat`, `GET/DELETE /api/history`, `GET/POST /api/profile`, `POST/GET /api/resume`, `POST /api/apply/prepare`, `GET /api/applications`, `GET /api/sessions`, `GET /api/sessions/{id}/messages`, `DELETE /api/sessions/{id}`, `GET /api/health`.
-- **`Agent/agent.py`** — LangChain ReAct agent using Groq (`llama-3.3-70b-versatile`), with 8 tools across 4 modules. Injects recent chat history for context (current message filtered to avoid duplication in LLM context). Auto-retries on rate limits (70s wait).
-- **`database.py`** — SQLite persistence with tables: `sessions`, `searches`, `search_results`, `chat_messages`, `user_profile`, `applications`. FK-safe deletion, paginated history queries, session-scoped chat history.
+- **`Agent/agent.py`** — LangChain ReAct agent using Groq (`llama-3.3-70b-versatile`), with 4 tools. Injects recent chat history for context (current message filtered to avoid duplication in LLM context). Auto-retries on rate limits (70s wait).
+- **`Agent/db_query_agent.py`** — LangGraph state machine that classifies user queries against the DB schema, generates & executes SQL (with up to 2 retries on failure), and returns results.
+- **`database.py`** — PostgreSQL persistence (via `psycopg2`, Neon-compatible) with tables: `sessions`, `searches`, `search_results`, `chat_messages`, `user_profile`, `applications`. Includes `get_schema_metadata()` for introspection and `execute_sql_query()` for safe SELECT-only execution via the SQL agent.
 - **`tools/job_search.py`** — DuckDuckGo search (`ddgs`) for Indeed, LinkedIn, and Y Combinator jobs. `search_jobs` @tool with `source` param ("all", "indeed", "linkedin", "yc"). Descriptions truncated to 120 chars.
-- **`tools/history_tools.py`** — `list_search_history` and `get_search_results` @tools.
-- **`tools/profile_tools.py`** — `get_my_profile` and `update_profile` @tools.
-- **`tools/application_tools.py`** — `list_applications`, `get_application`, and `update_application_status` @tools.
-- **`tools/__init__.py`** — Exports all tools for agent registration.
+- **`tools/profile_tools.py`** — `update_profile` @tool (write-only; reads handled by `query_database`).
+- **`tools/application_tools.py`** — `update_application_status` @tool (write-only; reads handled by `query_database`).
+- **`tools/db_query_tool.py`** — `query_database` @tool wrapping the LangGraph SQL agent. Handles all DB read queries (profile, applications, search history, chat messages).
+- **`tools/database_metadata_tool.py`** — `get_database_schema` @tool for schema introspection (used internally by the SQL agent).
+- **`tools/__init__.py`** — Exports 6 tools: `search_jobs`, `query_database`, `update_profile`, `update_application_status`, `get_database_schema`, and search helpers.
 
 ### Frontend (K8s pod)
 - **`web/server.js`** — Express server (port 3000), proxies `/api/*` to FastAPI, serves static files with `Cache-Control: no-store`.
@@ -69,7 +71,7 @@ kubectl create secret generic api-env \
 |---------|---------|-------------|
 | `CHAT_LLM_MODEL` | `llama-3.3-70b-versatile` | Groq model for agent and cover letters |
 | `CHAT_LLM_PROVIDER` | `groq` | LLM provider |
-| `DB_PATH` | `/app/data/history.db` | SQLite database path |
+| `DATABASE_URL` | `postgresql://user:pass@host/db` | PostgreSQL connection string (Neon or local Postgres) |
 
 ## Deployment Layout
 
@@ -78,19 +80,57 @@ kubectl create secret generic api-env \
 | API | `job-api:latest` (Python 3.13) | ClusterIP `api:8000` | 8000 |
 | Web | `job-web:latest` (Node.js 20) | NodePort `web:30080` | 3000 |
 
-API keys injected via `envFrom` + secret `api-env`. DB stored at `/app/data/history.db` via hostPath volume.
+API keys injected via `envFrom` + secret `api-env`. Database connected via `DATABASE_URL` env var. Local K8s deployment is scaled down — the app is deployed on Fly.io with Neon Postgres. Manifests remain for reference.
+
+## Fly.io Deployment
+
+### Deploy API
+```bash
+cd fly/api
+fly secrets set DATABASE_URL=$NEON_URL ANTHROPIC_API_KEY=$ANTHROPIC_KEY
+fly launch --dockerfile ../../Dockerfile.api
+```
+
+### Deploy Web
+```bash
+cd fly/web
+fly secrets set API_URL=http://jobsearch-api.internal:8000
+fly launch --dockerfile ../../Dockerfile.web
+```
+
+### Set up Cloudflare DNS
+```bash
+fly ips list -a jobsearch-web
+# Use the IPv4 address in Cloudflare DNS A record
+```
+
+## Database Migration
+
+To migrate existing data from a local SQLite database to a fresh Neon Postgres instance:
+
+```bash
+DATABASE_URL=postgresql://user:pass@ep-xxx.neon.tech/neondb uv run python scripts/migrate_to_postgres.py
+```
+
+## Prerequisites
+
+- **Python 3.13+** (managed via `uv`)
+- **PostgreSQL** — either local instance or a [Neon](https://neon.tech) serverless Postgres (free tier: 500MB, never sleeps)
+- **API keys** for LLM providers (Anthropic, Groq, etc.)
 
 ## Key Files
 
 | File | Purpose |
 |------|---------|
 | `api/main.py` | FastAPI routes |
-| `Agent/agent.py` | LangChain ReAct agent (8 tools, auto-retry) |
-| `database.py` | SQLite CRUD |
+| `Agent/agent.py` | LangChain ReAct agent (4 tools, auto-retry) |
+| `Agent/db_query_agent.py` | LangGraph SQL query agent (classify → generate → execute, 2 retries) |
+| `database.py` | PostgreSQL CRUD + `get_schema_metadata()` + `execute_sql_query()` |
 | `tools/job_search.py` | Job search @tool via DuckDuckGo |
-| `tools/history_tools.py` | Search history @tools |
-| `tools/profile_tools.py` | Profile @tools |
-| `tools/application_tools.py` | Application @tools |
+| `tools/db_query_tool.py` | `query_database` @tool (natural language → SQL) |
+| `tools/database_metadata_tool.py` | `get_database_schema` @tool |
+| `tools/profile_tools.py` | `update_profile` @tool |
+| `tools/application_tools.py` | `update_application_status` @tool |
 | `tools/__init__.py` | Tool exports |
 | `web/public/index.html` | Single-page frontend |
 | `auto-apply/service.py` | Local Playwright MCP agent |
@@ -101,5 +141,6 @@ API keys injected via `envFrom` + secret `api-env`. DB stored at `/app/data/hist
 | `k8s/web-deployment.yaml` | Web pod spec |
 | `k8s/web-service.yaml` | Web NodePort service |
 | `.dockerignore` | Excludes `.venv`, `.git`, `.env` from images |
+| `scripts/migrate_to_postgres.py` | SQLite → PostgreSQL migration script |
 | `AGENTS.md` | Agent instructions for development |
 | `pyproject.toml` | Python dependencies and project config |
