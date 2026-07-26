@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: jobsearch-api
+    env: docker
+    dockerfilePath: ./Dockerfile.api
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+
+  - type: web
+    name: jobsearch-web
+    env: docker
+    dockerfilePath: ./Dockerfile.web
+    envVars:
+      - key: API_URL
+        value: https://jobsearch-api.onrender.com
