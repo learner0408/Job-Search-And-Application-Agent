@@ -69,8 +69,8 @@ kubectl create secret generic api-env \
 
 | Env Var | Default | Description |
 |---------|---------|-------------|
-| `CHAT_LLM_MODEL` | `llama-3.3-70b-versatile` | Groq model for agent and cover letters |
-| `CHAT_LLM_PROVIDER` | `groq` | LLM provider |
+| `CHAT_LLM_MODEL` | `claude-sonnet-5` | Anthropic model for the chat agent (chat agent and DB query agent) |
+| `CHAT_LLM_PROVIDER` | `anthropic` | LLM provider for the chat agent |
 | `DATABASE_URL` | `postgresql://user:pass@host/db` | PostgreSQL connection string (Neon or local Postgres) |
 
 ## Deployment Layout

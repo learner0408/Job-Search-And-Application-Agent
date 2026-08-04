@@ -3,7 +3,7 @@ import sys
 import json
 import logging
 import shutil
-from datetime import datetime
+from datetime import datetime, timezone
 from fastapi import FastAPI, UploadFile, File, HTTPException, Query
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -33,8 +33,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Resume storage directory (same volume as DB)
-DATA_DIR = os.path.dirname(os.getenv("DB_PATH", os.path.join(BASE_DIR, "data", "history.db")))
+# Resume storage directory
+DATA_DIR = os.path.join(BASE_DIR, "data")
 RESUME_DIR = os.path.join(DATA_DIR, "resumes")
 os.makedirs(RESUME_DIR, exist_ok=True)
 
@@ -195,6 +195,7 @@ async def search_jobs_endpoint(request: SearchRequest):
     yc_jobs = search_yc(
         request.query,
         request.location,
+        request.employment_type,
         request.remote,
         request.max_results,
     )
@@ -244,7 +245,6 @@ async def history_list(page: int = 1, per_page: int = 10):
 async def history_detail(search_id: int):
     search = get_search(search_id)
     if not search:
-        from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="Search not found")
     return search
 
@@ -253,7 +253,6 @@ async def history_detail(search_id: int):
 async def history_delete(search_id: int):
     deleted = delete_search(search_id)
     if not deleted:
-        from fastapi import HTTPException
         raise HTTPException(status_code=404, detail="Search not found")
     return {"ok": True}
 
@@ -398,9 +397,14 @@ async def get_application_endpoint(app_id: int):
     return app
 
 
+_VALID_STATUSES = {"applied", "rejected", "interview", "offer"}
+
+
 @app.put("/api/applications/{app_id}")
 async def update_application(app_id: int, status: str = Query(...)):
-    now = datetime.utcnow().isoformat() if status == "applied" else None
+    if status not in _VALID_STATUSES:
+        raise HTTPException(status_code=400, detail=f"Invalid status '{status}'. Must be one of: {', '.join(sorted(_VALID_STATUSES))}")
+    now = datetime.now(timezone.utc).isoformat() if status == "applied" else None
     ok = update_application_status(app_id, status, applied_at=now)
     if not ok:
         raise HTTPException(status_code=404, detail="Application not found")

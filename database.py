@@ -13,12 +13,18 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 def _get_conn() -> psycopg2.extensions.connection:
+    """Open a psycopg2 Postgres connection.
+
+    Returns:
+        Connection with RealDictCursor factory and autocommit disabled.
+    """
     conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
     conn.autocommit = False
     return conn
 
 
 def init_db() -> None:
+    """Create all tables and indexes if they do not already exist."""
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -108,6 +114,17 @@ def save_search(
     source_trigger: str,
     jobs: list[dict],
 ) -> int:
+    """Insert a search and its job results.
+
+    Args:
+        query: The search query text.
+        location: Location filter used.
+        source_trigger: What triggered the search (e.g. "chat", "search-form").
+        jobs: List of job dicts with title, description, location, salary, link, source.
+
+    Returns:
+        The new search id.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -133,6 +150,15 @@ def save_search(
 
 
 def get_history(page: int = 1, per_page: int = 10) -> tuple[list[dict], int]:
+    """Fetch paginated search history ordered by recency.
+
+    Args:
+        page: 1-based page number.
+        per_page: Number of searches per page.
+
+    Returns:
+        Tuple of (list of search dicts with result_count, total search count).
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -154,6 +180,14 @@ def get_history(page: int = 1, per_page: int = 10) -> tuple[list[dict], int]:
 
 
 def get_search(search_id: int) -> Optional[dict]:
+    """Fetch a single search with its job results.
+
+    Args:
+        search_id: The id of the search.
+
+    Returns:
+        Search dict with a "results" key, or None if not found.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -173,6 +207,14 @@ def get_search(search_id: int) -> Optional[dict]:
 
 
 def delete_search(search_id: int) -> bool:
+    """Delete a search and unlink its chat messages.
+
+    Args:
+        search_id: The id of the search to delete.
+
+    Returns:
+        True if the search was deleted, False otherwise.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -185,6 +227,11 @@ def delete_search(search_id: int) -> bool:
 
 
 def clear_history() -> int:
+    """Delete all chat messages, search results, searches, and sessions.
+
+    Returns:
+        Number of searches deleted.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -201,6 +248,14 @@ def clear_history() -> int:
 
 
 def create_session(preview: str = "") -> str:
+    """Create a new chat session.
+
+    Args:
+        preview: Optional preview text for the session.
+
+    Returns:
+        The new session id (UUID string).
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -216,6 +271,11 @@ def create_session(preview: str = "") -> str:
 
 
 def update_session(session_id: str) -> None:
+    """Refresh a session's preview and updated_at from its messages.
+
+    Args:
+        session_id: The id of the session to update.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -240,6 +300,14 @@ def update_session(session_id: str) -> None:
 
 
 def list_sessions(limit: int = 5) -> list[dict]:
+    """List recent sessions ordered by last activity.
+
+    Args:
+        limit: Maximum number of sessions to return.
+
+    Returns:
+        List of session dicts with id, preview, created_at, and msg_count.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -257,6 +325,14 @@ def list_sessions(limit: int = 5) -> list[dict]:
 
 
 def get_session_messages(session_id: str) -> list[dict]:
+    """Fetch all messages for a session in chronological order.
+
+    Args:
+        session_id: The id of the session.
+
+    Returns:
+        List of message dicts with role, content, and created_at.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -270,6 +346,14 @@ def get_session_messages(session_id: str) -> list[dict]:
 
 
 def delete_session(session_id: str) -> bool:
+    """Delete a session and all its chat messages.
+
+    Args:
+        session_id: The id of the session to delete.
+
+    Returns:
+        True on success.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -282,6 +366,17 @@ def delete_session(session_id: str) -> bool:
 
 
 def save_chat_message(role: str, content: str, search_id: Optional[int] = None, session_id: Optional[str] = None) -> int:
+    """Insert a chat message.
+
+    Args:
+        role: "user" or "agent".
+        content: The message text.
+        search_id: Optional linked search id.
+        session_id: Optional linked session id.
+
+    Returns:
+        The new message id.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -296,6 +391,15 @@ def save_chat_message(role: str, content: str, search_id: Optional[int] = None, 
 
 
 def get_recent_chat_messages(limit: int = 6, session_id: Optional[str] = None) -> list[dict]:
+    """Fetch the most recent chat messages, optionally filtered by session.
+
+    Args:
+        limit: Maximum number of messages to return.
+        session_id: If set, only fetch messages for this session.
+
+    Returns:
+        List of message dicts in chronological order.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -316,6 +420,11 @@ def get_recent_chat_messages(limit: int = 6, session_id: Optional[str] = None) -
 
 
 def save_profile(data: dict) -> None:
+    """Upsert the single user profile row.
+
+    Args:
+        data: Profile dict with keys matching the user_profile table columns.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -353,6 +462,11 @@ def save_profile(data: dict) -> None:
 
 
 def get_profile() -> Optional[dict]:
+    """Fetch the user profile.
+
+    Returns:
+        Profile dict with JSON fields parsed, or None if no profile exists.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -370,6 +484,15 @@ def get_profile() -> Optional[dict]:
 
 
 def save_application(data: dict) -> int:
+    """Insert a new job application.
+
+    Args:
+        data: Application dict with job_title, company, location, salary, link,
+              source, status, cover_letter.
+
+    Returns:
+        The new application id.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -394,6 +517,14 @@ def save_application(data: dict) -> int:
 
 
 def get_application(app_id: int) -> Optional[dict]:
+    """Fetch a single application by id.
+
+    Args:
+        app_id: The application id.
+
+    Returns:
+        Application dict, or None if not found.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -405,6 +536,14 @@ def get_application(app_id: int) -> Optional[dict]:
 
 
 def get_applications(status: Optional[str] = None) -> list[dict]:
+    """List applications, optionally filtered by status, newest first.
+
+    Args:
+        status: If set, only return applications with this status.
+
+    Returns:
+        List of application dicts.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -423,6 +562,16 @@ def get_applications(status: Optional[str] = None) -> list[dict]:
 
 
 def update_application_status(app_id: int, status: str, applied_at: Optional[str] = None) -> bool:
+    """Update an application's status, optionally recording the applied timestamp.
+
+    Args:
+        app_id: The application id.
+        status: New status value.
+        applied_at: ISO timestamp to store when marking as applied.
+
+    Returns:
+        True if the application was updated, False if not found.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -505,6 +654,15 @@ _COLUMN_DESCRIPTIONS: dict[str, dict[str, str]] = {
 
 
 def _get_pk_columns(conn, tname: str) -> set[str]:
+    """Return the set of primary-key column names for a table.
+
+    Args:
+        conn: An open database connection.
+        tname: Table name.
+
+    Returns:
+        Set of column names that form the table's primary key.
+    """
     cur = conn.cursor()
     cur.execute("""
         SELECT kcu.column_name
@@ -520,6 +678,11 @@ def _get_pk_columns(conn, tname: str) -> set[str]:
 
 
 def get_schema_metadata() -> dict:
+    """Describe all tables and columns in the database.
+
+    Returns:
+        Dict with a "tables" key listing table names and column metadata.
+    """
     conn = _get_conn()
     try:
         cur = conn.cursor()
@@ -555,6 +718,14 @@ def get_schema_metadata() -> dict:
 
 
 def execute_sql_query(sql: str) -> list[dict]:
+    """Execute a read-only SELECT query against the database.
+
+    Args:
+        sql: A SELECT query string.
+
+    Returns:
+        List of result row dicts.
+    """
     stripped = sql.strip()
     if not stripped.upper().startswith("SELECT"):
         raise ValueError("Only SELECT queries are allowed")
