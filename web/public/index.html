@@ -1683,7 +1683,7 @@
           : 'indeed';
         const location = job.location && job.location !== 'N/A' ? job.location : null;
         const salary = job.salary && job.salary !== 'N/A' ? job.salary : null;
-        const link = job.link || '#';
+        const link = safeUrl(job.link || '#');
 
         const existingStatus = appStatusByLink.get(link);
         const actionHtml = existingStatus
@@ -1697,14 +1697,14 @@
               ${actionHtml}
             </div>
             <div class="card-title">
-              <a href="${link}" target="_blank" rel="noopener">${escapeHtml(job.title)}</a>
+              <a href="${escapeHtml(link)}" target="_blank" rel="noopener">${escapeHtml(job.title)}</a>
             </div>
             <div class="card-meta">
               ${location ? `<span><span class="label">Location:</span> ${escapeHtml(location)}</span>` : ''}
               ${salary ? `<span><span class="label">Salary:</span> ${escapeHtml(salary)}</span>` : ''}
             </div>
             <div class="card-action">
-              <a href="${link}" target="_blank" rel="noopener">
+              <a href="${escapeHtml(link)}" target="_blank" rel="noopener">
                 View on ${label} &rarr;
               </a>
             </div>
@@ -1800,6 +1800,14 @@
       const div = document.createElement('div');
       div.textContent = str;
       return div.innerHTML;
+    }
+
+    function safeUrl(url) {
+      try {
+        const u = new URL(url);
+        if (u.protocol === 'http:' || u.protocol === 'https:') return url;
+      } catch (e) {}
+      return '#';
     }
 
     function timeAgo(dateStr) {
@@ -2226,12 +2234,12 @@
           <div class="app-tile" data-id="${a.id}">
             <div class="app-tile-header">
               <span class="source-badge ${badgeClass}">${escapeHtml(a.source)}</span>
-              <span class="app-tile-status ${a.status}">${a.status}</span>
+              <span class="app-tile-status ${a.status}">${escapeHtml(a.status)}</span>
             </div>
             <div class="app-tile-title">${escapeHtml(a.job_title)}</div>
             <div class="app-tile-company">${a.company ? escapeHtml(a.company) : ''}</div>
             <div class="app-tile-meta">
-              <span>${a.location || 'N/A'}</span>
+              <span>${escapeHtml(a.location || 'N/A')}</span>
               <span>${date}</span>
             </div>
             <div class="app-tile-details" id="app-details-${a.id}">

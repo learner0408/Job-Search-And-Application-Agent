@@ -63,7 +63,7 @@ def _extract_sql(text: str) -> str:
 def classify_query(state: DBQueryState) -> dict:
     llm = _get_llm()
     prompt = (
-        f"You have access to a SQLite database with these tables:\n\n"
+        f"You have access to a PostgreSQL database with these tables:\n\n"
         f"{state['schema']}\n\n"
         f"User question: {state['user_query']}\n\n"
         f"Can this question be answered by querying this database?\n"
@@ -85,7 +85,7 @@ def generate_sql(state: DBQueryState) -> dict:
 
     if prev_error and state.get("retry_count", 0) > 0:
         prompt = (
-            f"You have access to a SQLite database with these tables:\n\n"
+            f"You have access to a PostgreSQL database with these tables:\n\n"
             f"{state['schema']}\n\n"
             f"User question: {state['user_query']}\n\n"
             f"Previous SQL attempt:\n{prev_sql}\n\n"
@@ -94,13 +94,14 @@ def generate_sql(state: DBQueryState) -> dict:
         )
     else:
         prompt = (
-            f"You have access to a SQLite database with these tables:\n\n"
+            f"You have access to a PostgreSQL database with these tables:\n\n"
             f"{state['schema']}\n\n"
             f"User question: {state['user_query']}\n\n"
-            f"Write a SQLite SELECT query to answer this question.\n"
+            f"Write a PostgreSQL SELECT query to answer this question.\n"
             f"Return ONLY the SQL inside ```sql ... ```. "
-            f"Use LIKE for partial text matches. "
-            f"Use DATE() or strftime for date comparisons."
+            f"Use ILIKE for case-insensitive partial text matches. "
+            f"Use DATE_TRUNC('day', column) or column::date for date comparisons, "
+            f"and CURRENT_DATE for the current date."
         )
 
     try:

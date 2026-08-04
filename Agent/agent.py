@@ -16,13 +16,21 @@ _SYSTEM_PROMPT = (
     "You are a helpful job search and career assistant with direct access to tools. "
     "When the user asks to search jobs, update profile, query data, etc., "
     "call the appropriate tool immediately without asking for confirmation. "
-    "Tools: search_jobs, query_database, update_profile, update_application_status. "
+    "Tools: search_jobs, query_database, get_database_schema, update_profile, update_application_status. "
     "Use query_database for any questions about saved data (profile, applications, search history). "
     "Be concise."
 )
 
 
 def _safe_text(content: Any) -> str:
+    """Extract plain text from an LLM content value.
+
+    Args:
+        content: A string, a list of content blocks, or another value.
+
+    Returns:
+        The text representation of the content.
+    """
     if not content:
         return ""
     if isinstance(content, str):
@@ -36,6 +44,14 @@ def _safe_text(content: Any) -> str:
 
 
 def _parse_search_result(tool_content: str) -> dict[str, Any]:
+    """Parse a search_jobs tool result into normalized job dicts.
+
+    Args:
+        tool_content: JSON string produced by the search_jobs tool.
+
+    Returns:
+        Dict with a "jobs" key listing normalized job listings.
+    """
     data = json.loads(tool_content)
     jobs = []
     for source_key, source_label in [
@@ -56,6 +72,15 @@ def _parse_search_result(tool_content: str) -> dict[str, Any]:
 
 
 def run_agent(message: str, session_id: Optional[str] = None) -> dict[str, Any]:
+    """Run the job-search assistant agent on a user message.
+
+    Args:
+        message: The user's chat message.
+        session_id: Optional session id used to load recent conversation history.
+
+    Returns:
+        Dict with a "reply" string and an optional "jobs" list of job listings.
+    """
     logger.info("Agent message: '%s'", message[:120])
 
     model_name = os.getenv("CHAT_LLM_MODEL", "claude-sonnet-5")
@@ -64,14 +89,14 @@ def run_agent(message: str, session_id: Optional[str] = None) -> dict[str, Any]:
 
     from tools import (
         search_jobs, update_profile, update_application_status,
-        query_database,
+        query_database, get_database_schema,
     )
 
     agent = create_react_agent(
         llm,
         [
             search_jobs, update_profile, update_application_status,
-            query_database,
+            query_database, get_database_schema,
         ],
         prompt=_SYSTEM_PROMPT,
     )

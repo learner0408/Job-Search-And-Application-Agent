@@ -3,16 +3,21 @@ import json
 from langchain.chat_models import init_chat_model
 from langchain.agents import create_agent
 from dotenv import load_dotenv
-from tools import search_jobs
+from tools import search_jobs, get_database_schema
 
 load_dotenv()
 
 
-def main(user_ques:str):
+def main(user_ques: str):
+    """Run the job search assistant for a single query.
+
+    Args:
+        user_ques: The job search question to ask the agent.
+    """
     model = os.getenv("LLM_MODEL", "gemini-2.0-flash")
     provider = os.getenv("LLM_PROVIDER", "google_genai")
     llm = init_chat_model(model, model_provider=provider, temperature=0)
-    tools = [search_jobs]
+    tools = [search_jobs, get_database_schema]
     graph = create_agent(
         model=llm,
         tools=tools,
@@ -30,7 +35,7 @@ def main(user_ques:str):
                 for msg in update.get("messages", []):
                     if msg.type == "tool" and msg.content:
                         data = json.loads(msg.content)
-                        for source in ("indeed", "linkedin"):
+                        for source in ("indeed", "linkedin", "yc_startups"):
                             for job in data.get(source, []):
                                 print(f"Title: {job['title']}")
                                 print(f"Description: {job.get('description', '')}")

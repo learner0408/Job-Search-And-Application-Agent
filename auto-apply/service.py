@@ -198,6 +198,7 @@ async def _run_apply(app_id: int, api_base: str):
             logger.info("(Auto-detecting submission via URL change)")
 
             current_url = link
+            submitted = False
             for _ in range(60):
                 await asyncio.sleep(5)
                 try:
@@ -212,12 +213,16 @@ async def _run_apply(app_id: int, api_base: str):
                             pass
                     if new_url and new_url != current_url and "apply" not in new_url.lower():
                         logger.info("URL changed to %s — submission detected", new_url)
+                        submitted = True
                         break
                 except Exception:
                     pass
 
-            await client.put(f"{api_base}/api/applications/{app_id}?status=applied")
-            logger.info("Application %d marked as applied", app_id)
+            if submitted:
+                await client.put(f"{api_base}/api/applications/{app_id}?status=applied")
+                logger.info("Application %d marked as applied", app_id)
+            else:
+                logger.warning("No submission detected for application %d; leaving status as preparing", app_id)
 
             if resume_path:
                 try:
@@ -230,7 +235,17 @@ async def _run_apply(app_id: int, api_base: str):
 async def trigger_apply(app_id: int, api_base: str | None = None):
     resolved = _resolve_api_base(api_base)
     logger.info("Triggering apply for app %d using API base: %s", app_id, resolved)
-    asyncio.create_task(_run_apply(app_id, resolved))
+
+    async def _done(task: asyncio.Task) -> None:
+        try:
+            task.result()
+        except asyncio.CancelledError:
+            logger.warning("Apply task for app %d cancelled", app_id)
+        except Exception as e:
+            logger.error("Apply task for app %d failed: %s", app_id, e)
+
+    task = asyncio.create_task(_run_apply(app_id, resolved))
+    task.add_done_callback(lambda t: asyncio.create_task(_done(t)))
     return {"status": "started", "app_id": app_id, "api_base": resolved}
 
 
