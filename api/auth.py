@@ -300,6 +300,9 @@ def _register_user(email: str, password_hash: Optional[str] = None, provider: st
 def _public_base_url(request: Request) -> str:
     """Build the public base URL for the request (respecting proxy headers).
 
+    Prefers X-Forwarded-Host so the callback URL uses the user-facing domain
+    even when the proxy rewrites the Host header (changeOrigin).
+
     Args:
         request: The incoming request.
 
@@ -307,7 +310,8 @@ def _public_base_url(request: Request) -> str:
         Base URL like https://jobs4today.com.
     """
     proto = request.headers.get("x-forwarded-proto", "http").split(",")[0].strip()
-    host = request.headers.get("host") or "localhost:8000"
+    forwarded_host = request.headers.get("x-forwarded-host")
+    host = (forwarded_host or request.headers.get("host") or "localhost:8000").split(",")[0].strip()
     return f"{proto}://{host}"
 
 
