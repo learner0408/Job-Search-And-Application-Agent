@@ -8,6 +8,22 @@ services:
         sync: false
       - key: ANTHROPIC_API_KEY
         sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: MAX_USERS
+        value: "2"
+      - key: OWNER_EMAIL
+        sync: false
+      - key: SERVICE_TOKEN
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GITHUB_CLIENT_ID
+        sync: false
+      - key: GITHUB_CLIENT_SECRET
+        sync: false
 
   - type: web
     name: jobsearch-web
@@ -15,4 +31,6 @@ services:
     dockerfilePath: ./Dockerfile.web
     envVars:
       - key: API_URL
-        value: https://jobsearch-api.onrender.com
+        value: https://jobsearch-api-1bbx.onrender.com
+      - key: JWT_SECRET
+        sync: false

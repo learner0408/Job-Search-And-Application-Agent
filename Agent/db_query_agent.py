@@ -60,6 +60,16 @@ def _extract_sql(text: str) -> str:
     return text.strip()
 
 
+_ROW_SCOPING_HINT = (
+    "IMPORTANT DATA ISOLATION RULE: This database is multi-tenant. "
+    "The current user's id is available as current_setting('app.current_user_id')::int. "
+    "Every query that reads sessions, searches, search_results, chat_messages, "
+    "user_profile, or applications MUST filter rows to this user, e.g. "
+    "WHERE user_id = current_setting('app.current_user_id')::int. "
+    "Never query the 'users' table or the 'resumes' table directly. "
+)
+
+
 def classify_query(state: DBQueryState) -> dict:
     llm = _get_llm()
     prompt = (
@@ -85,6 +95,7 @@ def generate_sql(state: DBQueryState) -> dict:
 
     if prev_error and state.get("retry_count", 0) > 0:
         prompt = (
+            f"{_ROW_SCOPING_HINT}"
             f"You have access to a PostgreSQL database with these tables:\n\n"
             f"{state['schema']}\n\n"
             f"User question: {state['user_query']}\n\n"
@@ -94,6 +105,7 @@ def generate_sql(state: DBQueryState) -> dict:
         )
     else:
         prompt = (
+            f"{_ROW_SCOPING_HINT}"
             f"You have access to a PostgreSQL database with these tables:\n\n"
             f"{state['schema']}\n\n"
             f"User question: {state['user_query']}\n\n"
