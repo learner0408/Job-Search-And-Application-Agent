@@ -13,3 +13,4 @@ wheels/
 .DS_Store
 data/
 web/node_modules/
+scripts/

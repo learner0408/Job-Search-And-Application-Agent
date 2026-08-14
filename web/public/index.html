@@ -1404,6 +1404,7 @@
       <div class="header-actions">
         <button class="header-icon" id="historyToggle" title="History">⏱</button>
         <button class="header-icon" id="profileToggle" title="Profile">👤</button>
+        <button class="header-icon" id="logoutBtn" title="Log out">⎋</button>
         <button class="header-reset" id="resetBtn" title="Reset">↻</button>
       </div>
     </div>
@@ -2378,6 +2379,23 @@
     /* Reset */
     document.getElementById('resetBtn').addEventListener('click', resetPage);
     document.getElementById('newChatBtn').addEventListener('click', newSession);
+
+    /* Logout + session expiry handling */
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+      } catch (_) {}
+      window.location.href = '/login';
+    });
+
+    const _origFetch = window.fetch.bind(window);
+    window.fetch = async (...args) => {
+      const res = await _origFetch(...args);
+      if (res.status === 401 && !String(args[0]).includes('/api/auth/') && !String(args[0]).includes('/api/health')) {
+        window.location.href = '/login';
+      }
+      return res;
+    };
 
     /* Seed application status map from history */
     (async function initApps() {

@@ -21,6 +21,20 @@ logger = logging.getLogger("auto-apply")
 HOST = os.environ.get("HOST", "127.0.0.1")
 PORT = int(os.environ.get("PORT", "8765"))
 
+SERVICE_TOKEN = os.environ.get("SERVICE_TOKEN", "")
+
+
+def _auth_headers() -> dict:
+    """Build the Authorization header for API calls using the service token.
+
+    Returns:
+        Dict with an Authorization bearer header if a service token is set,
+        otherwise an empty dict.
+    """
+    if SERVICE_TOKEN:
+        return {"Authorization": f"Bearer {SERVICE_TOKEN}"}
+    return {}
+
 
 def _resolve_api_base(override: str | None = None) -> str:
     if override:
@@ -86,7 +100,7 @@ async def _mcp_fill_field(session: ClientSession, field_name: str, value: str, s
 
 
 async def _run_apply(app_id: int, api_base: str):
-    async with httpx.AsyncClient(timeout=30) as client:
+    async with httpx.AsyncClient(timeout=30, headers=_auth_headers()) as client:
         app_resp = await client.get(f"{api_base}/api/applications/{app_id}")
         if app_resp.status_code != 200:
             raise HTTPException(status_code=404, detail="Application not found")
@@ -252,7 +266,7 @@ async def trigger_apply(app_id: int, api_base: str | None = None):
 @app.get("/status/{app_id}")
 async def get_apply_status(app_id: int, api_base: str | None = None):
     resolved = _resolve_api_base(api_base)
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(headers=_auth_headers()) as client:
         resp = await client.get(f"{resolved}/api/applications/{app_id}")
         if resp.status_code != 200:
             raise HTTPException(status_code=404)

@@ -71,17 +71,19 @@ def _parse_search_result(tool_content: str) -> dict[str, Any]:
     return {"jobs": jobs}
 
 
-def run_agent(message: str, session_id: Optional[str] = None) -> dict[str, Any]:
+def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[int] = None, email: Optional[str] = None) -> dict[str, Any]:
     """Run the job-search assistant agent on a user message.
 
     Args:
         message: The user's chat message.
         session_id: Optional session id used to load recent conversation history.
+        user_id: The authenticated user's id, used to scope data access.
+        email: The authenticated user's email, used to scope data access.
 
     Returns:
         Dict with a "reply" string and an optional "jobs" list of job listings.
     """
-    logger.info("Agent message: '%s'", message[:120])
+    logger.info("Agent message (user %s): '%s'", user_id, message[:120])
 
     model_name = os.getenv("CHAT_LLM_MODEL", "claude-sonnet-5")
     provider = os.getenv("CHAT_LLM_PROVIDER", "anthropic")
@@ -92,19 +94,27 @@ def run_agent(message: str, session_id: Optional[str] = None) -> dict[str, Any]:
         query_database, get_database_schema,
     )
 
+    system_prompt = _SYSTEM_PROMPT
+    if user_id is not None:
+        system_prompt += (
+            f"\nThe current user is user_id={user_id} (email: {email}). "
+            "All database queries MUST be scoped to this user via a user_id filter. "
+            "Never show or reference other users' data."
+        )
+
     agent = create_react_agent(
         llm,
         [
             search_jobs, update_profile, update_application_status,
             query_database, get_database_schema,
         ],
-        prompt=_SYSTEM_PROMPT,
+        prompt=system_prompt,
     )
 
     input_messages: list = [("human", message)]
     try:
         from database import get_recent_chat_messages
-        recent = get_recent_chat_messages(6, session_id=session_id)
+        recent = get_recent_chat_messages(6, session_id=session_id, user_id=user_id)
         if recent:
             recent = [m for m in recent if not (m["role"] == "user" and m["content"] == message)]
             if recent:

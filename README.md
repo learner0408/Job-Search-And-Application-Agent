@@ -106,10 +106,18 @@ fly ips list -a jobsearch-web
 
 ## Database Migration
 
+One-time migration scripts live in `scripts/` and are **gitignored** (run locally, not deployed).
+
 To migrate existing data from a local SQLite database to a fresh Neon Postgres instance:
 
 ```bash
 DATABASE_URL=postgresql://user:pass@ep-xxx.neon.tech/neondb uv run python scripts/migrate_to_postgres.py
+```
+
+To upgrade an existing (single-user) Postgres database to the multi-user schema — **wipes all existing data**; run once before deploying the multi-user release:
+
+```bash
+DATABASE_URL=postgresql://user:pass@ep-xxx.neon.tech/neondb uv run python scripts/migrate_multiuser.py
 ```
 
 ## Prerequisites
@@ -123,6 +131,7 @@ DATABASE_URL=postgresql://user:pass@ep-xxx.neon.tech/neondb uv run python script
 | File | Purpose |
 |------|---------|
 | `api/main.py` | FastAPI routes |
+| `api/auth.py` | JWT, Argon2 password hashing, OAuth (Google/GitHub), rate limiting, session cookies |
 | `Agent/agent.py` | LangChain ReAct agent (4 tools, auto-retry) |
 | `Agent/db_query_agent.py` | LangGraph SQL query agent (classify → generate → execute, 2 retries) |
 | `database.py` | PostgreSQL CRUD + `get_schema_metadata()` + `execute_sql_query()` |
@@ -133,6 +142,7 @@ DATABASE_URL=postgresql://user:pass@ep-xxx.neon.tech/neondb uv run python script
 | `tools/application_tools.py` | `update_application_status` @tool |
 | `tools/__init__.py` | Tool exports |
 | `web/public/index.html` | Single-page frontend |
+| `web/public/login.html` | Login / signup entry point (email/password + Google/GitHub) |
 | `auto-apply/service.py` | Local Playwright MCP agent |
 | `Dockerfile.api` | API container build |
 | `Dockerfile.web` | Web container build |
@@ -141,6 +151,15 @@ DATABASE_URL=postgresql://user:pass@ep-xxx.neon.tech/neondb uv run python script
 | `k8s/web-deployment.yaml` | Web pod spec |
 | `k8s/web-service.yaml` | Web NodePort service |
 | `.dockerignore` | Excludes `.venv`, `.git`, `.env` from images |
-| `scripts/migrate_to_postgres.py` | SQLite → PostgreSQL migration script |
+| `scripts/` | One-time migration scripts (gitignored, run locally) |
+
+## Future Scope
+
+Planned work deferred from the current release:
+
+- **Cloud auto-apply**: move `auto-apply/service.py` (Playwright) onto a separate Render service with per-user delegated context and short-lived tokens; `SERVICE_TOKEN` will be removed once this ships.
+- **Email verification & password reset**: account activation emails and self-service password reset (currently "contact admin").
+- **Resume object storage**: move resume blobs from Postgres `bytea` to S3/R2.
+- **Render keep-alive**: free tier spins down after inactivity (~30-90s cold start on first request); wire up UptimeRobot or a cron ping to both services.
 | `AGENTS.md` | Agent instructions for development |
 | `pyproject.toml` | Python dependencies and project config |

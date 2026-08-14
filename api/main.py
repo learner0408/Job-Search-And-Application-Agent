@@ -4,10 +4,10 @@ import json
 import logging
 import shutil
 from datetime import datetime, timezone
-from fastapi import FastAPI, UploadFile, File, HTTPException, Query
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, UploadFile, File, HTTPException, Query, Depends, Request
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import Optional, List
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
@@ -23,6 +23,17 @@ from database import (
     create_session, update_session, list_sessions, get_session_messages, delete_session,
     get_profile, save_profile,
     save_application, get_application, get_applications, update_application_status,
+    save_resume, get_resume,
+    create_user, get_user_by_email, get_user_by_provider, get_user_by_id,
+    count_active_users, admit_user, link_oauth_identity, set_current_user,
+)
+from api.auth import (
+    hash_password, verify_password, set_session_cookie, clear_session_cookie,
+    get_current_user, get_service_or_user, get_owner_user,
+    google_authorize_url, github_authorize_url,
+    exchange_google_code, exchange_github_code,
+    _register_user, _check_login_rate, _record_login_failure, _reset_login_attempts,
+    _is_owner, MAX_USERS as AUTH_MAX_USERS,
 )
 
 load_dotenv()
@@ -32,11 +43,6 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
 )
 logger = logging.getLogger(__name__)
-
-# Resume storage directory
-DATA_DIR = os.path.join(BASE_DIR, "data")
-RESUME_DIR = os.path.join(DATA_DIR, "resumes")
-os.makedirs(RESUME_DIR, exist_ok=True)
 
 app = FastAPI(title="Job Search Agent API")
 
@@ -114,82 +120,203 @@ class PrepareApplyRequest(BaseModel):
     description: str = ""
 
 
-class ApplicationResponse(BaseModel):
-    id: int
-    job_title: str
-    company: str
-    location: str
-    salary: str
-    link: str
-    source: str
-    status: str
-    cover_letter: str
-    notes: str
-    applied_at: Optional[str] = None
-    created_at: str
+class RegisterRequest(BaseModel):
+    email: EmailStr
+    password: str
 
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+
+# ── Auth endpoints ────────────────────────────────────────────
+
+@app.post("/api/auth/register")
+async def register(request: Request, data: RegisterRequest):
+    email = data.email.lower()
+    if len(data.password) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
+    if get_user_by_email(email):
+        raise HTTPException(status_code=409, detail="An account with this email already exists")
+    result = _register_user(email, password_hash=hash_password(data.password))
+    user = result["user"]
+    response = JSONResponse(content={
+        "user_id": user["id"],
+        "email": user["email"],
+        "is_admin": user["is_admin"],
+        "status": user["status"],
+    })
+    if user["status"] == "active":
+        set_session_cookie(response, user, request)
+    return response
+
+
+@app.post("/api/auth/login")
+async def login(request: Request, data: LoginRequest):
+    email = data.email.lower()
+    if not _check_login_rate(email):
+        raise HTTPException(status_code=429, detail="Too many failed attempts. Try again later.")
+
+    user = get_user_by_email(email)
+    if not user or not user.get("password_hash") or not verify_password(data.password, user["password_hash"]):
+        _record_login_failure(email)
+        logger.info("Failed login attempt for %s", email)
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    if user["status"] == "pending":
+        if count_active_users() < AUTH_MAX_USERS:
+            user = admit_user(user["id"])
+        else:
+            raise HTTPException(status_code=403, detail="Account is on the waitlist. Signups are currently at capacity.")
+
+    _reset_login_attempts(email)
+    response = JSONResponse(content={
+        "user_id": user["id"],
+        "email": user["email"],
+        "is_admin": user["is_admin"],
+    })
+    set_session_cookie(response, user, request)
+    return response
+
+
+@app.post("/api/auth/logout")
+async def logout():
+    response = JSONResponse(content={"ok": True})
+    clear_session_cookie(response)
+    return response
+
+
+@app.get("/api/auth/me")
+async def me(user: dict = Depends(get_current_user)):
+    return user
+
+
+@app.get("/api/auth/google")
+async def google_auth(request: Request):
+    return RedirectResponse(google_authorize_url(request))
+
+
+@app.get("/api/auth/google/callback")
+async def google_callback(request: Request, code: str = Query(...)):
+    info = await exchange_google_code(request, code)
+    email = info["email"]
+    user = get_user_by_provider("google", info["provider_id"])
+    if not user:
+        existing = get_user_by_email(email)
+        if existing:
+            user = link_oauth_identity(existing["id"], "google", info["provider_id"])
+        else:
+            result = _register_user(email, provider="google", provider_id=info["provider_id"])
+            user = result["user"]
+    if user["status"] == "pending":
+        if count_active_users() < AUTH_MAX_USERS:
+            user = admit_user(user["id"])
+        else:
+            return RedirectResponse("/login?waitlist=1")
+    response = RedirectResponse("/")
+    set_session_cookie(response, user, request)
+    return response
+
+
+@app.get("/api/auth/github")
+async def github_auth(request: Request):
+    return RedirectResponse(github_authorize_url(request))
+
+
+@app.get("/api/auth/github/callback")
+async def github_callback(request: Request, code: str = Query(...)):
+    info = await exchange_github_code(request, code)
+    email = info["email"]
+    user = get_user_by_provider("github", info["provider_id"])
+    if not user:
+        existing = get_user_by_email(email)
+        if existing:
+            user = link_oauth_identity(existing["id"], "github", info["provider_id"])
+        else:
+            result = _register_user(email, provider="github", provider_id=info["provider_id"])
+            user = result["user"]
+    if user["status"] == "pending":
+        if count_active_users() < AUTH_MAX_USERS:
+            user = admit_user(user["id"])
+        else:
+            return RedirectResponse("/login?waitlist=1")
+    response = RedirectResponse("/")
+    set_session_cookie(response, user, request)
+    return response
+
+
+# ── Chat & sessions ───────────────────────────────────────────
 
 @app.post("/api/chat", response_model=ChatResponse)
-async def chat_endpoint(request: ChatRequest):
-    logger.info("Chat request: '%s'", request.message[:120])
-    session_id = request.session_id
+async def chat_endpoint(request: Request, chat_req: ChatRequest, user: dict = Depends(get_current_user)):
+    logger.info("Chat request from user %s: '%s'", user["user_id"], chat_req.message[:120])
+    set_current_user(user["user_id"])
+    session_id = chat_req.session_id
     if not session_id:
-        session_id = create_session()
-    save_chat_message("user", request.message, session_id=session_id)
-    result = run_agent(request.message, session_id=session_id)
+        session_id = create_session(user_id=user["user_id"])
+    save_chat_message("user", chat_req.message, session_id=session_id, user_id=user["user_id"])
+    result = run_agent(chat_req.message, session_id=session_id, user_id=user["user_id"], email=user["email"])
     reply = result["reply"]
     jobs_data = result.get("jobs")
     job_listings = [JobListing(**j) for j in jobs_data] if jobs_data else None
     search_id = None
     if job_listings:
         search_id = save_search(
-            query=request.message,
+            query=chat_req.message,
             location="",
             source_trigger="chat",
             jobs=[j.model_dump() for j in job_listings],
+            user_id=user["user_id"],
         )
-    save_chat_message("agent", reply, search_id=search_id, session_id=session_id)
-    update_session(session_id)
+    save_chat_message("agent", reply, search_id=search_id, session_id=session_id, user_id=user["user_id"])
+    update_session(session_id, user_id=user["user_id"])
     return ChatResponse(reply=reply, session_id=session_id, jobs=job_listings)
 
 
 @app.get("/api/sessions")
-async def list_sessions_endpoint():
-    return {"sessions": list_sessions()}
+async def list_sessions_endpoint(user: dict = Depends(get_current_user)):
+    set_current_user(user["user_id"])
+    return {"sessions": list_sessions(user_id=user["user_id"])}
 
 
 @app.get("/api/sessions/{session_id}/messages")
-async def get_session_messages_endpoint(session_id: str):
-    return {"messages": get_session_messages(session_id)}
+async def get_session_messages_endpoint(session_id: str, user: dict = Depends(get_current_user)):
+    set_current_user(user["user_id"])
+    return {"messages": get_session_messages(session_id, user_id=user["user_id"])}
 
 
 @app.delete("/api/sessions/{session_id}")
-async def delete_session_endpoint(session_id: str):
-    deleted = delete_session(session_id)
+async def delete_session_endpoint(session_id: str, user: dict = Depends(get_current_user)):
+    set_current_user(user["user_id"])
+    deleted = delete_session(session_id, user_id=user["user_id"])
     if not deleted:
         raise HTTPException(status_code=404, detail="Session not found")
     return {"ok": True}
 
 
+# ── Search ────────────────────────────────────────────────────
+
 @app.post("/api/search", response_model=SearchResponse)
-async def search_jobs_endpoint(request: SearchRequest):
+async def search_jobs_endpoint(request: SearchRequest, user: dict = Depends(get_current_user)):
     logger.info(
-        "Search request: query='%s', location='%s', max_results=%d",
-        request.query, request.location, request.max_results,
+        "Search request from user %s: query='%s', location='%s', max_results=%d",
+        user["user_id"], request.query, request.location, request.max_results,
     )
+    set_current_user(user["user_id"])
 
     indeed_jobs = search_indeed(
-        request.query, 
-        request.location, 
-        request.employment_type, 
-        request.remote, 
+        request.query,
+        request.location,
+        request.employment_type,
+        request.remote,
         request.max_results
     )
     linkedin_jobs = search_linkedin(
-        request.query, 
-        request.location, 
-        request.employment_type, 
-        request.remote, 
+        request.query,
+        request.location,
+        request.employment_type,
+        request.remote,
         request.max_results
     )
     yc_jobs = search_yc(
@@ -199,7 +326,7 @@ async def search_jobs_endpoint(request: SearchRequest):
         request.remote,
         request.max_results,
     )
-    
+
     logger.info(
         "Results: %d Indeed + %d LinkedIn + %d YC = %d total",
         len(indeed_jobs), len(linkedin_jobs), len(yc_jobs),
@@ -225,41 +352,48 @@ async def search_jobs_endpoint(request: SearchRequest):
             location=job["location"] or "N/A", salary=job["salary"] or "N/A",
             link=job["link"], source="YC Startup",
         ))
-    
+
     save_search(
         query=request.query,
         location=request.location or "",
         source_trigger="search-form",
         jobs=[j.model_dump() for j in job_listings],
+        user_id=user["user_id"],
     )
     return SearchResponse(jobs=job_listings)
 
 
+# ── History ───────────────────────────────────────────────────
+
 @app.get("/api/history")
-async def history_list(page: int = 1, per_page: int = 10):
-    items, total = get_history(page=page, per_page=per_page)
+async def history_list(page: int = 1, per_page: int = 10, user: dict = Depends(get_current_user)):
+    set_current_user(user["user_id"])
+    items, total = get_history(page=page, per_page=per_page, user_id=user["user_id"])
     return {"searches": items, "total": total, "page": page, "per_page": per_page}
 
 
 @app.get("/api/history/{search_id}")
-async def history_detail(search_id: int):
-    search = get_search(search_id)
+async def history_detail(search_id: int, user: dict = Depends(get_current_user)):
+    set_current_user(user["user_id"])
+    search = get_search(search_id, user_id=user["user_id"])
     if not search:
         raise HTTPException(status_code=404, detail="Search not found")
     return search
 
 
 @app.delete("/api/history/{search_id}")
-async def history_delete(search_id: int):
-    deleted = delete_search(search_id)
+async def history_delete(search_id: int, user: dict = Depends(get_current_user)):
+    set_current_user(user["user_id"])
+    deleted = delete_search(search_id, user_id=user["user_id"])
     if not deleted:
         raise HTTPException(status_code=404, detail="Search not found")
     return {"ok": True}
 
 
 @app.delete("/api/history")
-async def history_clear():
-    count = clear_history()
+async def history_clear(user: dict = Depends(get_current_user)):
+    set_current_user(user["user_id"])
+    count = clear_history(user_id=user["user_id"])
     return {"deleted": count}
 
 
@@ -268,11 +402,12 @@ async def health_check():
     return {"status": "ok"}
 
 
-# ── Profile ────────────────────────────────────────────────
+# ── Profile ───────────────────────────────────────────────────
 
 @app.get("/api/profile")
-async def get_profile_endpoint():
-    p = get_profile()
+async def get_profile_endpoint(user: dict = Depends(get_service_or_user)):
+    set_current_user(user["user_id"])
+    p = get_profile(user_id=user["user_id"])
     if not p:
         return {
             "full_name": "", "email": "", "phone": "",
@@ -284,41 +419,41 @@ async def get_profile_endpoint():
 
 
 @app.post("/api/profile")
-async def save_profile_endpoint(data: ProfileData):
-    save_profile(data.model_dump())
+async def save_profile_endpoint(data: ProfileData, user: dict = Depends(get_service_or_user)):
+    set_current_user(user["user_id"])
+    save_profile(data.model_dump(), user_id=user["user_id"])
     return {"ok": True}
 
 
-# ── Resume ──────────────────────────────────────────────────
-
-RESUME_PATH = os.path.join(RESUME_DIR, "resume")
-
+# ── Resume ────────────────────────────────────────────────────
 
 @app.post("/api/resume/upload")
-async def upload_resume(file: UploadFile = File(...)):
-    ext = os.path.splitext(file.filename or "resume.pdf")[1] or ".pdf"
-    dest = RESUME_PATH + ext
-    with open(dest, "wb") as f:
-        shutil.copyfileobj(file.file, f)
-    # Update the profile with the resume filename
-    p = get_profile() or {}
-    p["resume_name"] = os.path.basename(dest)
-    save_profile(p)
-    return {"resume_name": os.path.basename(dest)}
+async def upload_resume(file: UploadFile = File(...), user: dict = Depends(get_service_or_user)):
+    set_current_user(user["user_id"])
+    ext = os.path.splitext(file.filename or "resume")[1] or ".pdf"
+    filename = f"resume{ext}"
+    content = await file.read()
+    save_resume(content, filename, file.content_type or "application/pdf", user_id=user["user_id"])
+    p = get_profile(user_id=user["user_id"]) or {}
+    p["resume_name"] = filename
+    save_profile(p, user_id=user["user_id"])
+    return {"resume_name": filename}
 
 
 @app.get("/api/resume")
-async def download_resume():
-    p = get_profile()
-    if not p or not p.get("resume_name"):
+async def download_resume(user: dict = Depends(get_service_or_user)):
+    set_current_user(user["user_id"])
+    resume = get_resume(user_id=user["user_id"])
+    if not resume:
         raise HTTPException(status_code=404, detail="No resume uploaded")
-    path = os.path.join(RESUME_DIR, p["resume_name"])
-    if not os.path.exists(path):
-        raise HTTPException(status_code=404, detail="Resume file not found")
-    return FileResponse(path, media_type="application/octet-stream", filename=p["resume_name"])
+    return Response(
+        content=resume["content"],
+        media_type=resume["mime_type"],
+        headers={"Content-Disposition": f'attachment; filename="{resume["filename"]}"'},
+    )
 
 
-# ── Cover Letter & Apply Preparation ────────────────────────
+# ── Cover Letter & Apply Preparation ──────────────────────────
 
 _COVER_LETTER_PROMPT = (
     "You are writing a professional cover letter. "
@@ -355,8 +490,9 @@ def _generate_cover_letter(job_title: str, company: str, description: str, profi
 
 
 @app.post("/api/apply/prepare")
-async def prepare_apply(data: PrepareApplyRequest):
-    profile = get_profile()
+async def prepare_apply(data: PrepareApplyRequest, user: dict = Depends(get_current_user)):
+    set_current_user(user["user_id"])
+    profile = get_profile(user_id=user["user_id"])
     skills = profile.get("skills", []) if profile else []
     work_history = profile.get("work_history", []) if profile else []
     education = profile.get("education", []) if profile else []
@@ -376,22 +512,24 @@ async def prepare_apply(data: PrepareApplyRequest):
         "source": data.source,
         "status": "preparing",
         "cover_letter": cover_letter,
-    })
+    }, user_id=user["user_id"])
 
     return {"app_id": app_id, "cover_letter": cover_letter}
 
 
-# ── Applications ────────────────────────────────────────────
+# ── Applications ──────────────────────────────────────────────
 
 @app.get("/api/applications")
-async def list_applications(status: Optional[str] = Query(None)):
-    items = get_applications(status=status)
+async def list_applications(status: Optional[str] = Query(None), user: dict = Depends(get_current_user)):
+    set_current_user(user["user_id"])
+    items = get_applications(status=status, user_id=user["user_id"])
     return {"applications": items}
 
 
 @app.get("/api/applications/{app_id}")
-async def get_application_endpoint(app_id: int):
-    app = get_application(app_id)
+async def get_application_endpoint(app_id: int, user: dict = Depends(get_service_or_user)):
+    set_current_user(user["user_id"])
+    app = get_application(app_id, user_id=user["user_id"])
     if not app:
         raise HTTPException(status_code=404, detail="Application not found")
     return app
@@ -401,11 +539,12 @@ _VALID_STATUSES = {"applied", "rejected", "interview", "offer"}
 
 
 @app.put("/api/applications/{app_id}")
-async def update_application(app_id: int, status: str = Query(...)):
+async def update_application(app_id: int, status: str = Query(...), user: dict = Depends(get_service_or_user)):
+    set_current_user(user["user_id"])
     if status not in _VALID_STATUSES:
         raise HTTPException(status_code=400, detail=f"Invalid status '{status}'. Must be one of: {', '.join(sorted(_VALID_STATUSES))}")
     now = datetime.now(timezone.utc).isoformat() if status == "applied" else None
-    ok = update_application_status(app_id, status, applied_at=now)
+    ok = update_application_status(app_id, status, applied_at=now, user_id=user["user_id"])
     if not ok:
         raise HTTPException(status_code=404, detail="Application not found")
     return {"ok": True}
