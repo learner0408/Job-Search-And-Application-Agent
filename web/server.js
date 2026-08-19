@@ -33,6 +33,10 @@ const isAuthed = (req) => {
 
 app.use(noCache);
 
+app.get('/ping', (req, res) => {
+  res.status(200).send('ok');
+});
+
 app.get('/login', (req, res) => {
   if (isAuthed(req)) return res.redirect('/');
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
