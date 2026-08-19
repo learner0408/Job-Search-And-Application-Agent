@@ -82,6 +82,8 @@ kubectl create secret generic api-env \
 
 API keys injected via `envFrom` + secret `api-env`. Database connected via `DATABASE_URL` env var. Local K8s deployment is scaled down — the app is deployed on Fly.io with Neon Postgres. Manifests remain for reference.
 
+**Keep-alive (cron-job.org):** Render's free tier spins down after 15 minutes idle (~30–60s cold start on the next request). Two cron-job.org jobs run every 10 minutes (schedule `*/10 11-22 * * *`, timezone Asia/Tokyo), keeping both services warm during the 11:00–22:59 JST window — one pings `https://jobsearch-api-1bbx.onrender.com/api/health`, the other `https://jobsearch-web.onrender.com/ping`. Each service is kept alive independently (the web proxy would otherwise serve an oversized HTML error page if the API were cold). Services sleep overnight; upgrading to Render Starter ($7/mo/service) removes spin-down entirely.
+
 ## Fly.io Deployment
 
 ### Deploy API
@@ -160,6 +162,5 @@ Planned work deferred from the current release:
 - **Cloud auto-apply**: move `auto-apply/service.py` (Playwright) onto a separate Render service with per-user delegated context and short-lived tokens; `SERVICE_TOKEN` will be removed once this ships.
 - **Email verification & password reset**: account activation emails and self-service password reset (currently "contact admin").
 - **Resume object storage**: move resume blobs from Postgres `bytea` to S3/R2.
-- **Render keep-alive**: free tier spins down after inactivity (~30-90s cold start on first request); wire up UptimeRobot or a cron ping to both services.
 | `AGENTS.md` | Agent instructions for development |
 | `pyproject.toml` | Python dependencies and project config |
