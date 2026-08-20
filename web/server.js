@@ -13,6 +13,24 @@ const API_URL = process.env.API_URL || 'http://127.0.0.1:8000';
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-me';
 const COOKIE_NAME = 'session';
 
+const KEEPALIVE_MS = 10 * 60 * 1000;
+const JST_WINDOW_START = 11;
+const JST_WINDOW_END = 22;
+
+const inJstWindow = () => {
+  const jst = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
+  return jst.getHours() >= JST_WINDOW_START && jst.getHours() <= JST_WINDOW_END;
+};
+
+const warmApi = async () => {
+  if (!inJstWindow()) return;
+  try {
+    await fetch(`${API_URL}/api/health`, { signal: AbortSignal.timeout(120000) });
+  } catch (err) {
+    console.log(`api keep-alive failed: ${err.message}`);
+  }
+};
+
 const noCache = (req, res, next) => {
   res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.set('Pragma', 'no-cache');
@@ -34,6 +52,11 @@ const isAuthed = (req) => {
 app.use(noCache);
 
 app.get('/ping', (req, res) => {
+  res.status(200).send('ok');
+});
+
+app.get('/wake', (req, res) => {
+  warmApi();
   res.status(200).send('ok');
 });
 
@@ -62,4 +85,6 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Frontend server running on http://localhost:${PORT}`);
   console.log(`Proxying API requests to ${API_URL}`);
+  warmApi();
+  setInterval(warmApi, KEEPALIVE_MS);
 });
