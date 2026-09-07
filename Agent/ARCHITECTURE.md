@@ -1,7 +1,5 @@
 # Architecture: Job Search and Application Agent — Agent Subsystem
 
-> Created by the `architecture-doc` skill. Section names must stay stable — the coding agent reads this file to map features to modules.
-
 ## 1. Project Overview
 
 Agent subsystem that routes dynamic natural-language job intents through a hybrid-planner orchestrator to help users search and apply for jobs. Examples: “Get me open positions for AI Engineer in Bangalore”, “Apply to 'X' job which matches my profile”, “What applications have I applied to?”. The planner generates a validated DAG of tools per query, so mixes like `db-read + search` are handled without a fixed pipeline. Goals are intent coverage, source extensibility, and auditable matching. Non-goals for this doc are cloud auto-apply hardening and resume object-storage migration (tracked in `BACKLOG.md`).

@@ -71,6 +71,20 @@ def _parse_search_result(tool_content: str) -> dict[str, Any]:
     return {"jobs": jobs}
 
 
+def _should_use_orchestrator(message: str) -> bool:
+    """Check if query should be routed to the orchestrator.
+
+    Args:
+        message: User message.
+
+    Returns:
+        True if orchestrator should handle it.
+    """
+    low = message.lower()
+    keywords = ["apply", "match", "threshold", "%", "bangalore", "engineer", "positions", "openings"]
+    return any(k in low for k in keywords) and any(k in low for k in ["apply", "match", "search", "find", "get"])
+
+
 def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[int] = None, email: Optional[str] = None) -> dict[str, Any]:
     """Run the job-search assistant agent on a user message.
 
@@ -84,6 +98,27 @@ def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[
         Dict with a "reply" string and an optional "jobs" list of job listings.
     """
     logger.info("Agent message (user %s): '%s'", user_id, message[:120])
+
+    # Route dynamic search+match+apply intents to the orchestrator
+    if user_id is not None and _should_use_orchestrator(message):
+        try:
+            from Agent.orchestrator import build_orchestrator
+            from database import set_current_user
+            set_current_user(user_id)
+            graph = build_orchestrator()
+            state = {"user_id": user_id, "session_id": session_id or "", "raw_query": message, "intent": "", "profile_snapshot": {}, "jobs": [], "scored_jobs": [], "threshold": None, "drafts": [], "error": None}
+            result = graph.invoke(state, config={"configurable": {"thread_id": session_id or str(user_id)}})
+            reply = result.get("error") or "Done."
+            jobs = [s["job"] for s in result.get("scored_jobs", [])] or [s["job"] for s in result.get("drafts", [])] if result.get("drafts") else None
+            # Fallback to jobs if scored empty
+            if not jobs:
+                jobs = result.get("jobs")
+            logger.info("Orchestrator reply: '%s'", reply[:120])
+            out: dict[str, Any] = {"reply": reply}
+            out["jobs"] = jobs if jobs else None
+            return out
+        except Exception as e:
+            logger.warning("Orchestrator failed, falling back to ReAct: %s", e)
 
     model_name = os.getenv("CHAT_LLM_MODEL", "claude-sonnet-5")
     provider = os.getenv("CHAT_LLM_PROVIDER", "anthropic")

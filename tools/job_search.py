@@ -51,12 +51,31 @@ def _parse_jobs(results: list[dict], source: str) -> list[dict]:
         jobs.append({
             "source": source,
             "title": title,
-            "description": snippet[:120] if snippet else "",
+            "description": snippet if snippet else "",
             "location": _extract_location(f"{title} {snippet}"),
             "salary": _extract_salary(snippet),
             "link": r.get("href", ""),
         })
     return jobs
+
+
+def _cache_key(title: str, location: str, source: str, employment_type: str, remote: bool, max_results: int) -> str:
+    """Build a cache key for a search.
+
+    Args:
+        title: Job title query.
+        location: Location filter.
+        source: Source filter.
+        employment_type: Employment type filter.
+        remote: Remote flag.
+        max_results: Max results.
+
+    Returns:
+        Cache key string.
+    """
+    import hashlib
+    raw = f"{title}|{location}|{source}|{employment_type}|{remote}|{max_results}"
+    return hashlib.sha256(raw.encode()).hexdigest()[:16]
 
 
 def search_indeed(
@@ -174,6 +193,16 @@ def search_jobs(
     Returns:
         JSON string with job results grouped by source. Top-level keys are "indeed", "linkedin", "yc_startups".
     """
+    # Check cache for 24h entries
+    cache_key = _cache_key(title, location or "", source or "all", employment_type or "", bool(remote), max_results or 10)
+    try:
+        from database import get_search_cache, set_search_cache
+        cached = get_search_cache(cache_key)
+        if cached is not None:
+            return json.dumps(cached, indent=2)
+    except Exception:
+        cached = None
+
     source_map = {
         "indeed": ("indeed", search_indeed),
         "linkedin": ("linkedin", search_linkedin),
@@ -181,17 +210,36 @@ def search_jobs(
     }
 
     if source == "all":
-        indeed_jobs = search_indeed(title, location, employment_type, remote, max_results)
-        linkedin_jobs = search_linkedin(title, location, employment_type, remote, max_results)
-        yc_jobs = search_yc(title, location, employment_type, remote, max_results)
-        return json.dumps({
+        # Retrieve with 2x retry on empty results
+        for attempt in range(2):
+            indeed_jobs = search_indeed(title, location, employment_type, remote, max_results)
+            linkedin_jobs = search_linkedin(title, location, employment_type, remote, max_results)
+            yc_jobs = search_yc(title, location, employment_type, remote, max_results)
+            if indeed_jobs or linkedin_jobs or yc_jobs:
+                break
+        result = {
             "indeed": indeed_jobs,
             "linkedin": linkedin_jobs,
             "yc_startups": yc_jobs,
-        }, indent=2)
+        }
+        try:
+            from database import set_search_cache
+            set_search_cache(cache_key, result, ttl_hours=24)
+        except Exception:
+            pass
+        return json.dumps(result, indent=2)
 
     key, func = source_map.get(source.lower(), (None, None))
     if func is None:
         return json.dumps({"error": f"Unknown source '{source}'. Use 'all', 'indeed', 'linkedin', or 'yc'."})
-    jobs = func(title, location, employment_type, remote, max_results)
-    return json.dumps({key: jobs}, indent=2)
+    for attempt in range(2):
+        jobs = func(title, location, employment_type, remote, max_results)
+        if jobs:
+            break
+    result = {key: jobs}
+    try:
+        from database import set_search_cache
+        set_search_cache(cache_key, result, ttl_hours=24)
+    except Exception:
+        pass
+    return json.dumps(result, indent=2)

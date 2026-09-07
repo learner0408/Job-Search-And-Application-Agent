@@ -171,6 +171,24 @@ def init_db() -> None:
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS user_preferences (
+                user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+                desired_roles TEXT NOT NULL DEFAULT '[]',
+                locations TEXT NOT NULL DEFAULT '[]',
+                salary_band TEXT NOT NULL DEFAULT '',
+                remote BOOLEAN,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS search_cache (
+                key TEXT PRIMARY KEY,
+                payload TEXT NOT NULL,
+                expires_at TIMESTAMP NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
         cur.execute("CREATE INDEX IF NOT EXISTS idx_search_results_search_id ON search_results(search_id)")
         cur.execute("CREATE INDEX IF NOT EXISTS idx_chat_messages_created_at ON chat_messages(created_at)")
         cur.execute("CREATE INDEX IF NOT EXISTS idx_chat_messages_session ON chat_messages(session_id)")
@@ -799,6 +817,20 @@ _COLUMN_DESCRIPTIONS: dict[str, dict[str, str]] = {
         "content": "Raw resume bytes (BYTEA)",
         "updated_at": "Last upload timestamp",
     },
+    "user_preferences": {
+        "user_id": "Owning user's id (PK, FK to users)",
+        "desired_roles": "JSON array of desired role strings",
+        "locations": "JSON array of preferred locations",
+        "salary_band": "Preferred salary band text",
+        "remote": "Whether remote is preferred (nullable)",
+        "updated_at": "Last update timestamp",
+    },
+    "search_cache": {
+        "key": "Cache key (query hash)",
+        "payload": "JSON-encoded job results",
+        "expires_at": "When the cached entry expires",
+        "created_at": "When the entry was created",
+    },
 }
 
 
@@ -1159,5 +1191,144 @@ def get_resume(user_id: Optional[int] = None) -> Optional[dict]:
             "mime_type": row["mime_type"],
             "content": bytes(row["content"]),
         }
+    finally:
+        conn.close()
+
+
+def get_resume_text(user_id: Optional[int] = None) -> str:
+    """Extract text from a user's stored resume, truncated to ~2k tokens.
+
+    Args:
+        user_id: Owning user id; defaults to the request context.
+
+    Returns:
+        Plain text extracted from the resume, or empty string if none.
+    """
+    resume = get_resume(user_id=user_id)
+    if not resume:
+        return ""
+    content = resume["content"]
+    text = ""
+    try:
+        import fitz  # PyMuPDF
+        doc = fitz.open(stream=content, filetype="pdf")
+        text = "\n".join(page.get_text() for page in doc)
+    except Exception:
+        try:
+            text = content.decode("utf-8", errors="ignore")
+        except Exception:
+            text = ""
+    return text[:8000]
+
+
+def get_user_preferences(user_id: Optional[int] = None) -> dict:
+    """Fetch a user's job preferences.
+
+    Args:
+        user_id: Owning user id; defaults to the request context.
+
+    Returns:
+        Dict with desired_roles, locations, salary_band, remote.
+    """
+    uid = _resolve_user_id(user_id)
+    conn = _get_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM user_preferences WHERE user_id = %s", (uid,))
+        row = cur.fetchone()
+        if not row:
+            return {"desired_roles": [], "locations": [], "salary_band": "", "remote": None}
+        return {
+            "desired_roles": json.loads(row["desired_roles"]) if isinstance(row["desired_roles"], str) else row["desired_roles"],
+            "locations": json.loads(row["locations"]) if isinstance(row["locations"], str) else row["locations"],
+            "salary_band": row["salary_band"] or "",
+            "remote": row["remote"],
+        }
+    finally:
+        conn.close()
+
+
+def save_user_preferences(data: dict, user_id: Optional[int] = None) -> None:
+    """Upsert a user's job preferences.
+
+    Args:
+        data: Dict with desired_roles, locations, salary_band, remote.
+        user_id: Owning user id; defaults to the request context.
+    """
+    uid = _resolve_user_id(user_id)
+    conn = _get_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """INSERT INTO user_preferences (user_id, desired_roles, locations, salary_band, remote, updated_at)
+               VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
+               ON CONFLICT (user_id) DO UPDATE SET
+                 desired_roles = EXCLUDED.desired_roles,
+                 locations = EXCLUDED.locations,
+                 salary_band = EXCLUDED.salary_band,
+                 remote = EXCLUDED.remote,
+                 updated_at = CURRENT_TIMESTAMP""",
+            (
+                uid,
+                json.dumps(data.get("desired_roles", [])),
+                json.dumps(data.get("locations", [])),
+                data.get("salary_band", ""),
+                data.get("remote"),
+            ),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def get_search_cache(key: str) -> Optional[list]:
+    """Fetch a cached search payload if not expired.
+
+    Args:
+        key: Cache key.
+
+    Returns:
+        Cached job list, or None if missing/expired.
+    """
+    conn = _get_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute("SELECT payload, expires_at FROM search_cache WHERE key = %s", (key,))
+        row = cur.fetchone()
+        if not row:
+            return None
+        import datetime
+        expires = row["expires_at"]
+        if expires.tzinfo is None:
+            expires = expires.replace(tzinfo=None)
+        if expires < datetime.datetime.utcnow():
+            cur.execute("DELETE FROM search_cache WHERE key = %s", (key,))
+            conn.commit()
+            return None
+        return json.loads(row["payload"])
+    finally:
+        conn.close()
+
+
+def set_search_cache(key: str, payload: list, ttl_hours: int = 24) -> None:
+    """Store a search payload in the cache.
+
+    Args:
+        key: Cache key.
+        payload: Job list to cache.
+        ttl_hours: Hours until expiry.
+    """
+    import datetime
+    expires_at = datetime.datetime.utcnow() + datetime.timedelta(hours=ttl_hours)
+    conn = _get_conn()
+    try:
+        cur = conn.cursor()
+        cur.execute(
+            """INSERT INTO search_cache (key, payload, expires_at)
+               VALUES (%s, %s, %s)
+               ON CONFLICT (key) DO UPDATE SET payload = EXCLUDED.payload, expires_at = EXCLUDED.expires_at""",
+            (key, json.dumps(payload), expires_at),
+        )
+        conn.commit()
     finally:
         conn.close()
