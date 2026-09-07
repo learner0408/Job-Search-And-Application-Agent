@@ -13,3 +13,7 @@
 - [ ] Email verification / password reset flow
 - [ ] Resume object storage (move from BYTEA to external store)
 - [ ] Cloud auto-apply hardening
+- [ ] R3 re-plan: planner re-routes on node failure (e.g., DDG `all` → retry `linkedin` only), behind flag (deferred from R2)
+
+## P3 — Agent improvements (R3 follow-up)
+- [ ] Implement orchestrator re-plan edge (`route_after_execute` → planner) with validator flag
