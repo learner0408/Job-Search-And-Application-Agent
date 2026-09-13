@@ -59,8 +59,7 @@ def _deterministic_score(job: dict, snapshot: dict) -> tuple[int, dict]:
     if job.get("salary") and job["salary"] != "N/A" and prefs.get("salary_band"):
         salary_score = 5
 
-    # Type placeholder 0–5
-    type_score = 3
+    type_score = 5
 
     breakdown = {"skills": skills_score, "location": loc_score, "salary": salary_score, "type": type_score}
     return sum(breakdown.values()), breakdown

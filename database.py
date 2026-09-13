@@ -900,7 +900,7 @@ def get_schema_metadata() -> dict:
 
 _USER_SCOPED_TABLES = {
     "sessions", "searches", "search_results", "chat_messages",
-    "user_profile", "applications",
+    "user_profile", "applications", "user_preferences",
 }
 
 _BLOCKED_TABLES = {"users", "resumes"}
@@ -1281,14 +1281,14 @@ def save_user_preferences(data: dict, user_id: Optional[int] = None) -> None:
         conn.close()
 
 
-def get_search_cache(key: str) -> Optional[list]:
+def get_search_cache(key: str) -> Optional[dict]:
     """Fetch a cached search payload if not expired.
 
     Args:
         key: Cache key.
 
     Returns:
-        Cached job list, or None if missing/expired.
+        Cached job dict, or None if missing/expired.
     """
     conn = _get_conn()
     try:
@@ -1299,9 +1299,10 @@ def get_search_cache(key: str) -> Optional[list]:
             return None
         import datetime
         expires = row["expires_at"]
+        now = datetime.datetime.now(datetime.timezone.utc)
         if expires.tzinfo is None:
-            expires = expires.replace(tzinfo=None)
-        if expires < datetime.datetime.utcnow():
+            expires = expires.replace(tzinfo=datetime.timezone.utc)
+        if expires < now:
             cur.execute("DELETE FROM search_cache WHERE key = %s", (key,))
             conn.commit()
             return None
@@ -1310,16 +1311,16 @@ def get_search_cache(key: str) -> Optional[list]:
         conn.close()
 
 
-def set_search_cache(key: str, payload: list, ttl_hours: int = 24) -> None:
+def set_search_cache(key: str, payload: dict, ttl_hours: int = 24) -> None:
     """Store a search payload in the cache.
 
     Args:
         key: Cache key.
-        payload: Job list to cache.
+        payload: Job dict to cache.
         ttl_hours: Hours until expiry.
     """
     import datetime
-    expires_at = datetime.datetime.utcnow() + datetime.timedelta(hours=ttl_hours)
+    expires_at = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=ttl_hours)
     conn = _get_conn()
     try:
         cur = conn.cursor()

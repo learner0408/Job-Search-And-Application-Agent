@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 from typing import TypedDict, Optional, Any
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
@@ -20,6 +21,43 @@ class OrchestratorState(TypedDict):
     threshold: Optional[int]
     drafts: list
     error: Optional[str]
+    plan: Optional[dict]
+
+
+def extract_threshold(raw_query: str) -> Optional[int]:
+    """Extract threshold from query.
+
+    Args:
+        raw_query: User query text.
+
+    Returns:
+        Threshold 0-100 or None.
+    """
+    m = re.search(r"(?:threshold|≥|>=|match)?\s*(\d+)\s*(?:%|percent|pct)?\b", raw_query, re.I)
+    if m:
+        v = int(m.group(1))
+        if 0 < v <= 100:
+            return v
+    return None
+
+
+def get_missing_fields(profile: Optional[dict]) -> list[str]:
+    """Get missing required fields from profile.
+
+    Args:
+        profile: Profile dict.
+
+    Returns:
+        List of missing field names.
+    """
+    if not profile:
+        return ["phone", "email"]
+    missing = []
+    if not profile.get("phone"):
+        missing.append("phone")
+    if not profile.get("email"):
+        missing.append("email")
+    return missing
 
 
 def _classify_intent(state: OrchestratorState) -> dict:
@@ -29,16 +67,17 @@ def _classify_intent(state: OrchestratorState) -> dict:
         state: Current orchestrator state.
 
     Returns:
-        Dict with intent label.
+        Dict with intent and plan.
     """
-    q = state.get("raw_query", "").lower()
+    raw = state.get("raw_query", "")
+    q = raw.lower()
     if any(k in q for k in ["apply", "match", "%", "threshold"]):
-        return {"intent": "search_score_prepare"}
+        return {"intent": "search_score_prepare", "plan": None}
     if "search" in q or "jobs" in q or "position" in q:
-        return {"intent": "search"}
+        return {"intent": "search", "plan": None}
     if "appl" in q or "profile" in q or "history" in q:
-        return {"intent": "db_read"}
-    return {"intent": "chat"}
+        return {"intent": "db_read", "plan": None}
+    return {"intent": "chat", "plan": None}
 
 
 def _search_node(state: OrchestratorState) -> dict:
@@ -50,10 +89,17 @@ def _search_node(state: OrchestratorState) -> dict:
     Returns:
         Dict with jobs.
     """
-    from tools.job_search import search_jobs
+    from tools.search.job_search import search_jobs
     import json as _json
-    # Simple heuristic: extract title/location from raw_query (fallback to raw_query as title)
     title = state.get("raw_query", "")
+    # If plan has search_jobs step, use its args
+    plan = state.get("plan")
+    if plan:
+        for s in plan.get("steps", []):
+            if s["tool"] == "search_jobs":
+                args = s.get("args", {})
+                title = args.get("title", title)
+                break
     raw = json.loads(search_jobs(title=title, location="", source="all", max_results=10))
     jobs = []
     for key in ("indeed", "linkedin", "yc_startups"):
@@ -95,12 +141,17 @@ def _score_node(state: OrchestratorState) -> dict:
     """
     from tools.scoring.score_jobs import _deterministic_score, _llm_experience_score
     threshold = state.get("threshold")
-    # Extract threshold from query if present
     if threshold is None:
-        import re
-        m = re.search(r"(\d+)\s*%", state.get("raw_query", ""))
-        if m:
-            threshold = int(m.group(1))
+        threshold = extract_threshold(state.get("raw_query", ""))
+        # Also check planner plan threshold arg if present
+        plan = state.get("plan")
+        if plan:
+            for s in plan.get("steps", []):
+                if s["tool"] == "score_jobs" and "threshold" in s.get("args", {}):
+                    try:
+                        threshold = int(s["args"]["threshold"])
+                    except Exception:
+                        pass
     jobs = state.get("jobs", [])
     snapshot = state.get("profile_snapshot", {})
     scored = []
@@ -127,16 +178,14 @@ def _prepare_node(state: OrchestratorState) -> dict:
     """
     from database import save_application, get_profile
     profile = get_profile(user_id=state["user_id"])
-    missing = []
-    if not profile or not profile.get("phone"):
-        missing.append("phone")
+    missing = get_missing_fields(profile)
     scored = state.get("scored_jobs", [])[:5]
     drafts = []
     for s in scored:
         job = s["job"]
         data = {
             "job_title": job.get("title", ""),
-            "company": job.get("title", "")[:50],
+            "company": job.get("company", ""),
             "location": job.get("location", ""),
             "salary": job.get("salary", ""),
             "link": job.get("link", ""),
@@ -147,6 +196,23 @@ def _prepare_node(state: OrchestratorState) -> dict:
         app_id = save_application(data, user_id=state["user_id"])
         drafts.append({"app_id": app_id, "job": job, "score": s["score"], "missing_fields": missing})
     return {"drafts": drafts}
+
+
+def _db_read_node(state: OrchestratorState) -> dict:
+    """Handle DB-read intents via query_database.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Dict with error as formatted answer.
+    """
+    from tools.db_query_tool import query_database
+    try:
+        answer = query_database(state.get("raw_query", ""))
+        return {"error": answer}
+    except Exception as e:
+        return {"error": str(e)}
 
 
 def _format_node(state: OrchestratorState) -> dict:
@@ -170,14 +236,42 @@ def _format_node(state: OrchestratorState) -> dict:
     if state.get("intent") == "search":
         jobs = state.get("jobs", [])
         return {"error": f"Found {len(jobs)} jobs."}
-    return {"error": "Done."}
+    if state.get("intent") == "db_read":
+        return {"error": state.get("error") or "Done."}
+    return {"error": state.get("error") or "Done."}
 
 
-def build_orchestrator():
-    """Build the LangGraph orchestrator with MemorySaver checkpoint.
+def _route_after_classify(state: OrchestratorState) -> str:
+    """Route after classify based on intent.
+
+    Args:
+        state: Current orchestrator state.
 
     Returns:
-        Compiled graph.
+        Next node name.
+    """
+    intent = state.get("intent", "chat")
+    if intent == "search_score_prepare":
+        return "search"
+    if intent == "search":
+        return "search"
+    if intent == "db_read":
+        return "db_read"
+    return "format"
+
+
+_checkpointer = MemorySaver()
+_graph = None
+
+
+def _build_graph(checkpointer=None):
+    """Build the graph structure.
+
+    Args:
+        checkpointer: Checkpoint saver.
+
+    Returns:
+        StateGraph builder.
     """
     g = StateGraph(OrchestratorState)
     g.add_node("classify", _classify_intent)
@@ -185,15 +279,29 @@ def build_orchestrator():
     g.add_node("profile", _profile_node)
     g.add_node("score", _score_node)
     g.add_node("prepare", _prepare_node)
+    g.add_node("db_read", _db_read_node)
     g.add_node("format", _format_node)
 
     g.set_entry_point("classify")
-    # For now linear; planner DAG will replace edges in future
-    g.add_edge("classify", "search")
+    g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "db_read": "db_read", "format": "format"})
     g.add_edge("search", "profile")
     g.add_edge("profile", "score")
     g.add_edge("score", "prepare")
     g.add_edge("prepare", "format")
+    g.add_edge("db_read", "format")
     g.add_edge("format", END)
+    return g
 
-    return g.compile(checkpointer=MemorySaver())
+
+def build_orchestrator():
+    """Build the LangGraph orchestrator with shared MemorySaver checkpoint.
+
+    Returns:
+        Compiled graph.
+    """
+    global _graph
+    if _graph is not None:
+        return _graph
+    g = _build_graph(checkpointer=_checkpointer)
+    _graph = g.compile(checkpointer=_checkpointer)
+    return _graph

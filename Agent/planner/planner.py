@@ -38,7 +38,23 @@ def plan_query(query: str, user_id: int = 0) -> dict:
     if not m:
         raise ValueError(f"No JSON plan found: {content[:500]}")
     plan = json.loads(m.group())
-    ok, err = validate_plan(plan)
+    ok, err = validate_plan(plan, raw_query=query)
     if not ok:
+        # Retry once with error appended
+        retry_prompt = prompt + f"\n\nPrevious attempt was invalid: {err}\nFix the JSON and return ONLY the corrected plan."
+        try:
+            from tests.conftest import add_tokens
+            add_tokens(1000)
+        except Exception:
+            pass
+        result2 = llm.invoke(retry_prompt)
+        content2 = result2.content if isinstance(result2.content, str) else str(result2.content)
+        m2 = re.search(r"\{.*\}", content2, re.DOTALL)
+        if m2:
+            plan = json.loads(m2.group())
+            ok2, err2 = validate_plan(plan, raw_query=query)
+            if ok2:
+                return plan
+            err = err2
         raise ValueError(f"Invalid plan: {err} — {plan}")
     return plan

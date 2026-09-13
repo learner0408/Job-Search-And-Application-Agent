@@ -1,5 +1,4 @@
 from .base import JobSource
-from tools.job_search import search_yc as _search_fn
 
 
 class YCSource(JobSource):
@@ -22,4 +21,6 @@ class YCSource(JobSource):
         Returns:
             Job listings from YC.
         """
-        return _search_fn(title, location, employment_type, remote, max_results)
+        import tools.job_search as js
+
+        return js.search_yc(title, location, employment_type, remote, max_results)

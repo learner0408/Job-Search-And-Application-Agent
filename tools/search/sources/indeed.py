@@ -1,5 +1,4 @@
 from .base import JobSource
-from tools.job_search import search_indeed as _search_fn
 
 
 class IndeedSource(JobSource):
@@ -22,4 +21,6 @@ class IndeedSource(JobSource):
         Returns:
             Job listings from Indeed.
         """
-        return _search_fn(title, location, employment_type, remote, max_results)
+        import tools.job_search as js
+
+        return js.search_indeed(title, location, employment_type, remote, max_results)

@@ -1,5 +1,4 @@
 from .base import JobSource
-from tools.job_search import search_linkedin as _search_fn
 
 
 class LinkedInSource(JobSource):
@@ -22,4 +21,6 @@ class LinkedInSource(JobSource):
         Returns:
             Job listings from LinkedIn.
         """
-        return _search_fn(title, location, employment_type, remote, max_results)
+        import tools.job_search as js
+
+        return js.search_linkedin(title, location, employment_type, remote, max_results)

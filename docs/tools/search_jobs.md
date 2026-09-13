@@ -9,9 +9,9 @@
 
 **Output**
 ```json
-{"indeed": [{"title": "", "description": "", "location": "", "salary": "", "link": "", "source": "Indeed"}], "linkedin": [], "yc_startups": []}
+{"indeed": [{"title": "", "company": "", "description": "", "location": "", "salary": "", "link": "", "source": "Indeed"}], "linkedin": [], "yc_startups": []}
 ```
-`description` is full snippet (no 120-char truncation). `location`/`salary` normalized in source layer.
+`description` is full snippet (no 120-char truncation). `location`/`salary`/`company` normalized in source layer via `_extract_company`.
 
 **Errors**
 - `{"error": "Unknown source '...' "}` for invalid `source`
