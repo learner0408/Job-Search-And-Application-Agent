@@ -60,8 +60,42 @@ def get_missing_fields(profile: Optional[dict]) -> list[str]:
     return missing
 
 
+def _load_classify_prompt() -> str:
+    """Load classify prompt template.
+
+    Returns:
+        Prompt template string.
+    """
+    from pathlib import Path
+    p = Path(__file__).parent / "prompts" / "classify" / "v1.md"
+    if p.exists():
+        return p.read_text()
+    return "Classify into one of search, search_score_prepare, db_read, chat, profile"
+
+
+def _rule_based_intent(raw: str) -> str:
+    """Fallback rule-based intent.
+
+    Args:
+        raw: Raw query.
+
+    Returns:
+        Intent string.
+    """
+    q = raw.lower()
+    if "my profile" in q or "my resume" in q or q.strip() == "profile":
+        return "profile"
+    if any(k in q for k in ["apply", "match", "%", "threshold", "≥"]):
+        return "search_score_prepare"
+    if "search" in q or "jobs" in q or "position" in q:
+        return "search"
+    if "appl" in q or "history" in q or ("profile" in q and "get" not in q):
+        return "db_read"
+    return "chat"
+
+
 def _classify_intent(state: OrchestratorState) -> dict:
-    """Classify query intent.
+    """Classify query intent via LLM with rule fallback.
 
     Args:
         state: Current orchestrator state.
@@ -70,14 +104,20 @@ def _classify_intent(state: OrchestratorState) -> dict:
         Dict with intent and plan.
     """
     raw = state.get("raw_query", "")
-    q = raw.lower()
-    if any(k in q for k in ["apply", "match", "%", "threshold"]):
-        return {"intent": "search_score_prepare", "plan": None}
-    if "search" in q or "jobs" in q or "position" in q:
-        return {"intent": "search", "plan": None}
-    if "appl" in q or "profile" in q or "history" in q:
-        return {"intent": "db_read", "plan": None}
-    return {"intent": "chat", "plan": None}
+    try:
+        import os
+        from langchain.chat_models import init_chat_model
+
+        llm = init_chat_model(os.getenv("PLANNER_LLM_MODEL", "claude-haiku-4-5"), model_provider="anthropic", temperature=0)
+        prompt = _load_classify_prompt() + f"\n\nQuery: {raw}\nIntent:"
+        result = llm.invoke(prompt)
+        content = result.content if isinstance(result.content, str) else str(result.content)
+        m = re.search(r"\b(search_score_prepare|search|db_read|chat|profile)\b", content.lower())
+        if m:
+            return {"intent": m.group(1), "plan": None}
+    except Exception as e:
+        logger.warning("LLM classify failed, falling back to rule: %s", e)
+    return {"intent": _rule_based_intent(raw), "plan": None}
 
 
 def _search_node(state: OrchestratorState) -> dict:
@@ -238,7 +278,24 @@ def _format_node(state: OrchestratorState) -> dict:
         return {"error": f"Found {len(jobs)} jobs."}
     if state.get("intent") == "db_read":
         return {"error": state.get("error") or "Done."}
+    if state.get("intent") == "profile":
+        snap = state.get("profile_snapshot") or {}
+        return {"error": f"Profile: {snap.get('skills', [])} | {snap.get('full_name','')}"}
     return {"error": state.get("error") or "Done."}
+
+
+def _route_after_profile(state: OrchestratorState) -> str:
+    """Route after profile based on intent.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Next node name.
+    """
+    if state.get("intent") == "profile":
+        return "format"
+    return "score"
 
 
 def _route_after_classify(state: OrchestratorState) -> str:
@@ -257,6 +314,8 @@ def _route_after_classify(state: OrchestratorState) -> str:
         return "search"
     if intent == "db_read":
         return "db_read"
+    if intent == "profile":
+        return "profile"
     return "format"
 
 
@@ -283,9 +342,9 @@ def _build_graph(checkpointer=None):
     g.add_node("format", _format_node)
 
     g.set_entry_point("classify")
-    g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "db_read": "db_read", "format": "format"})
+    g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "db_read": "db_read", "profile": "profile", "format": "format"})
     g.add_edge("search", "profile")
-    g.add_edge("profile", "score")
+    g.add_conditional_edges("profile", _route_after_profile, {"score": "score", "format": "format"})
     g.add_edge("score", "prepare")
     g.add_edge("prepare", "format")
     g.add_edge("db_read", "format")
