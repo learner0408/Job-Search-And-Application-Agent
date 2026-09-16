@@ -9,8 +9,12 @@ wheels/
 # Virtual environments
 .venv
 .env
+
+# Test Files / Local Configs
 .playwright-mcp/
 .DS_Store
+
+opencode.json
 data/
 web/node_modules/
 scripts/

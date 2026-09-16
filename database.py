@@ -1208,11 +1208,19 @@ def get_resume_text(user_id: Optional[int] = None) -> str:
     if not resume:
         return ""
     content = resume["content"]
+    mime = (resume.get("mime_type") or "").lower()
+    filename = (resume.get("filename") or "").lower()
     text = ""
     try:
-        import fitz  # PyMuPDF
-        doc = fitz.open(stream=content, filetype="pdf")
-        text = "\n".join(page.get_text() for page in doc)
+        import io
+        if "word" in mime or filename.endswith(".docx"):
+            from docx import Document
+            doc = Document(io.BytesIO(content))
+            text = "\n".join(p.text for p in doc.paragraphs)
+        else:
+            from PyPDF2 import PdfReader
+            reader = PdfReader(io.BytesIO(content))
+            text = "\n".join(page.extract_text() or "" for page in reader.pages)
     except Exception:
         try:
             text = content.decode("utf-8", errors="ignore")
