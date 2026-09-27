@@ -2126,7 +2126,12 @@
               <div class="profile-section-header">
                 <h3>Resume</h3>
               </div>
-              <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:8px">${p.resume_name ? 'Current: ' + p.resume_name : 'No resume uploaded'}</p>
+              ${p.resume_name
+                ? `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                     <span style="font-size:13px;color:var(--color-text-secondary)">Current: ${escapeHtml(p.resume_name)}</span>
+                     <button class="profile-add-btn" id="pf-download" type="button" style="width:auto">⬇ Download</button>
+                   </div>`
+                : `<p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:8px">No resume uploaded</p>`}
               <input type="file" id="pf-resume" accept=".pdf,.docx" style="font-size:13px">
             </div>
 
@@ -2134,6 +2139,7 @@
             <div class="profile-status" id="pf-status"></div>
           </div>`;
         document.getElementById('pf-save').addEventListener('click', saveProfile);
+        document.getElementById('pf-download')?.addEventListener('click', () => downloadResume(p.resume_name));
       } catch (err) {
         sideProfileBody.innerHTML = `<div style="text-align:center;padding:40px;color:var(--color-text-secondary)">Error loading profile: ${err.message}</div>`;
       }
@@ -2244,6 +2250,33 @@
         status.style.color = '#ef4444';
       } finally {
         btn.disabled = false;
+      }
+    }
+
+    async function downloadResume(fallbackName) {
+      const status = document.getElementById('pf-status');
+      try {
+        const res = await fetch('/api/resume');
+        if (!res.ok) {
+          status.textContent = 'Resume file not found — please re-upload';
+          status.style.color = '#ef4444';
+          return;
+        }
+        const blob = await res.blob();
+        const disposition = res.headers.get('Content-Disposition') || '';
+        const match = disposition.match(/filename="([^"]+)"/);
+        const filename = match ? match[1] : (fallbackName || 'resume.pdf');
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        status.textContent = `Error: ${err.message}`;
+        status.style.color = '#ef4444';
       }
     }
 
