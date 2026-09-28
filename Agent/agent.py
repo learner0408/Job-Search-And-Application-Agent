@@ -82,7 +82,7 @@ def _should_use_orchestrator(message: str) -> bool:
     """
     low = message.lower()
     keywords = ["apply", "match", "threshold", "%", "bangalore", "engineer", "positions", "openings", "profile", "resume"]
-    return any(k in low for k in keywords) and any(k in low for k in ["apply", "match", "search", "find", "get", "profile"])
+    return any(k in low for k in keywords) and any(k in low for k in ["apply", "match", "search", "find", "fetch", "show", "get", "profile"])
 
 
 def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[int] = None, email: Optional[str] = None) -> dict[str, Any]:
@@ -97,10 +97,10 @@ def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[
     Returns:
         Dict with a "reply" string and an optional "jobs" list of job listings.
     """
-    logger.info("Agent message (user %s): '%s'", user_id, message[:120])
-
     # Route dynamic intents to the orchestrator (planner-driven, let its own classify handle routing)
-    if user_id is not None and _should_use_orchestrator(message):
+    use_orchestrator = user_id is not None and _should_use_orchestrator(message)
+    logger.info("route orchestrator=%s session=%s", use_orchestrator, session_id)
+    if use_orchestrator:
         try:
             from Agent.orchestrator import build_orchestrator
             from database import set_current_user
@@ -115,7 +115,7 @@ def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[
             jobs = [s["job"] for s in result.get("scored_jobs", [])] or [s["job"] for s in result.get("drafts", [])] if result.get("drafts") else None
             if not jobs:
                 jobs = result.get("jobs")
-            logger.info("Orchestrator reply: '%s'", reply[:120])
+            logger.info("Orchestrator reply session=%s: '%s'", session_id, reply[:120])
             out: dict[str, Any] = {"reply": reply}
             out["jobs"] = jobs if jobs else None
             return out
@@ -199,8 +199,13 @@ def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[
         if not reply:
             reply = _safe_text(last.content if last else None) or "No response."
 
+    tools_used = []
     for msg in messages:
-        if msg.type == "tool" and msg.name == "search_jobs":
+        if msg.type == "tool":
+            if msg.name not in tools_used:
+                tools_used.append(msg.name)
+            if msg.name != "search_jobs":
+                continue
             if isinstance(msg.content, list):
                 text = "".join(
                     b.get("text", "") for b in msg.content
@@ -211,7 +216,7 @@ def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[
             elif msg.content:
                 search_result = _parse_search_result(msg.content)
 
-    logger.info("Agent reply: '%s'", reply[:120])
+    logger.info("Agent reply tools=%s session=%s: '%s'", tools_used, session_id, reply[:120])
 
     out: dict[str, Any] = {"reply": reply}
     if search_result:

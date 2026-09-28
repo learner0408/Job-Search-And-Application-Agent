@@ -114,10 +114,13 @@ def _classify_intent(state: OrchestratorState) -> dict:
         content = result.content if isinstance(result.content, str) else str(result.content)
         m = re.search(r"\b(search_score_prepare|search|db_read|chat|profile)\b", content.lower())
         if m:
+            logger.info("intent=%s session=%s", m.group(1), state.get("session_id"))
             return {"intent": m.group(1), "plan": None}
     except Exception as e:
         logger.warning("LLM classify failed, falling back to rule: %s", e)
-    return {"intent": _rule_based_intent(raw), "plan": None}
+    intent = _rule_based_intent(raw)
+    logger.info("intent=%s session=%s (rule)", intent, state.get("session_id"))
+    return {"intent": intent, "plan": None}
 
 
 def _search_node(state: OrchestratorState) -> dict:
@@ -144,6 +147,7 @@ def _search_node(state: OrchestratorState) -> dict:
     jobs = []
     for key in ("indeed", "linkedin", "yc_startups"):
         jobs.extend(raw.get(key, []))
+    logger.info("search jobs=%d session=%s", len(jobs), state.get("session_id"))
     return {"jobs": jobs}
 
 
@@ -156,9 +160,11 @@ def _profile_node(state: OrchestratorState) -> dict:
     Returns:
         Dict with profile_snapshot.
     """
-    from database import get_profile, get_resume_text, get_user_preferences
+    from database import get_profile, get_resume, get_resume_text, get_user_preferences
     profile = get_profile(user_id=state["user_id"]) or {}
     prefs = get_user_preferences(user_id=state["user_id"])
+    resume = get_resume(user_id=state["user_id"])
+    resume_bytes = len(resume["content"]) if resume else 0
     resume_text = get_resume_text(user_id=state["user_id"])
     snapshot = {
         "skills": profile.get("skills", []),
@@ -167,6 +173,13 @@ def _profile_node(state: OrchestratorState) -> dict:
         "resume_text": resume_text,
         "preferences": prefs,
     }
+    logger.info(
+        "profile completeness=%s resume_bytes=%d resume_text_len=%d session=%s",
+        "full" if resume_text else "partial",
+        resume_bytes,
+        len(resume_text),
+        state.get("session_id"),
+    )
     return {"profile_snapshot": snapshot}
 
 
@@ -202,8 +215,13 @@ def _score_node(state: OrchestratorState) -> dict:
         breakdown["experience"] = exp
         scored.append({"job": job, "score": total, "breakdown": breakdown})
     scored.sort(key=lambda x: x["score"], reverse=True)
+    n_in = len(scored)
     if threshold is not None:
         scored = [s for s in scored if s["score"] >= threshold]
+    logger.info(
+        "score threshold=%s in=%d out=%d session=%s",
+        threshold, n_in, len(scored), state.get("session_id"),
+    )
     return {"scored_jobs": scored, "threshold": threshold}
 
 
@@ -235,6 +253,7 @@ def _prepare_node(state: OrchestratorState) -> dict:
         }
         app_id = save_application(data, user_id=state["user_id"])
         drafts.append({"app_id": app_id, "job": job, "score": s["score"], "missing_fields": missing})
+    logger.info("prepare drafts=%d session=%s", len(drafts), state.get("session_id"))
     return {"drafts": drafts}
 
 
@@ -250,6 +269,7 @@ def _db_read_node(state: OrchestratorState) -> dict:
     from tools.db_query_tool import query_database
     try:
         answer = query_database(state.get("raw_query", ""))
+        logger.info("db_read session=%s", state.get("session_id"))
         return {"error": answer}
     except Exception as e:
         return {"error": str(e)}
