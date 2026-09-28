@@ -82,7 +82,7 @@ def _should_use_orchestrator(message: str) -> bool:
     """
     low = message.lower()
     keywords = ["apply", "match", "threshold", "%", "bangalore", "engineer", "positions", "openings", "profile", "resume"]
-    return any(k in low for k in keywords) and any(k in low for k in ["apply", "match", "search", "find", "get", "profile"])
+    return any(k in low for k in keywords) and any(k in low for k in ["apply", "match", "search", "find", "fetch", "show", "get", "profile"])
 
 
 def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[int] = None, email: Optional[str] = None) -> dict[str, Any]:

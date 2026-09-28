@@ -160,9 +160,11 @@ def _profile_node(state: OrchestratorState) -> dict:
     Returns:
         Dict with profile_snapshot.
     """
-    from database import get_profile, get_resume_text, get_user_preferences
+    from database import get_profile, get_resume, get_resume_text, get_user_preferences
     profile = get_profile(user_id=state["user_id"]) or {}
     prefs = get_user_preferences(user_id=state["user_id"])
+    resume = get_resume(user_id=state["user_id"])
+    resume_bytes = len(resume["content"]) if resume else 0
     resume_text = get_resume_text(user_id=state["user_id"])
     snapshot = {
         "skills": profile.get("skills", []),
@@ -172,8 +174,10 @@ def _profile_node(state: OrchestratorState) -> dict:
         "preferences": prefs,
     }
     logger.info(
-        "profile completeness=%s session=%s",
+        "profile completeness=%s resume_bytes=%d resume_text_len=%d session=%s",
         "full" if resume_text else "partial",
+        resume_bytes,
+        len(resume_text),
         state.get("session_id"),
     )
     return {"profile_snapshot": snapshot}
