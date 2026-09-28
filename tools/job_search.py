@@ -1,10 +1,13 @@
 import json
+import logging
 import re
 import time
 import random
 from typing import Optional
 from langchain_core.tools import tool
 from ddgs import DDGS
+
+logger = logging.getLogger(__name__)
 
 
 def _ddgs_search(query: str, max_results: int) -> list[dict]:
@@ -250,7 +253,9 @@ def search_jobs(
         from database import get_search_cache
         cached = get_search_cache(cache_key)
         if cached is not None:
+            logger.info("search cache=hit source=%s title=%s", source, title[:60])
             return json.dumps(cached, indent=2)
+        logger.info("search cache=miss source=%s title=%s", source, title[:60])
     except Exception:
         cached = None
 

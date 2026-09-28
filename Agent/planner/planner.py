@@ -1,8 +1,11 @@
 import json
+import logging
 import re
 import os
 from pathlib import Path
 from langchain.chat_models import init_chat_model
+
+logger = logging.getLogger(__name__)
 
 
 def _load_prompt() -> str:
@@ -39,6 +42,10 @@ def plan_query(query: str, user_id: int = 0) -> dict:
         raise ValueError(f"No JSON plan found: {content[:500]}")
     plan = json.loads(m.group())
     ok, err = validate_plan(plan, raw_query=query)
+    logger.info(
+        "plan valid=%s steps=%s user=%s",
+        ok, [s.get("tool") for s in plan.get("steps", [])], user_id,
+    )
     if not ok:
         # Retry once with error appended
         retry_prompt = prompt + f"\n\nPrevious attempt was invalid: {err}\nFix the JSON and return ONLY the corrected plan."
