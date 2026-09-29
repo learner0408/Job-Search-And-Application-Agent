@@ -165,12 +165,14 @@ def _profile_node(state: OrchestratorState) -> dict:
     prefs = get_user_preferences(user_id=state["user_id"])
     resume = get_resume(user_id=state["user_id"])
     resume_bytes = len(resume["content"]) if resume else 0
+    resume_updated = str(resume.get("updated_at")) if resume and resume.get("updated_at") else "none"
     resume_text = get_resume_text(user_id=state["user_id"])
     snapshot = {
         "skills": profile.get("skills", []),
         "work_history": profile.get("work_history", []),
         "education": profile.get("education", []),
         "resume_text": resume_text,
+        "resume_updated": resume_updated,
         "preferences": prefs,
     }
     logger.info(
@@ -300,8 +302,70 @@ def _format_node(state: OrchestratorState) -> dict:
         return {"error": state.get("error") or "Done."}
     if state.get("intent") == "profile":
         snap = state.get("profile_snapshot") or {}
+        resume_text = snap.get("resume_text", "")
+        if resume_text:
+            summary = _get_cached_resume_summary(
+                state.get("user_id"), snap.get("resume_updated", "none"), resume_text,
+                state.get("session_id"),
+            )
+            if summary:
+                return {"error": summary}
+            return {"error": "Your resume on file:\n\n" + resume_text[:1500]}
         return {"error": f"Profile: {snap.get('skills', [])} | {snap.get('full_name','')}"}
     return {"error": state.get("error") or "Done."}
+
+
+def _load_summarize_prompt() -> str:
+    """Load resume summarize prompt template.
+
+    Returns:
+        Prompt template string.
+    """
+    from pathlib import Path
+    p = Path(__file__).parent / "prompts" / "summarize" / "v1.md"
+    if p.exists():
+        return p.read_text()
+    return "Summarize this resume in 5 lines: Name | Headline | Key skills | Experience | Education."
+
+
+def _get_cached_resume_summary(user_id: int, resume_updated: str, resume_text: str, session_id: str = "") -> str:
+    """Get cached resume summary or generate via LLM.
+
+    Args:
+        user_id: Owning user id.
+        resume_updated: Resume updated_at marker for cache rotation.
+        resume_text: Full resume text.
+        session_id: Session id for log correlation.
+
+    Returns:
+        Summary string, or empty string on LLM failure.
+    """
+    from database import get_search_cache, set_search_cache
+
+    key = f"resume_summary:{user_id}:{resume_updated}"
+    try:
+        cached = get_search_cache(key)
+        if cached and isinstance(cached, dict) and cached.get("summary"):
+            logger.info("profile summary cache=hit session=%s", session_id)
+            return cached["summary"]
+    except Exception:
+        pass
+    try:
+        import os
+        from langchain.chat_models import init_chat_model
+
+        llm = init_chat_model(os.getenv("PLANNER_LLM_MODEL", "claude-haiku-4-5"), model_provider="anthropic", temperature=0)
+        result = llm.invoke(_load_summarize_prompt() + "\n\nResume:\n" + resume_text)
+        summary = result.content if isinstance(result.content, str) else str(result.content)
+        try:
+            set_search_cache(key, {"summary": summary})
+        except Exception:
+            pass
+        logger.info("profile summary cache=miss chars=%d session=%s", len(summary), session_id)
+        return summary
+    except Exception as e:
+        logger.warning("profile summary failed, falling back to excerpt: %s", e)
+        return ""
 
 
 def _route_after_profile(state: OrchestratorState) -> str:

@@ -1173,14 +1173,14 @@ def get_resume(user_id: Optional[int] = None) -> Optional[dict]:
         user_id: Owning user id; defaults to the request context.
 
     Returns:
-        Dict with filename, mime_type, and content bytes, or None if none stored.
+        Dict with filename, mime_type, content bytes, and updated_at, or None if none stored.
     """
     uid = _resolve_user_id(user_id)
     conn = _get_conn()
     try:
         cur = conn.cursor()
         cur.execute(
-            "SELECT filename, mime_type, content FROM resumes WHERE user_id = %s",
+            "SELECT filename, mime_type, content, updated_at FROM resumes WHERE user_id = %s",
             (uid,),
         )
         row = cur.fetchone()
@@ -1190,6 +1190,7 @@ def get_resume(user_id: Optional[int] = None) -> Optional[dict]:
             "filename": row["filename"],
             "mime_type": row["mime_type"],
             "content": bytes(row["content"]),
+            "updated_at": row.get("updated_at"),
         }
     finally:
         conn.close()
