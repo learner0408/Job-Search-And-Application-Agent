@@ -85,6 +85,8 @@ def _rule_based_intent(raw: str) -> str:
     q = raw.lower()
     if "my profile" in q or "my resume" in q or q.strip() == "profile":
         return "profile"
+    if any(k in q for k in ["update my", "change my", "set my", "save my", "mark application", "mark as"]) or ("update" in q and "profile" in q):
+        return "update"
     if any(k in q for k in ["apply", "match", "%", "threshold", "≥"]):
         return "search_score_prepare"
     if "search" in q or "jobs" in q or "position" in q:
@@ -112,7 +114,7 @@ def _classify_intent(state: OrchestratorState) -> dict:
         prompt = _load_classify_prompt() + f"\n\nQuery: {raw}\nIntent:"
         result = llm.invoke(prompt)
         content = result.content if isinstance(result.content, str) else str(result.content)
-        m = re.search(r"\b(search_score_prepare|search|db_read|chat|profile)\b", content.lower())
+        m = re.search(r"\b(search_score_prepare|search|db_read|chat|profile|update)\b", content.lower())
         if m:
             logger.info("intent=%s session=%s", m.group(1), state.get("session_id"))
             return {"intent": m.group(1), "plan": None}
@@ -277,6 +279,80 @@ def _db_read_node(state: OrchestratorState) -> dict:
         return {"error": str(e)}
 
 
+def _load_update_prompt() -> str:
+    """Load update extraction prompt template.
+
+    Returns:
+        Prompt template string.
+    """
+    from pathlib import Path
+    p = Path(__file__).parent / "prompts" / "update" / "v1.md"
+    if p.exists():
+        return p.read_text()
+    return 'Return ONLY JSON {"action": "update_profile"|"update_application_status", "args": {}}'
+
+
+_UPDATE_PROFILE_FIELDS = {"full_name", "email", "phone", "linkedin_url", "github_url", "website", "skills"}
+_UPDATE_STATUSES = {"applied", "rejected", "interview", "offer"}
+
+
+def _update_node(state: OrchestratorState) -> dict:
+    """Apply profile/application updates via LLM arg extraction.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Dict with confirmation or clarification in error field.
+    """
+    import os
+    from langchain.chat_models import init_chat_model
+
+    raw = state.get("raw_query", "")
+    uid = state.get("user_id")
+    try:
+        llm = init_chat_model(os.getenv("PLANNER_LLM_MODEL", "claude-haiku-4-5"), model_provider="anthropic", temperature=0)
+        result = llm.invoke(_load_update_prompt() + f"\n\nQuery: {raw}\nJSON:")
+        content = result.content if isinstance(result.content, str) else str(result.content)
+        m = re.search(r"\{.*\}", content, re.DOTALL)
+        if not m:
+            return {"error": "I couldn't tell what to update. Tell me the field and value, e.g. 'update my phone to X'."}
+        extracted = json.loads(m.group())
+    except Exception as e:
+        logger.warning("update extraction failed: %s", e)
+        return {"error": "I couldn't process that update. Tell me the field and value, e.g. 'update my phone to X'."}
+
+    action = extracted.get("action")
+    args = extracted.get("args", {}) or {}
+    if action == "update_profile":
+        fields = {k: v for k, v in args.items() if k in _UPDATE_PROFILE_FIELDS and v is not None}
+        if not fields:
+            return {"error": "I couldn't tell which profile field to update. Tell me the field and value."}
+        if "skills" in fields and isinstance(fields["skills"], list):
+            fields["skills"] = [s.strip() for s in fields["skills"] if isinstance(s, str)]
+        from database import get_profile, save_profile
+        profile = get_profile(user_id=uid) or {}
+        profile.update(fields)
+        save_profile(profile, user_id=uid)
+        logger.info("update action=update_profile fields=%s session=%s", sorted(fields), state.get("session_id"))
+        return {"error": f"Profile updated: {', '.join(sorted(fields))}."}
+    if action == "update_application_status":
+        try:
+            app_id = int(args.get("app_id"))
+        except (TypeError, ValueError):
+            return {"error": "Which application id should I update? e.g. 'mark application 5 as applied'."}
+        status = str(args.get("status", "")).lower()
+        if status not in _UPDATE_STATUSES:
+            return {"error": f"Invalid status '{args.get('status')}'. Must be one of: {', '.join(sorted(_UPDATE_STATUSES))}."}
+        from database import update_application_status as db_update_status
+        ok = db_update_status(app_id, status, user_id=uid)
+        logger.info("update action=update_application_status app=%s status=%s ok=%s session=%s", app_id, status, ok, state.get("session_id"))
+        if not ok:
+            return {"error": f"No application found with id {app_id}."}
+        return {"error": f"Application {app_id} updated to '{status}'."}
+    return {"error": "I couldn't tell what to update. Tell me the field and value, e.g. 'update my phone to X'."}
+
+
 def _format_node(state: OrchestratorState) -> dict:
     """Format final response.
 
@@ -299,6 +375,8 @@ def _format_node(state: OrchestratorState) -> dict:
         jobs = state.get("jobs", [])
         return {"error": f"Found {len(jobs)} jobs."}
     if state.get("intent") == "db_read":
+        return {"error": state.get("error") or "Done."}
+    if state.get("intent") == "update":
         return {"error": state.get("error") or "Done."}
     if state.get("intent") == "profile":
         snap = state.get("profile_snapshot") or {}
@@ -400,6 +478,8 @@ def _route_after_classify(state: OrchestratorState) -> str:
         return "db_read"
     if intent == "profile":
         return "profile"
+    if intent == "update":
+        return "update"
     return "format"
 
 
@@ -423,15 +503,17 @@ def _build_graph(checkpointer=None):
     g.add_node("score", _score_node)
     g.add_node("prepare", _prepare_node)
     g.add_node("db_read", _db_read_node)
+    g.add_node("update", _update_node)
     g.add_node("format", _format_node)
 
     g.set_entry_point("classify")
-    g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "db_read": "db_read", "profile": "profile", "format": "format"})
+    g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "db_read": "db_read", "profile": "profile", "update": "update", "format": "format"})
     g.add_edge("search", "profile")
     g.add_conditional_edges("profile", _route_after_profile, {"score": "score", "format": "format"})
     g.add_edge("score", "prepare")
     g.add_edge("prepare", "format")
     g.add_edge("db_read", "format")
+    g.add_edge("update", "format")
     g.add_edge("format", END)
     return g
 

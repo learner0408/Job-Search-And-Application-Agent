@@ -71,20 +71,6 @@ def _parse_search_result(tool_content: str) -> dict[str, Any]:
     return {"jobs": jobs}
 
 
-def _should_use_orchestrator(message: str) -> bool:
-    """Check if query should be routed to the orchestrator.
-
-    Args:
-        message: User message.
-
-    Returns:
-        True if orchestrator should handle it.
-    """
-    low = message.lower()
-    keywords = ["apply", "match", "threshold", "%", "bangalore", "engineer", "positions", "openings", "profile", "resume"]
-    return any(k in low for k in keywords) and any(k in low for k in ["apply", "match", "search", "find", "fetch", "show", "get", "profile"])
-
-
 def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[int] = None, email: Optional[str] = None) -> dict[str, Any]:
     """Run the job-search assistant agent on a user message.
 
@@ -97,10 +83,9 @@ def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[
     Returns:
         Dict with a "reply" string and an optional "jobs" list of job listings.
     """
-    # Route dynamic intents to the orchestrator (planner-driven, let its own classify handle routing)
-    use_orchestrator = user_id is not None and _should_use_orchestrator(message)
-    logger.info("route orchestrator=%s session=%s", use_orchestrator, session_id)
-    if use_orchestrator:
+    # All requests enter via the orchestrator; chat intent falls back to ReAct below
+    logger.info("route=orchestrator session=%s", session_id)
+    if user_id is not None:
         try:
             from Agent.orchestrator import build_orchestrator
             from database import set_current_user
