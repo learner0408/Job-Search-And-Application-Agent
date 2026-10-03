@@ -72,6 +72,9 @@ kubectl create secret generic api-env \
 | `CHAT_LLM_MODEL` | `claude-sonnet-5` | Anthropic model for the chat agent (chat agent and DB query agent) |
 | `CHAT_LLM_PROVIDER` | `anthropic` | LLM provider for the chat agent |
 | `DATABASE_URL` | `postgresql://user:pass@host/db` | PostgreSQL connection string (Neon or local Postgres) |
+| `ADZUNA_APP_ID` | (none — Adzuna skipped) | Adzuna API app id (free at `developer.adzuna.com/signup`) |
+| `ADZUNA_APP_KEY` | (none — Adzuna skipped) | Adzuna API app key |
+| `ADZUNA_COUNTRY` | `in` | Fallback Adzuna country site when location doesn't map to one |
 
 ## Deployment Layout
 

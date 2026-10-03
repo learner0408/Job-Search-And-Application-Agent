@@ -55,6 +55,7 @@ def _parse_search_result(tool_content: str) -> dict[str, Any]:
     data = json.loads(tool_content)
     jobs = []
     for source_key, source_label in [
+        ("adzuna", "Adzuna"),
         ("indeed", "Indeed"),
         ("linkedin", "LinkedIn"),
         ("yc_startups", "YC Startup"),

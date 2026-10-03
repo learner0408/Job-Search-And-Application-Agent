@@ -357,6 +357,9 @@
     .source-badge.yc-startup {
       background: #f26522;
     }
+    .source-badge.adzuna {
+      background: #0a64c2;
+    }
 
     .card-title {
       font-size: 16px;
@@ -1423,9 +1426,10 @@
         <div class="results-count" id="resultsCount"></div>
 
         <div class="tabs" id="tabs">
-          <button class="tab-button active" data-source="indeed">Indeed</button>
-          <button class="tab-button" data-source="linkedin">LinkedIn</button>
+          <button class="tab-button active" data-source="adzuna">Adzuna</button>
           <button class="tab-button" data-source="yc">YC Startup</button>
+          <button class="tab-button" data-source="indeed">Indeed</button>
+          <button class="tab-button" data-source="linkedin">LinkedIn</button>
         </div>
 
         <div class="job-grid" id="jobGrid"></div>
@@ -1509,6 +1513,7 @@
     function sourceKey(label) {
       return label === 'LinkedIn' ? 'linkedin'
         : label === 'YC Startup' ? 'yc'
+        : label === 'Adzuna' ? 'adzuna'
         : 'indeed';
     }
 
@@ -1538,6 +1543,7 @@
     function sourceLabel(source) {
       return source === 'LinkedIn' ? 'LinkedIn'
         : source === 'YC Startup' ? 'YC Startup'
+        : source === 'Adzuna' ? 'Adzuna'
         : 'Indeed';
     }
 
@@ -1594,7 +1600,7 @@
         return;
       }
 
-      allJobsBySource = { indeed: [], linkedin: [], yc: [] };
+      allJobsBySource = { adzuna: [], indeed: [], linkedin: [], yc: [] };
       for (const job of jobs) {
         const key = sourceKey(job.source || 'Indeed');
         if (allJobsBySource[key]) {
@@ -1607,8 +1613,9 @@
       tabs.classList.add('active');
 
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-      document.querySelector('.tab-button[data-source="indeed"]').classList.add('active');
-      renderGrid('indeed');
+      const firstTab = ['adzuna', 'yc', 'indeed', 'linkedin'].find(k => (allJobsBySource[k] || []).length > 0) || 'adzuna';
+      document.querySelector(`.tab-button[data-source="${firstTab}"]`).classList.add('active');
+      renderGrid(firstTab);
     }
 
     function renderGrid(source) {
@@ -1619,6 +1626,7 @@
         const tabKey = sourceKey(label);
         const badgeClass = tabKey === 'linkedin' ? 'linkedin'
           : tabKey === 'yc' ? 'yc-startup'
+          : tabKey === 'adzuna' ? 'adzuna'
           : 'indeed';
         const location = job.location && job.location !== 'N/A' ? job.location : null;
         const salary = job.salary && job.salary !== 'N/A' ? job.salary : null;
@@ -2111,7 +2119,7 @@
         }
 
         appTileGrid.innerHTML = apps.map(a => {
-          const badgeClass = a.source === 'LinkedIn' ? 'linkedin' : a.source === 'YC Startup' ? 'yc-startup' : 'indeed';
+          const badgeClass = a.source === 'LinkedIn' ? 'linkedin' : a.source === 'YC Startup' ? 'yc-startup' : a.source === 'Adzuna' ? 'adzuna' : 'indeed';
           const date = a.created_at ? new Date(a.created_at + 'Z').toLocaleDateString() : '';
           return `
           <div class="app-tile" data-id="${a.id}">

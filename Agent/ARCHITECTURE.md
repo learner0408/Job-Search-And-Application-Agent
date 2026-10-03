@@ -6,7 +6,7 @@ Agent subsystem that routes dynamic natural-language job intents through a hybri
 
 ## 2. Tech Stack
 
-Python 3.13, `uv`, LangChain + LangGraph, `langchain-anthropic` via `init_chat_model` everywhere (check LangChain/LangGraph abstractions first before adding new helpers). Models: `claude-haiku-4-5` for high-volume planner + scoring rubric (`Agent/prompts/planner/v1.md`, `Agent/prompts/scoring/v1.md`) and `claude-sonnet-5` for chat (`Agent/prompts/chat/v1.md`), versioned per node. Search via `ddgs` (DuckDuckGo) behind a `JobSource` interface; persistence via `psycopg2` + Neon Postgres; testing via `pytest` + `/test-case-writer`.
+Python 3.13, `uv`, LangChain + LangGraph, `langchain-anthropic` via `init_chat_model` everywhere (check LangChain/LangGraph abstractions first before adding new helpers). Models: `claude-haiku-4-5` for high-volume planner + scoring rubric (`Agent/prompts/planner/v1.md`, `Agent/prompts/scoring/v1.md`) and `claude-sonnet-5` for chat (`Agent/prompts/chat/v1.md`), versioned per node. Search via Adzuna official API + `ddgs` (DuckDuckGo) behind a `JobSource` interface (primaries Adzuna/YC, fallbacks LinkedIn/Indeed); persistence via `psycopg2` + Neon Postgres; testing via `pytest` + `/test-case-writer`.
 
 ## 3. Directory Structure
 
@@ -67,7 +67,7 @@ How data moves between modules. Mark each flow `[Input] → [Step] → [Output]`
 
 ## 6. Contracts & Interfaces
 
-- `JobSource` interface: `search(title, location, employment_type, remote, max_results) → jobs[]` implemented by `tools/search/sources/base.py`, `indeed.py`, `linkedin.py`, `yc.py`
+- `JobSource` interface: `search(title, location, employment_type, remote, max_results) → jobs[]` implemented by `tools/search/sources/base.py`, `adzuna.py`, `indeed.py`, `linkedin.py`, `yc.py` (primaries Adzuna/YC, fallbacks LinkedIn/Indeed on shortfall)
 - Per-tool JSON I/O: `docs/tools/search_jobs.md`, `docs/tools/get_profile.md`, `docs/tools/score_jobs.md`, `docs/tools/prepare_application.md`, `docs/tools/query_database.md`
 - `OrchestratorState` TypedDict: `user_id, session_id, raw_query, intent, profile_snapshot, jobs, scored_jobs, threshold, drafts, error`
 - Planner DAG schema: `{"steps": [{id, tool, args, depends_on}]}` — `depends_on` references prior `id`s

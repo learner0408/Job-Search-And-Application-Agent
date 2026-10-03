@@ -134,20 +134,26 @@ def _search_node(state: OrchestratorState) -> dict:
     Returns:
         Dict with jobs.
     """
-    from tools.search.job_search import search_jobs
-    import json as _json
+    from tools.job_search import search_jobs
     title = state.get("raw_query", "")
     # If plan has search_jobs step, use its args
-    plan = state.get("plan")
-    if plan:
-        for s in plan.get("steps", []):
-            if s["tool"] == "search_jobs":
-                args = s.get("args", {})
-                title = args.get("title", title)
-                break
-    raw = json.loads(search_jobs(title=title, location="", source="all", max_results=10))
+    plan = state.get("plan") or {}
+    plan_args = {}
+    for s in plan.get("steps", []):
+        if s["tool"] == "search_jobs":
+            plan_args = s.get("args", {}) or {}
+            break
+    title = plan_args.get("title", title)
+    location = plan_args.get("location", "")
+    employment_type = plan_args.get("employment_type", "")
+    remote = bool(plan_args.get("remote", False))
+    try:
+        max_results = int(plan_args.get("max_results", 10))
+    except (TypeError, ValueError):
+        max_results = 10
+    raw = json.loads(search_jobs(title=title, location=location, source="all", employment_type=employment_type, remote=remote, max_results=max_results))
     jobs = []
-    for key in ("indeed", "linkedin", "yc_startups"):
+    for key in ("adzuna", "indeed", "linkedin", "yc_startups"):
         jobs.extend(raw.get(key, []))
     logger.info("search jobs=%d session=%s", len(jobs), state.get("session_id"))
     return {"jobs": jobs}

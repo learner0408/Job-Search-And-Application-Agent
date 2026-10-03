@@ -101,7 +101,7 @@ def _cache_key(title: str, location: str, source: str, employment_type: str, rem
         Cache key string.
     """
     import hashlib
-    raw = f"{title}|{location}|{source}|{employment_type}|{remote}|{max_results}"
+    raw = f"v2|{title}|{location}|{source}|{employment_type}|{remote}|{max_results}"
     return hashlib.sha256(raw.encode()).hexdigest()[:16]
 
 
@@ -212,8 +212,10 @@ def _get_sources():
         from tools.search.sources.indeed import IndeedSource
         from tools.search.sources.linkedin import LinkedInSource
         from tools.search.sources.yc import YCSource
+        from tools.search.sources.adzuna import AdzunaSource
 
         SOURCES = {
+            "adzuna": AdzunaSource(),
             "indeed": IndeedSource(),
             "linkedin": LinkedInSource(),
             "yc": YCSource(),
@@ -221,6 +223,22 @@ def _get_sources():
     except Exception:
         SOURCES = {}
     return SOURCES
+
+
+PRIMARY_SOURCES = ("adzuna", "yc")
+FALLBACK_SOURCES = ("linkedin", "indeed")
+
+
+def _legacy_source_fn(key: str):
+    """Return the legacy DDG search function for a source key.
+
+    Args:
+        key: Source key (indeed, linkedin, yc).
+
+    Returns:
+        Search function or None.
+    """
+    return {"indeed": search_indeed, "linkedin": search_linkedin, "yc": search_yc}.get(key)
 
 
 @tool
@@ -232,21 +250,26 @@ def search_jobs(
     remote: Optional[bool] = False,
     max_results: Optional[int] = 10,
 ) -> str:
-    """Search for jobs across Indeed, LinkedIn, and Y Combinator startups.
+    """Search for jobs across Adzuna, Y Combinator startups, Indeed, and LinkedIn.
 
     Call this when the user asks to find or search for jobs. Returns a JSON string
     keyed by source with job listings containing title, company, description, location, salary, and link.
 
+    Primaries (adzuna, yc) are always queried; fallbacks (linkedin, indeed) only
+    run when primaries return fewer than max_results in total.
+
     Args:
         title: Job title or keywords to search for (e.g. "AI Engineer", "Software Developer").
         location: City or region to search in (e.g. "Bangalore", "San Francisco", "Remote").
-        source: Which source to search. "all" (default) searches all three, or choose "indeed", "linkedin", "yc".
+        source: Which source to search. "all" (default) runs the primary-first cascade,
+            or choose "adzuna", "indeed", "linkedin", "yc".
         employment_type: Filter by employment type (e.g. "fulltime", "contract", "internship", "parttime").
         remote: If True, add "remote" to the search query to find remote jobs.
         max_results: Maximum number of results per source (default 10, max 20).
 
     Returns:
-        JSON string with job results grouped by source. Top-level keys are "indeed", "linkedin", "yc_startups".
+        JSON string with job results grouped by source. Top-level keys are "adzuna",
+        "indeed", "linkedin", "yc_startups".
     """
     cache_key = _cache_key(title, location or "", source or "all", employment_type or "", bool(remote), max_results or 10)
     try:
@@ -262,22 +285,39 @@ def search_jobs(
     def _has_results(res: dict) -> bool:
         return any(v for v in res.values() if v)
 
-    if source == "all":
+    def _run(key: str) -> list:
         sources = _get_sources()
+        if key in sources:
+            for attempt in range(2):
+                jobs = sources[key].search(title, location, employment_type, remote, max_results)
+                if jobs:
+                    return jobs
+                if attempt == 0:
+                    time.sleep(random.uniform(0.5, 1.5))
+            return jobs
+        func = _legacy_source_fn(key)
+        if func is None:
+            return []
         for attempt in range(2):
-            if sources:
-                indeed_jobs = sources["indeed"].search(title, location, employment_type, remote, max_results) if "indeed" in sources else search_indeed(title, location, employment_type, remote, max_results)
-                linkedin_jobs = sources["linkedin"].search(title, location, employment_type, remote, max_results) if "linkedin" in sources else search_linkedin(title, location, employment_type, remote, max_results)
-                yc_jobs = sources["yc"].search(title, location, employment_type, remote, max_results) if "yc" in sources else search_yc(title, location, employment_type, remote, max_results)
-            else:
-                indeed_jobs = search_indeed(title, location, employment_type, remote, max_results)
-                linkedin_jobs = search_linkedin(title, location, employment_type, remote, max_results)
-                yc_jobs = search_yc(title, location, employment_type, remote, max_results)
-            if indeed_jobs or linkedin_jobs or yc_jobs:
-                break
+            jobs = func(title, location, employment_type, remote, max_results)
+            if jobs:
+                return jobs
             if attempt == 0:
                 time.sleep(random.uniform(0.5, 1.5))
+        return jobs
+
+    if source == "all":
+        adzuna_jobs = _run("adzuna")
+        yc_jobs = _run("yc")
+        primary_total = len(adzuna_jobs) + len(yc_jobs)
+        if primary_total < (max_results or 10):
+            linkedin_jobs = _run("linkedin")
+            indeed_jobs = _run("indeed")
+        else:
+            logger.info("search primaries satisfied=%d, skipping fallbacks", primary_total)
+            linkedin_jobs, indeed_jobs = [], []
         result = {
+            "adzuna": adzuna_jobs,
             "indeed": indeed_jobs,
             "linkedin": linkedin_jobs,
             "yc_startups": yc_jobs,
@@ -291,7 +331,7 @@ def search_jobs(
         return json.dumps(result, indent=2)
 
     # Single source via registry
-    key_map = {"indeed": "indeed", "linkedin": "linkedin", "yc": "yc"}
+    key_map = {"adzuna": "adzuna", "indeed": "indeed", "linkedin": "linkedin", "yc": "yc"}
     sources = _get_sources()
     if source.lower() in sources:
         src = sources[source.lower()]
@@ -318,7 +358,7 @@ def search_jobs(
     }
     key, func = source_map.get(source.lower(), (None, None))
     if func is None:
-        return json.dumps({"error": f"Unknown source '{source}'. Use 'all', 'indeed', 'linkedin', or 'yc'."})
+        return json.dumps({"error": f"Unknown source '{source}'. Use 'all', 'adzuna', 'indeed', 'linkedin', or 'yc'."})
     for attempt in range(2):
         jobs = func(title, location, employment_type, remote, max_results)
         if jobs:
