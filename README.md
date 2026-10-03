@@ -18,7 +18,7 @@ Search job listings from Indeed, LinkedIn, and Y Combinator startups, chat with 
 
 ### Frontend (K8s pod)
 - **`web/server.js`** — Express server (port 3000), proxies `/api/*` to FastAPI, serves static files with `Cache-Control: no-store`.
-- **`web/public/index.html`** — Single-page vanilla HTML/CSS/JS UI. Chat is the primary home page. Left conversation sidebar (rounded card, last 5 sessions, "+ New" button, hover-to-delete). Hamburger menu navigating to Job Search and Applications full-page sections. Applications displayed as a tile grid with status filter. Slide-out History and Profile side panels. Apply button with cover letter generation modal.
+- **`web/public/index.html`** — Single-page vanilla HTML/CSS/JS UI. Chat is the primary home page. Left conversation sidebar (rounded card, last 5 sessions, "+ New" button, hover-to-delete). Hamburger menu navigating to Job Search and Applications full-page sections. Applications displayed as a tile grid with status filter. Slide-out Profile side panel. Apply button with cover letter generation modal.
 
 ### Local Agent (not in K8s)
 - **`auto-apply/service.py`** — Runs on your machine. Auto-starts Playwright MCP via `npx @playwright/mcp`, exposes `POST /apply/{app_id}?api_base=<origin>` (opens headed browser, dismisses overlays, pre-fills forms, waits for manual submit, marks applied) and `GET /status/{app_id}`.

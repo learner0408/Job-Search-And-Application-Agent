@@ -441,91 +441,6 @@
       .job-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
-    .history-item {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-sm);
-      padding: 14px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      cursor: pointer;
-      transition: box-shadow 0.15s;
-    }
-    .history-item:hover {
-      box-shadow: var(--shadow-sm);
-    }
-    .history-item-info {
-      flex: 1;
-      min-width: 0;
-    }
-    .history-item-query {
-      font-weight: 600;
-      font-size: 15px;
-    }
-    .history-item-meta {
-      font-size: 13px;
-      color: var(--color-text-secondary);
-      margin-top: 2px;
-    }
-    .history-item-actions {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    .history-item-actions button {
-      padding: 5px 12px;
-      border: none;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 600;
-      font-family: var(--font);
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .history-view-btn {
-      background: var(--color-primary-light);
-      color: var(--color-primary);
-    }
-    .history-view-btn:hover {
-      background: var(--color-primary);
-      color: #fff;
-    }
-    .history-del-btn {
-      background: #fef2f2;
-      color: #991b1b;
-    }
-    .history-del-btn:hover {
-      background: #991b1b;
-      color: #fff;
-    }
-    .history-empty {
-      text-align: center;
-      padding: 60px 24px;
-      color: var(--color-text-secondary);
-      font-size: 15px;
-    }
-    .history-load-more {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      background: none;
-      border: 1px dashed var(--color-border);
-      border-radius: var(--radius-sm);
-      color: var(--color-primary);
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      transition: background 0.15s, border-color 0.15s;
-    }
-    .history-load-more:hover {
-      background: var(--color-primary-light);
-      border-color: var(--color-primary);
-    }
-
     .header-reset {
       flex-shrink: 0;
       background: none;
@@ -1436,7 +1351,6 @@
         <p>Search Indeed, LinkedIn, and Y Combinator startups</p>
       </div>
       <div class="header-actions">
-        <button class="header-icon" id="historyToggle" title="History">⏱</button>
         <button class="header-icon" id="profileToggle" title="Profile">👤</button>
         <button class="header-icon" id="logoutBtn" title="Log out">⎋</button>
         <button class="header-reset" id="resetBtn" title="Reset">↻</button>
@@ -1546,14 +1460,6 @@
 
   <div class="side-panel-overlay" id="sidePanelOverlay"></div>
 
-  <div class="side-panel" id="sideHistory">
-    <div class="side-panel-header">
-      <span>History</span>
-      <button class="side-panel-close" data-panel="sideHistory">✕</button>
-    </div>
-    <div class="side-panel-body" id="sideHistoryBody"></div>
-  </div>
-
   <div class="side-panel" id="sideProfile">
     <div class="side-panel-header">
       <span>Profile</span>
@@ -1585,9 +1491,7 @@
     const jobGrid = document.getElementById('jobGrid');
 
     const sidePanelOverlay = document.getElementById('sidePanelOverlay');
-    const sideHistory = document.getElementById('sideHistory');
-    const sideProfile = document.getElementById('sideProfile');
-    const sideHistoryBody = document.getElementById('sideHistoryBody');
+
     const sideProfileBody = document.getElementById('sideProfileBody');
 
     const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -1910,12 +1814,7 @@
       refreshSidebar();
     }
 
-    let historyPage = 1;
-    let allHistory = [];
-    let historyTotal = 0;
-
     function closeSidePanels() {
-      sideHistory.classList.remove('active');
       sideProfile.classList.remove('active');
       sidePanelOverlay.classList.remove('active');
     }
@@ -1924,7 +1823,6 @@
     document.querySelectorAll('.side-panel-close').forEach(btn => {
       btn.addEventListener('click', closeSidePanels);
     });
-    document.getElementById('historyToggle').addEventListener('click', () => renderHistory());
     document.getElementById('profileToggle').addEventListener('click', () => renderProfile());
 
     /* Navigation */
@@ -1985,89 +1883,6 @@
       currentSessionId = null;
       chatMessages.innerHTML = '';
       refreshSidebar();
-    }
-
-    async function renderHistory(page = 1) {
-      closeSidePanels();
-      sideHistory.classList.add('active');
-      sidePanelOverlay.classList.add('active');
-      sideHistoryBody.setAttribute('data-page', String(page));
-
-      if (page === 1) {
-        sideHistoryBody.innerHTML = '<div style="text-align:center;padding:40px"><div class="spinner-ring"></div></div>';
-        allHistory = [];
-        historyPage = 1;
-      }
-
-      try {
-        const res = await fetch(`/api/history?page=${page}&per_page=10`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-
-        historyTotal = data.total;
-        historyPage = page;
-        allHistory = page === 1 ? data.searches : [...allHistory, ...data.searches];
-
-        if (allHistory.length === 0) {
-          sideHistoryBody.innerHTML = '<div class="history-empty">No search history yet.</div>';
-          return;
-        }
-
-        sideHistoryBody.innerHTML = allHistory.map(s => {
-          const date = s.created_at ? new Date(s.created_at + 'Z').toLocaleString() : '';
-          const trigger = s.source_trigger === 'chat' ? 'via Chat' : 'via Search';
-          return `
-            <div class="history-item" data-id="${s.id}">
-              <div class="history-item-info">
-                <div class="history-item-query">${escapeHtml(s.query)}${s.location ? ' — ' + escapeHtml(s.location) : ''}</div>
-                <div class="history-item-meta">${s.result_count} jobs · ${date} · ${trigger}</div>
-              </div>
-              <div class="history-item-actions">
-                <button class="history-view-btn" data-action="view">View</button>
-                <button class="history-del-btn" data-action="delete">Delete</button>
-              </div>
-            </div>`;
-        }).join('');
-
-        const loaded = allHistory.length;
-        if (loaded < historyTotal) {
-          const loadMore = document.createElement('button');
-          loadMore.className = 'history-load-more';
-          loadMore.textContent = `Show ${Math.min(10, historyTotal - loaded)} more (${loaded} of ${historyTotal})`;
-          sideHistoryBody.appendChild(loadMore);
-          loadMore.addEventListener('click', () => renderHistory(historyPage + 1));
-        }
-
-        sideHistoryBody.querySelectorAll('.history-view-btn').forEach(btn => {
-          btn.addEventListener('click', async (e) => {
-            e.stopPropagation();
-            const item = btn.closest('.history-item');
-            const id = item.dataset.id;
-            const res = await fetch(`/api/history/${id}`);
-            if (!res.ok) return;
-            const data = await res.json();
-            closeSidePanels();
-            const tab = document.querySelector('.tab-button[data-source="indeed"]');
-            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            tab.classList.add('active');
-            renderJobs(data.results || []);
-          });
-        });
-
-        sideHistoryBody.querySelectorAll('.history-del-btn').forEach(btn => {
-          btn.addEventListener('click', async (e) => {
-            e.stopPropagation();
-            if (!confirm('Delete this search?')) return;
-            const item = btn.closest('.history-item');
-            const id = item.dataset.id;
-            const res = await fetch(`/api/history/${id}`, { method: 'DELETE' });
-            if (!res.ok) return;
-            renderHistory(1);
-          });
-        });
-      } catch (err) {
-        sideHistoryBody.innerHTML = `<div class="history-empty">Error loading history: ${err.message}</div>`;
-      }
     }
 
     async function renderProfile() {
