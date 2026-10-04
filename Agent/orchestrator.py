@@ -134,7 +134,7 @@ def _search_node(state: OrchestratorState) -> dict:
     Returns:
         Dict with jobs.
     """
-    from tools.job_search import search_jobs
+    from tools.search.job_search import search_jobs
     title = state.get("raw_query", "")
     # If plan has search_jobs step, use its args
     plan = state.get("plan") or {}
@@ -169,20 +169,15 @@ def _profile_node(state: OrchestratorState) -> dict:
         Dict with profile_snapshot.
     """
     from database import get_profile, get_resume, get_resume_text, get_user_preferences
+    from tools.profile.get_profile import build_snapshot
     profile = get_profile(user_id=state["user_id"]) or {}
     prefs = get_user_preferences(user_id=state["user_id"])
     resume = get_resume(user_id=state["user_id"])
     resume_bytes = len(resume["content"]) if resume else 0
     resume_updated = str(resume.get("updated_at")) if resume and resume.get("updated_at") else "none"
     resume_text = get_resume_text(user_id=state["user_id"])
-    snapshot = {
-        "skills": profile.get("skills", []),
-        "work_history": profile.get("work_history", []),
-        "education": profile.get("education", []),
-        "resume_text": resume_text,
-        "resume_updated": resume_updated,
-        "preferences": prefs,
-    }
+    snapshot = build_snapshot(profile, resume_text, prefs)
+    snapshot["resume_updated"] = resume_updated
     logger.info(
         "profile completeness=%s resume_bytes=%d resume_text_len=%d session=%s",
         "full" if resume_text else "partial",
@@ -276,7 +271,7 @@ def _db_read_node(state: OrchestratorState) -> dict:
     Returns:
         Dict with error as formatted answer.
     """
-    from tools.db_query_tool import query_database
+    from tools.db.query_database import query_database
     try:
         answer = query_database(state.get("raw_query", ""))
         logger.info("db_read session=%s", state.get("session_id"))

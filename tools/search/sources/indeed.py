@@ -21,6 +21,6 @@ class IndeedSource(JobSource):
         Returns:
             Job listings from Indeed.
         """
-        import tools.job_search as js
+        import tools.search.job_search as js
 
         return js.search_indeed(title, location, employment_type, remote, max_results)

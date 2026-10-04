@@ -21,6 +21,6 @@ class LinkedInSource(JobSource):
         Returns:
             Job listings from LinkedIn.
         """
-        import tools.job_search as js
+        import tools.search.job_search as js
 
         return js.search_linkedin(title, location, employment_type, remote, max_results)

@@ -21,6 +21,6 @@ class YCSource(JobSource):
         Returns:
             Job listings from YC.
         """
-        import tools.job_search as js
+        import tools.search.job_search as js
 
         return js.search_yc(title, location, employment_type, remote, max_results)
