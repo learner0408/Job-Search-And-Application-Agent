@@ -1,7 +1,7 @@
 import json
 import re
 
-ALLOWED_TOOLS = {"search_jobs", "get_profile", "score_jobs", "prepare_application", "query_database", "get_database_schema"}
+ALLOWED_TOOLS = {"search_jobs", "get_profile", "score_jobs", "prepare_application", "apply_application", "query_database", "get_database_schema"}
 
 
 REQUIRED_ARGS = {
@@ -9,6 +9,7 @@ REQUIRED_ARGS = {
     "get_profile": set(),
     "score_jobs": set(),
     "prepare_application": set(),
+    "apply_application": {"app_ids"},
     "query_database": set(),
     "get_database_schema": set(),
 }

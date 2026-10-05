@@ -6,11 +6,12 @@ from .db.query_database import query_database
 from .profile.get_profile import get_profile
 from .scoring.score_jobs import score_jobs
 from .application.prepare_application import prepare_application
+from .application.apply_application import apply_application
 
 __all__ = [
     "search_jobs", "search_indeed", "search_linkedin", "search_yc",
     "update_profile", "update_application_status",
     "get_database_schema",
     "query_database",
-    "get_profile", "score_jobs", "prepare_application",
+    "get_profile", "score_jobs", "prepare_application", "apply_application",
 ]

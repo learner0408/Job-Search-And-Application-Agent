@@ -62,13 +62,13 @@ How data moves between modules. Mark each flow `[Input] → [Step] → [Output]`
 - `[mixed search + profile intent] → [tools/profile get_profile (structured + resume + preferences) || tools/search in parallel] → [profile_snapshot, jobs[]]`
 - `[profile_snapshot + jobs[] + threshold] → [tools/scoring score_jobs (deterministic 50 + scoring/v1.md rubric 50)] → [scored_jobs[] with score + breakdown] → [code filter score ≥ threshold]`
 - `[scored_jobs[]] → [tools/application prepare_application → DB status: preparing] → [preview: top scored jobs + breakdown]`
-- `[User "apply to #2" / "apply to all ≥70%"] → [orchestrator resumes via checkpoint] → [application status update → status: applied]`
+- `[User "apply to #2" / "apply to all"] → [apply intent → resolve #N/all to app_ids → apply_application tool] → [per-id results, no-op message for now; cloud submission is P2]`
 - `[DB-read intent] → [tools/db query_database (classify → generate → execute)] → [human-readable rows]`, all reads filtered `WHERE user_id = current_setting('app.current_user_id')`
 
 ## 6. Contracts & Interfaces
 
 - `JobSource` interface: `search(title, location, employment_type, remote, max_results) → jobs[]` implemented by `tools/search/sources/base.py`, `adzuna.py`, `indeed.py`, `linkedin.py`, `yc.py` (primaries Adzuna/YC, fallbacks LinkedIn/Indeed on shortfall)
-- Per-tool JSON I/O: `docs/tools/search_jobs.md`, `docs/tools/get_profile.md`, `docs/tools/score_jobs.md`, `docs/tools/prepare_application.md`, `docs/tools/query_database.md`
+- Per-tool JSON I/O: `docs/tools/search_jobs.md`, `docs/tools/get_profile.md`, `docs/tools/score_jobs.md`, `docs/tools/prepare_application.md`, `docs/tools/apply_application.md`, `docs/tools/query_database.md`
 - `OrchestratorState` TypedDict: `user_id, session_id, raw_query, intent, profile_snapshot, jobs, scored_jobs, threshold, drafts, error`
 - Planner DAG schema: `{"steps": [{id, tool, args, depends_on}]}` — `depends_on` references prior `id`s
 

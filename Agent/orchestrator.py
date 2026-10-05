@@ -83,6 +83,8 @@ def _rule_based_intent(raw: str) -> str:
         Intent string.
     """
     q = raw.lower()
+    if re.search(r"apply to #\d+", q) or "apply to all" in q or re.search(r"\bconfirm\b.*\bappl", q) or re.search(r"^yes\b.*\bapply", q):
+        return "apply"
     if "my profile" in q or "my resume" in q or q.strip() == "profile":
         return "profile"
     if any(k in q for k in ["update my", "change my", "set my", "save my", "mark application", "mark as"]) or ("update" in q and "profile" in q):
@@ -114,7 +116,7 @@ def _classify_intent(state: OrchestratorState) -> dict:
         prompt = _load_classify_prompt() + f"\n\nQuery: {raw}\nIntent:"
         result = llm.invoke(prompt)
         content = result.content if isinstance(result.content, str) else str(result.content)
-        m = re.search(r"\b(search_score_prepare|search|db_read|chat|profile|update)\b", content.lower())
+        m = re.search(r"\b(search_score_prepare|search|db_read|chat|profile|update|apply)\b", content.lower())
         if m:
             logger.info("intent=%s session=%s", m.group(1), state.get("session_id"))
             return {"intent": m.group(1), "plan": None}
@@ -242,7 +244,9 @@ def _prepare_node(state: OrchestratorState) -> dict:
     from database import save_application, get_profile
     profile = get_profile(user_id=state["user_id"])
     missing = get_missing_fields(profile)
-    scored = state.get("scored_jobs", [])[:5]
+    top_m = re.search(r"top\s+(\d+)", state.get("raw_query", ""), re.I)
+    limit = min(int(top_m.group(1)), 5) if top_m else 5
+    scored = state.get("scored_jobs", [])[:limit]
     drafts = []
     for s in scored:
         job = s["job"]
@@ -354,6 +358,61 @@ def _update_node(state: OrchestratorState) -> dict:
     return {"error": "I couldn't tell what to update. Tell me the field and value, e.g. 'update my phone to X'."}
 
 
+def _resolve_apply_ids(state: OrchestratorState) -> list[int]:
+    """Resolve #N/all selections to application ids.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        List of application ids.
+    """
+    raw = state.get("raw_query", "").lower()
+    drafts = state.get("drafts", []) or []
+    if "all" in raw:
+        ids = [d.get("app_id") for d in drafts if d.get("app_id") is not None]
+        if ids:
+            return [int(i) for i in ids]
+    m = re.search(r"#(\d+)", raw)
+    if m and drafts:
+        idx = int(m.group(1)) - 1
+        if 0 <= idx < len(drafts) and drafts[idx].get("app_id") is not None:
+            return [int(drafts[idx]["app_id"])]
+    if drafts:
+        return []
+    from database import get_applications
+    rows = get_applications(status="preparing", user_id=state.get("user_id")) or []
+    if "all" in raw:
+        return [int(r["id"]) for r in rows]
+    if m and rows:
+        idx = int(m.group(1)) - 1
+        if 0 <= idx < len(rows):
+            return [int(rows[idx]["id"])]
+    return []
+
+
+def _apply_node(state: OrchestratorState) -> dict:
+    """Execute human-approved applies via the apply_application tool.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Dict with per-id results in error field.
+    """
+    from tools.application.apply_application import apply_application
+
+    ids = _resolve_apply_ids(state)
+    if not ids:
+        return {"error": "I couldn't tell which application to apply to. Reply 'apply to #N' using the numbers above, or 'apply to all'."}
+    try:
+        result = apply_application.invoke({"app_ids": ids})
+    except Exception as e:
+        return {"error": f"Apply failed: {e}"}
+    logger.info("apply ids=%s session=%s", ids, state.get("session_id"))
+    return {"error": result if isinstance(result, str) else json.dumps(result)}
+
+
 def _format_node(state: OrchestratorState) -> dict:
     """Format final response.
 
@@ -370,7 +429,10 @@ def _format_node(state: OrchestratorState) -> dict:
         lines = [f"Found {len(drafts)} jobs meeting the threshold:"]
         for i, d in enumerate(drafts, 1):
             lines.append(f"{i}. {d['job'].get('title')} — {d['score']}% (id {d['app_id']})")
-        lines.append("Say 'apply to #N' to proceed.")
+        if re.search(r"apply\b", state.get("raw_query", ""), re.I):
+            lines.append("Does this look ok? Reply 'apply to #N' or 'apply to all' to confirm — nothing will be submitted before you confirm.")
+        else:
+            lines.append("Say 'apply to #N' to proceed.")
         return {"error": "\n".join(lines)}
     if state.get("intent") == "search":
         jobs = state.get("jobs", [])
@@ -378,6 +440,8 @@ def _format_node(state: OrchestratorState) -> dict:
     if state.get("intent") == "db_read":
         return {"error": state.get("error") or "Done."}
     if state.get("intent") == "update":
+        return {"error": state.get("error") or "Done."}
+    if state.get("intent") == "apply":
         return {"error": state.get("error") or "Done."}
     if state.get("intent") == "profile":
         snap = state.get("profile_snapshot") or {}
@@ -481,6 +545,8 @@ def _route_after_classify(state: OrchestratorState) -> str:
         return "profile"
     if intent == "update":
         return "update"
+    if intent == "apply":
+        return "apply"
     return "format"
 
 
@@ -505,16 +571,18 @@ def _build_graph(checkpointer=None):
     g.add_node("prepare", _prepare_node)
     g.add_node("db_read", _db_read_node)
     g.add_node("update", _update_node)
+    g.add_node("apply", _apply_node)
     g.add_node("format", _format_node)
 
     g.set_entry_point("classify")
-    g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "db_read": "db_read", "profile": "profile", "update": "update", "format": "format"})
+    g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "db_read": "db_read", "profile": "profile", "update": "update", "apply": "apply", "format": "format"})
     g.add_edge("search", "profile")
     g.add_conditional_edges("profile", _route_after_profile, {"score": "score", "format": "format"})
     g.add_edge("score", "prepare")
     g.add_edge("prepare", "format")
     g.add_edge("db_read", "format")
     g.add_edge("update", "format")
+    g.add_edge("apply", "format")
     g.add_edge("format", END)
     return g
 
