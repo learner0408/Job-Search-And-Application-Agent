@@ -858,8 +858,14 @@ def _get_pk_columns(conn, tname: str) -> set[str]:
     return {row["column_name"] for row in cur.fetchall()}
 
 
+_HIDDEN_TABLES = {"users", "resumes"}
+
+
 def get_schema_metadata() -> dict:
-    """Describe all tables and columns in the database.
+    """Describe queryable tables and columns in the database.
+
+    The users/resumes tables are excluded: they are blocked for generated
+    queries, so advertising their structure only wastes prompt tokens.
 
     Returns:
         Dict with a "tables" key listing table names and column metadata.
@@ -875,6 +881,8 @@ def get_schema_metadata() -> dict:
         tables = []
         for row in cur.fetchall():
             tname = row["table_name"]
+            if tname in _HIDDEN_TABLES:
+                continue
             pk_cols = _get_pk_columns(conn, tname)
             cur2 = conn.cursor()
             cur2.execute("""

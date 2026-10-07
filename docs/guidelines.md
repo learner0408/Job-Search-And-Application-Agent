@@ -3,7 +3,7 @@
 ## Validator (B3)
 
 `Agent/planner/validator.py` checks before executor runs:
-- `tool` in allowed set (`search_jobs`, `get_profile`, `score_jobs`, `prepare_application`, `query_database`, `get_database_schema`)
+- `tool` in allowed set (`search_jobs`, `get_profile`, `score_jobs`, `prepare_application`, `apply_application`, `query_database`)
 - Arg JSON schema per `docs/tools/<tool>.md`
 - `user_id` scoping present when tool reads `user_profile`/`applications`/etc. (`current_setting('app.current_user_id')`)
 - If query contains `match|≥70%|%`, plan must include `score_jobs` with `threshold`

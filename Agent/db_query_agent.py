@@ -125,6 +125,21 @@ def generate_sql(state: DBQueryState) -> dict:
         return {"sql_query": "", "error": f"SQL generation failed: {e}"}
 
 
+_ROW_LIMIT = 10
+
+
+def _cap_rows(sql: str) -> str:
+    """Wrap a SELECT with an outer row cap (LIMIT 11 to detect truncation).
+
+    Args:
+        sql: Generated SELECT string.
+
+    Returns:
+        Wrapped SQL capped at _ROW_LIMIT + 1 rows.
+    """
+    return f"SELECT * FROM ({sql.strip().rstrip(';')}) AS q LIMIT {_ROW_LIMIT + 1}"
+
+
 def execute_sql(state: DBQueryState) -> dict:
     from database import execute_sql_query
 
@@ -133,10 +148,14 @@ def execute_sql(state: DBQueryState) -> dict:
         return {"error": "No SQL query to execute", "retry_count": state.get("retry_count", 0) + 1}
 
     try:
-        rows = execute_sql_query(sql)
+        rows = execute_sql_query(_cap_rows(sql))
         if not rows:
             return {"query_result": "No results found.", "error": None}
-        return {"query_result": json.dumps(rows, indent=2, default=str), "error": None}
+        truncated = len(rows) > _ROW_LIMIT
+        payload = json.dumps(rows[:_ROW_LIMIT], indent=2, default=str)
+        if truncated:
+            payload += f"\n…showing first {_ROW_LIMIT} — ask me to narrow it down for more."
+        return {"query_result": payload, "error": None}
     except Exception as e:
         logger.warning("execute_sql failed: %s", e)
         return {"error": str(e), "retry_count": state.get("retry_count", 0) + 1}
