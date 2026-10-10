@@ -330,32 +330,54 @@ def _update_node(state: OrchestratorState) -> dict:
     action = extracted.get("action")
     args = extracted.get("args", {}) or {}
     if action == "update_profile":
-        fields = {k: v for k, v in args.items() if k in _UPDATE_PROFILE_FIELDS and v is not None}
-        if not fields:
-            return {"error": "I couldn't tell which profile field to update. Tell me the field and value."}
-        if "skills" in fields and isinstance(fields["skills"], list):
-            fields["skills"] = [s.strip() for s in fields["skills"] if isinstance(s, str)]
+        named = [k for k in args if k in _UPDATE_PROFILE_FIELDS or k in ("work_history", "education")]
+        empty_named = [k for k in named if args.get(k) is None or (isinstance(args.get(k), str) and not args[k].strip()) or args.get(k) == []]
+        if empty_named:
+            field = empty_named[0]
+            return {"error": f"You asked to update {field}, but no new value was given — tell me the new {field} (e.g. 'update my {field} to …')."}
+        fields = {k: v for k, v in args.items() if k in _UPDATE_PROFILE_FIELDS and v is not None and (not isinstance(v, str) or v.strip())}
+        wh_add = [e for e in (args.get("work_history") or []) if isinstance(e, dict)]
+        edu_add = [e for e in (args.get("education") or []) if isinstance(e, dict)]
+        if not fields and not wh_add and not edu_add:
+            return {"error": "I couldn't find a field and value in your message — tell me which field and the new value."}
         from database import get_profile, save_profile
         profile = get_profile(user_id=uid) or {}
+        if "skills" in fields and isinstance(fields["skills"], list):
+            merged = list(profile.get("skills", []) or [])
+            seen = {str(s).lower() for s in merged}
+            for s in fields["skills"]:
+                if isinstance(s, str) and s.strip() and s.strip().lower() not in seen:
+                    merged.append(s.strip())
+                    seen.add(s.strip().lower())
+            fields["skills"] = merged
         profile.update(fields)
+        if wh_add:
+            profile["work_history"] = list(profile.get("work_history", []) or []) + wh_add
+        if edu_add:
+            profile["education"] = list(profile.get("education", []) or []) + edu_add
         save_profile(profile, user_id=uid)
-        logger.info("update action=update_profile fields=%s session=%s", sorted(fields), state.get("session_id"))
-        return {"error": f"Profile updated: {', '.join(sorted(fields))}."}
+        touched = sorted(fields) + (["work_history"] if wh_add else []) + (["education"] if edu_add else [])
+        logger.info("update action=update_profile fields=%s session=%s", touched, state.get("session_id"))
+        return {"error": f"Profile updated: {', '.join(touched)}."}
     if action == "update_application_status":
         try:
             app_id = int(args.get("app_id"))
         except (TypeError, ValueError):
             return {"error": "Which application id should I update? e.g. 'mark application 5 as applied'."}
+        if args.get("status") is None or (isinstance(args.get("status"), str) and not args["status"].strip()):
+            return {"error": f"No status was provided — choose one of: {', '.join(sorted(_UPDATE_STATUSES))}."}
         status = str(args.get("status", "")).lower()
         if status not in _UPDATE_STATUSES:
             return {"error": f"Invalid status '{args.get('status')}'. Must be one of: {', '.join(sorted(_UPDATE_STATUSES))}."}
+        from datetime import datetime, timezone
         from database import update_application_status as db_update_status
-        ok = db_update_status(app_id, status, user_id=uid)
-        logger.info("update action=update_application_status app=%s status=%s ok=%s session=%s", app_id, status, ok, state.get("session_id"))
+        applied_at = datetime.now(timezone.utc).isoformat() if status == "applied" else None
+        ok = db_update_status(app_id, status, applied_at=applied_at, user_id=uid)
+        logger.info("update action=update_application_status app=%s status=%s applied_at=%s ok=%s session=%s", app_id, status, applied_at, ok, state.get("session_id"))
         if not ok:
             return {"error": f"No application found with id {app_id}."}
         return {"error": f"Application {app_id} updated to '{status}'."}
-    return {"error": "I couldn't tell what to update. Tell me the field and value, e.g. 'update my phone to X'."}
+    return {"error": "I couldn't find a field and value in your message — tell me which field and the new value."}
 
 
 def _resolve_apply_ids(state: OrchestratorState) -> list[int]:

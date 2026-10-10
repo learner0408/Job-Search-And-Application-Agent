@@ -15,20 +15,25 @@ def update_profile(
     github_url: Optional[str] = None,
     website: Optional[str] = None,
     skills: Optional[list] = None,
+    work_history: Optional[list] = None,
+    education: Optional[list] = None,
 ) -> str:
-    """Update your saved profile. Only provided fields are changed; omitted fields keep their current values.
+    """Update your saved profile. Scalars are replaced; skills are merged (union);
+    work_history and education entries are appended, never removed.
 
     Call this when the user wants to save or update their personal information. Use get_my_profile first
     to see current values.
 
     Args:
-        full_name: Full name (e.g. "John Doe").
-        email: Email address (e.g. "john@example.com").
-        phone: Phone number (e.g. "+1 555-0123").
-        linkedin_url: Full URL to LinkedIn profile.
-        github_url: Full URL to GitHub profile.
-        website: Personal or portfolio website URL.
-        skills: List of skill strings (e.g. ["Python", "React", "Machine Learning"]).
+        full_name: Full name (e.g. "John Doe"). Replaces the current value.
+        email: Email address (e.g. "john@example.com"). Replaces the current value.
+        phone: Phone number (e.g. "+1 555-0123"). Replaces the current value.
+        linkedin_url: Full URL to LinkedIn profile. Replaces the current value.
+        github_url: Full URL to GitHub profile. Replaces the current value.
+        website: Personal or portfolio website URL. Replaces the current value.
+        skills: List of skill strings (e.g. ["Python", "React", "Machine Learning"]). Merged into existing skills.
+        work_history: List of work-history objects. Appended to existing entries.
+        education: List of education objects. Appended to existing entries.
 
     Returns:
         JSON string with status confirmation.
@@ -50,7 +55,17 @@ def update_profile(
     if website is not None:
         current["website"] = website
     if skills is not None:
-        current["skills"] = [s.strip() for s in skills if isinstance(s, str)]
+        merged = list(current.get("skills", []) or [])
+        seen = {str(s).lower() for s in merged}
+        for s in skills:
+            if isinstance(s, str) and s.strip() and s.strip().lower() not in seen:
+                merged.append(s.strip())
+                seen.add(s.strip().lower())
+        current["skills"] = merged
+    if work_history is not None:
+        current["work_history"] = list(current.get("work_history", []) or []) + [e for e in work_history if isinstance(e, dict)]
+    if education is not None:
+        current["education"] = list(current.get("education", []) or []) + [e for e in education if isinstance(e, dict)]
 
     save_profile(current)
     return json.dumps({"status": "ok", "message": "Profile updated successfully."}, indent=2)
