@@ -23,6 +23,6 @@ def query_database(natural_language_query: str) -> str:
         A human-readable answer with the query results, or a message explaining
         that the database doesn't have the requested information.
     """
-    from Agent.db_query_agent import run_db_query
+    from agent.db_query_agent import run_db_query
 
     return run_db_query(natural_language_query)

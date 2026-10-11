@@ -618,7 +618,7 @@ def _plan_node(state: OrchestratorState) -> dict:
     Returns:
         Dict with plan (or None on failure, falling back to fixed chain).
     """
-    from Agent.planner.planner import plan_query
+    from agent.planner.planner import plan_query
 
     try:
         plan = plan_query(state.get("raw_query", ""), user_id=state.get("user_id", 0))
@@ -638,7 +638,7 @@ def _execute_node(state: OrchestratorState) -> dict:
     Returns:
         Empty dict (working state updated in place) or error.
     """
-    from Agent.planner.executor import execute_plan
+    from agent.planner.executor import execute_plan
 
     try:
         work = dict(state)

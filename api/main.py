@@ -12,11 +12,11 @@ from typing import Optional, List
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
 
-# Add parent directory to path to import tools, Agent, and database
+# Add parent directory to path to import tools, agent, and database
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 from tools import search_indeed, search_linkedin, search_yc
-from Agent.agent import run_agent
+from agent.agent import run_agent
 from database import (
     init_db, save_search, get_history, get_search, delete_search, clear_history,
     save_chat_message, get_recent_chat_messages,

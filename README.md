@@ -6,8 +6,8 @@ Search job listings from Indeed, LinkedIn, and Y Combinator startups, chat with 
 
 ### Backend (K8s pod)
 - **`api/main.py`** — FastAPI server on port 8000. Endpoints: `POST /api/search`, `POST /api/chat`, `GET/DELETE /api/history`, `GET/POST /api/profile`, `POST/GET /api/resume`, `POST /api/apply/prepare`, `GET /api/applications`, `GET /api/sessions`, `GET /api/sessions/{id}/messages`, `DELETE /api/sessions/{id}`, `GET /api/health`.
-- **`Agent/agent.py`** — LangChain ReAct agent using Groq (`llama-3.3-70b-versatile`), with 4 tools. Injects recent chat history for context (current message filtered to avoid duplication in LLM context). Auto-retries on rate limits (70s wait).
-- **`Agent/db_query_agent.py`** — LangGraph state machine that classifies user queries against the DB schema, generates & executes SQL (with up to 2 retries on failure), and returns results.
+- **`agent/agent.py`** — LangChain ReAct agent using Groq (`llama-3.3-70b-versatile`), with 4 tools. Injects recent chat history for context (current message filtered to avoid duplication in LLM context). Auto-retries on rate limits (70s wait).
+- **`agent/db_query_agent.py`** — LangGraph state machine that classifies user queries against the DB schema, generates & executes SQL (with up to 2 retries on failure), and returns results.
 - **`database.py`** — PostgreSQL persistence (via `psycopg2`, Neon-compatible) with tables: `sessions`, `searches`, `search_results`, `chat_messages`, `user_profile`, `applications`. Includes `get_schema_metadata()` for introspection and `execute_sql_query()` for safe SELECT-only execution via the SQL agent.
 - **`tools/job_search.py`** — DuckDuckGo search (`ddgs`) for Indeed, LinkedIn, and Y Combinator jobs. `search_jobs` @tool with `source` param ("all", "indeed", "linkedin", "yc"). Descriptions truncated to 120 chars.
 - **`tools/profile/update_profile.py`** — `update_profile` @tool (write-only; reads handled by `query_database`).
@@ -137,8 +137,8 @@ DATABASE_URL=postgresql://user:pass@ep-xxx.neon.tech/neondb uv run python script
 |------|---------|
 | `api/main.py` | FastAPI routes |
 | `api/auth.py` | JWT, Argon2 password hashing, OAuth (Google/GitHub), rate limiting, session cookies |
-| `Agent/agent.py` | LangChain ReAct agent (4 tools, auto-retry) |
-| `Agent/db_query_agent.py` | LangGraph SQL query agent (classify → generate → execute, 2 retries) |
+| `agent/agent.py` | LangChain ReAct agent (4 tools, auto-retry) |
+| `agent/db_query_agent.py` | LangGraph SQL query agent (classify → generate → execute, 2 retries) |
 | `database.py` | PostgreSQL CRUD + `get_schema_metadata()` + `execute_sql_query()` |
 | `tools/search/` | Job search @tool + `JobSource` impls (Adzuna API, DDG: Indeed/LinkedIn/YC) |
 | `tools/db/` | `query_database` @tool (natural language → SQL), `get_database_schema` @tool |

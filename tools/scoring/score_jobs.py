@@ -15,7 +15,7 @@ def _read_prompt() -> str:
     """
     import os
     from pathlib import Path
-    prompt_path = Path(__file__).parent.parent.parent / "Agent" / "prompts" / "scoring" / "v1.md"
+    prompt_path = Path(__file__).parent.parent.parent / "agent" / "prompts" / "scoring" / "v1.md"
     if prompt_path.exists():
         return prompt_path.read_text()
     return "Score experience relevance 0-50: {profile} vs {job}"

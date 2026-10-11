@@ -6,14 +6,14 @@ Agent subsystem that routes dynamic natural-language job intents through a hybri
 
 ## 2. Tech Stack
 
-Python 3.13, `uv`, LangChain + LangGraph, `langchain-anthropic` via `init_chat_model` everywhere (check LangChain/LangGraph abstractions first before adding new helpers). Models: `claude-haiku-4-5` for high-volume planner + scoring rubric (`Agent/prompts/planner/v1.md`, `Agent/prompts/scoring/v1.md`) and `claude-sonnet-5` for chat (`Agent/prompts/chat/v1.md`), versioned per node. Search via Adzuna official API + `ddgs` (DuckDuckGo) behind a `JobSource` interface (primaries Adzuna/YC, fallbacks LinkedIn/Indeed); persistence via `psycopg2` + Neon Postgres; testing via `pytest` + `/test-case-writer`.
+Python 3.13, `uv`, LangChain + LangGraph, `langchain-anthropic` via `init_chat_model` everywhere (check LangChain/LangGraph abstractions first before adding new helpers). Models: `claude-haiku-4-5` for high-volume planner + scoring rubric (`agent/prompts/planner/v1.md`, `agent/prompts/scoring/v1.md`) and `claude-sonnet-5` for chat (`agent/prompts/chat/v1.md`), versioned per node. Search via Adzuna official API + `ddgs` (DuckDuckGo) behind a `JobSource` interface (primaries Adzuna/YC, fallbacks LinkedIn/Indeed); persistence via `psycopg2` + Neon Postgres; testing via `pytest` + `/test-case-writer`.
 
 ## 3. Directory Structure
 
 Layered by category — first-order children only.
 
 ```
-Agent/
+agent/
 ├── agent.py
 ├── db_query_agent.py
 ├── orchestrator.py
@@ -35,7 +35,7 @@ docs/
 └── guidelines.md
 ```
 
-- `Agent/` — orchestrator, planner + validator, prompts, and this arch doc
+- `agent/` — orchestrator, planner + validator, prompts, and this arch doc
 - `tools/search`, `tools/profile`, `tools/scoring`, `tools/application`, `tools/db` — category subfolders, each tool has a succinct `docs/tools/<tool>.md`
 - `docs/tools/` — per-tool contracts
 - `docs/guidelines.md` — validator, prompt-version, and cache rules
@@ -44,13 +44,13 @@ docs/
 
 | Module | Responsibility | Files |
 |---|---|---|
-| orchestrator | Intent classification, DAG validation, LangGraph wiring, ephemeral state + checkpoint | `Agent/orchestrator.py`, `Agent/planner/planner.py`, `Agent/planner/validator.py` |
+| orchestrator | Intent classification, DAG validation, LangGraph wiring, ephemeral state + checkpoint | `agent/orchestrator.py`, `agent/planner/planner.py`, `agent/planner/validator.py` |
 | search | Dispatch to `JobSource` implementations, 24h cache, normalize description/location/salary | `tools/search/` |
 | profile | Assemble profile snapshot (structured + resume ~2k tokens + preferences) | `tools/profile/` |
 | scoring | Hybrid scorer: deterministic 0–50 + LLM rubric 0–50, filter by threshold with breakdown | `tools/scoring/` |
 | application | Draft preview without mandatory cover letter, persist `status: preparing` | `tools/application/` |
-| db-read | Natural-language to SQL via LangGraph state machine, user-scoped reads | `tools/db/`, `Agent/db_query_agent.py` |
-| chat | Thin router for general conversation, delegates job intents to orchestrator | `Agent/agent.py` |
+| db-read | Natural-language to SQL via LangGraph state machine, user-scoped reads | `tools/db/`, `agent/db_query_agent.py` |
+| chat | Thin router for general conversation, delegates job intents to orchestrator | `agent/agent.py` |
 
 ## 5. Data Flow
 
@@ -93,7 +93,7 @@ How data moves between modules. Mark each flow `[Input] → [Step] → [Output]`
 
 ## 8. Conventions Reference
 
-Project `AGENTS.md` at the repo root applies (`CLAUDE.md` points there): concise code, docstrings with `Args:`/`Returns:`, ask-before-edit/push, LangChain by default and LangGraph for custom flows, check LangChain/LangGraph abstractions first before creating new helpers, keep `README.md` current. Deviation: agent architecture lives at `Agent/ARCHITECTURE.md` (not project-root) because this doc scopes to the agent subsystem only; tool contracts live at `docs/tools/<tool>.md` with a mapping in `tools/README.md` and guardrails in `docs/GUARDRAILS.md`.
+Project `AGENTS.md` at the repo root applies (`CLAUDE.md` points there): concise code, docstrings with `Args:`/`Returns:`, ask-before-edit/push, LangChain by default and LangGraph for custom flows, check LangChain/LangGraph abstractions first before creating new helpers, keep `README.md` current. Deviation: agent architecture lives at `agent/ARCHITECTURE.md` (not project-root) because this doc scopes to the agent subsystem only; tool contracts live at `docs/tools/<tool>.md` with a mapping in `tools/README.md` and guardrails in `docs/GUARDRAILS.md`.
 
 ## 9. Open Questions
 

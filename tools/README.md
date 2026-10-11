@@ -12,4 +12,4 @@
 | `query_database` | db | NL → SQL LangGraph, user-scoped reads | `docs/tools/query_database.md` | `tools/db/query_database.py` |
 | `get_database_schema` | db | Schema introspection for `query_database` | `docs/tools/query_database.md` | `tools/db/get_database_schema.py` |
 
-Guidelines: `docs/guidelines.md` — validator, prompt version (`Agent/prompts/<node>/v1.md`), cache TTL. Decisions: `Agent/ARCHITECTURE.md`.
+Guidelines: `docs/guidelines.md` — validator, prompt version (`agent/prompts/<node>/v1.md`), cache TTL. Decisions: `agent/ARCHITECTURE.md`.

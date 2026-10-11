@@ -34,7 +34,7 @@ def plan_query(query: str, user_id: int = 0) -> dict:
     Returns:
         Validated plan dict.
     """
-    from Agent.planner.validator import validate_plan
+    from agent.planner.validator import validate_plan
 
     model_name = os.getenv("PLANNER_LLM_MODEL", "claude-haiku-4-5")
     llm = init_chat_model(model_name, model_provider="anthropic", temperature=0)
