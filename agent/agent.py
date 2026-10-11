@@ -55,6 +55,7 @@ def _parse_search_result(tool_content: str) -> dict[str, Any]:
     data = json.loads(tool_content)
     jobs = []
     for source_key, source_label in [
+        ("adzuna", "Adzuna"),
         ("indeed", "Indeed"),
         ("linkedin", "LinkedIn"),
         ("yc_startups", "YC Startup"),
@@ -87,7 +88,7 @@ def run_agent(message: str, session_id: Optional[str] = None, user_id: Optional[
     logger.info("route=orchestrator session=%s", session_id)
     if user_id is not None:
         try:
-            from Agent.orchestrator import build_orchestrator
+            from agent.orchestrator import build_orchestrator
             from database import set_current_user
             set_current_user(user_id)
             graph = build_orchestrator()

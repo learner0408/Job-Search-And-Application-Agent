@@ -24,6 +24,56 @@ class OrchestratorState(TypedDict):
     plan: Optional[dict]
 
 
+def _load_guard_prompt() -> str:
+    """Load guard prompt template.
+
+    Returns:
+        Prompt template string.
+    """
+    from pathlib import Path
+    p = Path(__file__).parent / "prompts" / "guard" / "v1.md"
+    if p.exists():
+        return p.read_text()
+    return 'Return ONLY valid JSON: {"on_topic": true/false}.'
+
+
+GUARD_REFUSAL = (
+    "I'm a job-search assistant — I can help with finding jobs, matching them "
+    "to your profile, applications, your resume, and interviews. "
+    "What would you like to do?"
+)
+
+
+def _guard_node(state: OrchestratorState) -> dict:
+    """Reject off-topic queries before classification (fail-open).
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Dict with intent off_topic + refusal, or empty dict to continue.
+    """
+    raw = state.get("raw_query", "")
+    on_topic = True
+    try:
+        import os
+        from langchain.chat_models import init_chat_model
+
+        llm = init_chat_model(os.getenv("PLANNER_LLM_MODEL", "claude-haiku-4-5"), model_provider="anthropic", temperature=0)
+        result = llm.invoke(_load_guard_prompt() + f"\n\nQuery: {raw}\nJSON:")
+        content = result.content if isinstance(result.content, str) else str(result.content)
+        m = re.search(r"\{.*\}", content, re.DOTALL)
+        if m:
+            on_topic = bool(json.loads(m.group()).get("on_topic", True))
+    except Exception as e:
+        logger.warning("guard judge failed, failing open: %s", e)
+    if on_topic:
+        logger.info("guardrail=pass session=%s", state.get("session_id"))
+        return {}
+    logger.info("guardrail=reject session=%s", state.get("session_id"))
+    return {"intent": "off_topic", "error": GUARD_REFUSAL}
+
+
 def extract_threshold(raw_query: str) -> Optional[int]:
     """Extract threshold from query.
 
@@ -83,6 +133,8 @@ def _rule_based_intent(raw: str) -> str:
         Intent string.
     """
     q = raw.lower()
+    if re.search(r"apply to #\d+", q) or "apply to all" in q or re.search(r"\bconfirm\b.*\bappl", q) or re.search(r"^yes\b.*\bapply", q):
+        return "apply"
     if "my profile" in q or "my resume" in q or q.strip() == "profile":
         return "profile"
     if any(k in q for k in ["update my", "change my", "set my", "save my", "mark application", "mark as"]) or ("update" in q and "profile" in q):
@@ -111,17 +163,25 @@ def _classify_intent(state: OrchestratorState) -> dict:
         from langchain.chat_models import init_chat_model
 
         llm = init_chat_model(os.getenv("PLANNER_LLM_MODEL", "claude-haiku-4-5"), model_provider="anthropic", temperature=0)
-        prompt = _load_classify_prompt() + f"\n\nQuery: {raw}\nIntent:"
+        prompt = _load_classify_prompt() + f"\n\nQuery: {raw}\nJSON:"
         result = llm.invoke(prompt)
         content = result.content if isinstance(result.content, str) else str(result.content)
-        m = re.search(r"\b(search_score_prepare|search|db_read|chat|profile|update)\b", content.lower())
+        m = re.search(r"\{.*\}", content, re.DOTALL)
         if m:
-            logger.info("intent=%s session=%s", m.group(1), state.get("session_id"))
-            return {"intent": m.group(1), "plan": None}
+            parsed = json.loads(m.group())
+            label = str(parsed.get("intent", "")).lower()
+            try:
+                confidence = float(parsed.get("confidence", 0))
+            except (TypeError, ValueError):
+                confidence = 0
+            if label in ("search_score_prepare", "search", "db_read", "chat", "profile", "update", "apply") and confidence >= 0.6:
+                logger.info("intent=%s source=llm confidence=%.2f session=%s", label, confidence, state.get("session_id"))
+                return {"intent": label, "plan": None}
+            logger.info("intent gate rejected label=%s confidence=%.2f, falling back to rule", label, confidence)
     except Exception as e:
         logger.warning("LLM classify failed, falling back to rule: %s", e)
     intent = _rule_based_intent(raw)
-    logger.info("intent=%s session=%s (rule)", intent, state.get("session_id"))
+    logger.info("intent=%s source=rule session=%s", intent, state.get("session_id"))
     return {"intent": intent, "plan": None}
 
 
@@ -135,19 +195,25 @@ def _search_node(state: OrchestratorState) -> dict:
         Dict with jobs.
     """
     from tools.search.job_search import search_jobs
-    import json as _json
     title = state.get("raw_query", "")
     # If plan has search_jobs step, use its args
-    plan = state.get("plan")
-    if plan:
-        for s in plan.get("steps", []):
-            if s["tool"] == "search_jobs":
-                args = s.get("args", {})
-                title = args.get("title", title)
-                break
-    raw = json.loads(search_jobs(title=title, location="", source="all", max_results=10))
+    plan = state.get("plan") or {}
+    plan_args = {}
+    for s in plan.get("steps", []):
+        if s["tool"] == "search_jobs":
+            plan_args = s.get("args", {}) or {}
+            break
+    title = plan_args.get("title", title)
+    location = plan_args.get("location", "")
+    employment_type = plan_args.get("employment_type", "")
+    remote = bool(plan_args.get("remote", False))
+    try:
+        max_results = int(plan_args.get("max_results", 10))
+    except (TypeError, ValueError):
+        max_results = 10
+    raw = json.loads(search_jobs(title=title, location=location, source="all", employment_type=employment_type, remote=remote, max_results=max_results))
     jobs = []
-    for key in ("indeed", "linkedin", "yc_startups"):
+    for key in ("adzuna", "indeed", "linkedin", "yc_startups"):
         jobs.extend(raw.get(key, []))
     logger.info("search jobs=%d session=%s", len(jobs), state.get("session_id"))
     return {"jobs": jobs}
@@ -163,20 +229,15 @@ def _profile_node(state: OrchestratorState) -> dict:
         Dict with profile_snapshot.
     """
     from database import get_profile, get_resume, get_resume_text, get_user_preferences
+    from tools.profile.get_profile import build_snapshot
     profile = get_profile(user_id=state["user_id"]) or {}
     prefs = get_user_preferences(user_id=state["user_id"])
     resume = get_resume(user_id=state["user_id"])
     resume_bytes = len(resume["content"]) if resume else 0
     resume_updated = str(resume.get("updated_at")) if resume and resume.get("updated_at") else "none"
     resume_text = get_resume_text(user_id=state["user_id"])
-    snapshot = {
-        "skills": profile.get("skills", []),
-        "work_history": profile.get("work_history", []),
-        "education": profile.get("education", []),
-        "resume_text": resume_text,
-        "resume_updated": resume_updated,
-        "preferences": prefs,
-    }
+    snapshot = build_snapshot(profile, resume_text, prefs)
+    snapshot["resume_updated"] = resume_updated
     logger.info(
         "profile completeness=%s resume_bytes=%d resume_text_len=%d session=%s",
         "full" if resume_text else "partial",
@@ -241,7 +302,9 @@ def _prepare_node(state: OrchestratorState) -> dict:
     from database import save_application, get_profile
     profile = get_profile(user_id=state["user_id"])
     missing = get_missing_fields(profile)
-    scored = state.get("scored_jobs", [])[:5]
+    top_m = re.search(r"top\s+(\d+)", state.get("raw_query", ""), re.I)
+    limit = min(int(top_m.group(1)), 5) if top_m else 5
+    scored = state.get("scored_jobs", [])[:limit]
     drafts = []
     for s in scored:
         job = s["job"]
@@ -270,7 +333,7 @@ def _db_read_node(state: OrchestratorState) -> dict:
     Returns:
         Dict with error as formatted answer.
     """
-    from tools.db_query_tool import query_database
+    from tools.db.query_database import query_database
     try:
         answer = query_database(state.get("raw_query", ""))
         logger.info("db_read session=%s", state.get("session_id"))
@@ -325,32 +388,109 @@ def _update_node(state: OrchestratorState) -> dict:
     action = extracted.get("action")
     args = extracted.get("args", {}) or {}
     if action == "update_profile":
-        fields = {k: v for k, v in args.items() if k in _UPDATE_PROFILE_FIELDS and v is not None}
-        if not fields:
-            return {"error": "I couldn't tell which profile field to update. Tell me the field and value."}
-        if "skills" in fields and isinstance(fields["skills"], list):
-            fields["skills"] = [s.strip() for s in fields["skills"] if isinstance(s, str)]
+        named = [k for k in args if k in _UPDATE_PROFILE_FIELDS or k in ("work_history", "education")]
+        empty_named = [k for k in named if args.get(k) is None or (isinstance(args.get(k), str) and not args[k].strip()) or args.get(k) == []]
+        if empty_named:
+            field = empty_named[0]
+            return {"error": f"You asked to update {field}, but no new value was given — tell me the new {field} (e.g. 'update my {field} to …')."}
+        fields = {k: v for k, v in args.items() if k in _UPDATE_PROFILE_FIELDS and v is not None and (not isinstance(v, str) or v.strip())}
+        wh_add = [e for e in (args.get("work_history") or []) if isinstance(e, dict)]
+        edu_add = [e for e in (args.get("education") or []) if isinstance(e, dict)]
+        if not fields and not wh_add and not edu_add:
+            return {"error": "I couldn't find a field and value in your message — tell me which field and the new value."}
         from database import get_profile, save_profile
         profile = get_profile(user_id=uid) or {}
+        if "skills" in fields and isinstance(fields["skills"], list):
+            merged = list(profile.get("skills", []) or [])
+            seen = {str(s).lower() for s in merged}
+            for s in fields["skills"]:
+                if isinstance(s, str) and s.strip() and s.strip().lower() not in seen:
+                    merged.append(s.strip())
+                    seen.add(s.strip().lower())
+            fields["skills"] = merged
         profile.update(fields)
+        if wh_add:
+            profile["work_history"] = list(profile.get("work_history", []) or []) + wh_add
+        if edu_add:
+            profile["education"] = list(profile.get("education", []) or []) + edu_add
         save_profile(profile, user_id=uid)
-        logger.info("update action=update_profile fields=%s session=%s", sorted(fields), state.get("session_id"))
-        return {"error": f"Profile updated: {', '.join(sorted(fields))}."}
+        touched = sorted(fields) + (["work_history"] if wh_add else []) + (["education"] if edu_add else [])
+        logger.info("update action=update_profile fields=%s session=%s", touched, state.get("session_id"))
+        return {"error": f"Profile updated: {', '.join(touched)}."}
     if action == "update_application_status":
         try:
             app_id = int(args.get("app_id"))
         except (TypeError, ValueError):
             return {"error": "Which application id should I update? e.g. 'mark application 5 as applied'."}
+        if args.get("status") is None or (isinstance(args.get("status"), str) and not args["status"].strip()):
+            return {"error": f"No status was provided — choose one of: {', '.join(sorted(_UPDATE_STATUSES))}."}
         status = str(args.get("status", "")).lower()
         if status not in _UPDATE_STATUSES:
             return {"error": f"Invalid status '{args.get('status')}'. Must be one of: {', '.join(sorted(_UPDATE_STATUSES))}."}
+        from datetime import datetime, timezone
         from database import update_application_status as db_update_status
-        ok = db_update_status(app_id, status, user_id=uid)
-        logger.info("update action=update_application_status app=%s status=%s ok=%s session=%s", app_id, status, ok, state.get("session_id"))
+        applied_at = datetime.now(timezone.utc).isoformat() if status == "applied" else None
+        ok = db_update_status(app_id, status, applied_at=applied_at, user_id=uid)
+        logger.info("update action=update_application_status app=%s status=%s applied_at=%s ok=%s session=%s", app_id, status, applied_at, ok, state.get("session_id"))
         if not ok:
             return {"error": f"No application found with id {app_id}."}
         return {"error": f"Application {app_id} updated to '{status}'."}
-    return {"error": "I couldn't tell what to update. Tell me the field and value, e.g. 'update my phone to X'."}
+    return {"error": "I couldn't find a field and value in your message — tell me which field and the new value."}
+
+
+def _resolve_apply_ids(state: OrchestratorState) -> list[int]:
+    """Resolve #N/all selections to application ids.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        List of application ids.
+    """
+    raw = state.get("raw_query", "").lower()
+    drafts = state.get("drafts", []) or []
+    if "all" in raw:
+        ids = [d.get("app_id") for d in drafts if d.get("app_id") is not None]
+        if ids:
+            return [int(i) for i in ids]
+    m = re.search(r"#(\d+)", raw)
+    if m and drafts:
+        idx = int(m.group(1)) - 1
+        if 0 <= idx < len(drafts) and drafts[idx].get("app_id") is not None:
+            return [int(drafts[idx]["app_id"])]
+    if drafts:
+        return []
+    from database import get_applications
+    rows = get_applications(status="preparing", user_id=state.get("user_id")) or []
+    if "all" in raw:
+        return [int(r["id"]) for r in rows]
+    if m and rows:
+        idx = int(m.group(1)) - 1
+        if 0 <= idx < len(rows):
+            return [int(rows[idx]["id"])]
+    return []
+
+
+def _apply_node(state: OrchestratorState) -> dict:
+    """Execute human-approved applies via the apply_application tool.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Dict with per-id results in error field.
+    """
+    from tools.application.apply_application import apply_application
+
+    ids = _resolve_apply_ids(state)
+    if not ids:
+        return {"error": "I couldn't tell which application to apply to. Reply 'apply to #N' using the numbers above, or 'apply to all'."}
+    try:
+        result = apply_application.invoke({"app_ids": ids})
+    except Exception as e:
+        return {"error": f"Apply failed: {e}"}
+    logger.info("apply ids=%s session=%s", ids, state.get("session_id"))
+    return {"error": result if isinstance(result, str) else json.dumps(result)}
 
 
 def _format_node(state: OrchestratorState) -> dict:
@@ -365,11 +505,16 @@ def _format_node(state: OrchestratorState) -> dict:
     if state.get("intent") == "search_score_prepare":
         drafts = state.get("drafts", [])
         if not drafts:
+            if state.get("error"):
+                return {"error": state["error"]}
             return {"error": "No jobs met the threshold. Try lowering it or broadening the search."}
         lines = [f"Found {len(drafts)} jobs meeting the threshold:"]
         for i, d in enumerate(drafts, 1):
             lines.append(f"{i}. {d['job'].get('title')} — {d['score']}% (id {d['app_id']})")
-        lines.append("Say 'apply to #N' to proceed.")
+        if re.search(r"apply\b", state.get("raw_query", ""), re.I):
+            lines.append("Does this look ok? Reply 'apply to #N' or 'apply to all' to confirm — nothing will be submitted before you confirm.")
+        else:
+            lines.append("Say 'apply to #N' to proceed.")
         return {"error": "\n".join(lines)}
     if state.get("intent") == "search":
         jobs = state.get("jobs", [])
@@ -378,6 +523,10 @@ def _format_node(state: OrchestratorState) -> dict:
         return {"error": state.get("error") or "Done."}
     if state.get("intent") == "update":
         return {"error": state.get("error") or "Done."}
+    if state.get("intent") == "apply":
+        return {"error": state.get("error") or "Done."}
+    if state.get("intent") == "off_topic":
+        return {"error": state.get("error") or GUARD_REFUSAL}
     if state.get("intent") == "profile":
         snap = state.get("profile_snapshot") or {}
         resume_text = snap.get("resume_text", "")
@@ -460,6 +609,74 @@ def _route_after_profile(state: OrchestratorState) -> str:
     return "score"
 
 
+def _plan_node(state: OrchestratorState) -> dict:
+    """Generate and validate a DAG plan for search_score_prepare.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Dict with plan (or None on failure, falling back to fixed chain).
+    """
+    from agent.planner.planner import plan_query
+
+    try:
+        plan = plan_query(state.get("raw_query", ""), user_id=state.get("user_id", 0))
+        logger.info("plan steps=%s session=%s", [s.get("tool") for s in plan.get("steps", [])], state.get("session_id"))
+        return {"plan": plan}
+    except Exception as e:
+        logger.warning("plan failed, falling back to fixed chain: %s", e)
+        return {"plan": None}
+
+
+def _execute_node(state: OrchestratorState) -> dict:
+    """Run the validated plan via the executor (fail-fast).
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Empty dict (working state updated in place) or error.
+    """
+    from agent.planner.executor import execute_plan
+
+    try:
+        work = dict(state)
+        execute_plan(state.get("plan") or {}, work)
+        return {k: work.get(k) for k in ("jobs", "profile_snapshot", "scored_jobs", "threshold", "drafts")}
+    except Exception as e:
+        logger.warning("execute failed: %s", e)
+        return {"error": str(e)}
+
+
+def _route_after_plan(state: OrchestratorState) -> str:
+    """Route after plan based on whether a valid plan exists.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Next node name.
+    """
+    if state.get("plan"):
+        return "execute"
+    return "search"
+
+
+def _route_after_guard(state: OrchestratorState) -> str:
+    """Route after guard based on whether the query is in scope.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Next node name.
+    """
+    if state.get("intent") == "off_topic":
+        return "format"
+    return "classify"
+
+
 def _route_after_classify(state: OrchestratorState) -> str:
     """Route after classify based on intent.
 
@@ -471,7 +688,7 @@ def _route_after_classify(state: OrchestratorState) -> str:
     """
     intent = state.get("intent", "chat")
     if intent == "search_score_prepare":
-        return "search"
+        return "plan"
     if intent == "search":
         return "search"
     if intent == "db_read":
@@ -480,6 +697,8 @@ def _route_after_classify(state: OrchestratorState) -> str:
         return "profile"
     if intent == "update":
         return "update"
+    if intent == "apply":
+        return "apply"
     return "format"
 
 
@@ -497,6 +716,7 @@ def _build_graph(checkpointer=None):
         StateGraph builder.
     """
     g = StateGraph(OrchestratorState)
+    g.add_node("guard", _guard_node)
     g.add_node("classify", _classify_intent)
     g.add_node("search", _search_node)
     g.add_node("profile", _profile_node)
@@ -504,16 +724,23 @@ def _build_graph(checkpointer=None):
     g.add_node("prepare", _prepare_node)
     g.add_node("db_read", _db_read_node)
     g.add_node("update", _update_node)
+    g.add_node("apply", _apply_node)
+    g.add_node("plan", _plan_node)
+    g.add_node("execute", _execute_node)
     g.add_node("format", _format_node)
 
-    g.set_entry_point("classify")
-    g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "db_read": "db_read", "profile": "profile", "update": "update", "format": "format"})
+    g.set_entry_point("guard")
+    g.add_conditional_edges("guard", _route_after_guard, {"classify": "classify", "format": "format"})
+    g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "plan": "plan", "db_read": "db_read", "profile": "profile", "update": "update", "apply": "apply", "format": "format"})
+    g.add_conditional_edges("plan", _route_after_plan, {"execute": "execute", "search": "search"})
+    g.add_edge("execute", "format")
     g.add_edge("search", "profile")
     g.add_conditional_edges("profile", _route_after_profile, {"score": "score", "format": "format"})
     g.add_edge("score", "prepare")
     g.add_edge("prepare", "format")
     g.add_edge("db_read", "format")
     g.add_edge("update", "format")
+    g.add_edge("apply", "format")
     g.add_edge("format", END)
     return g
 

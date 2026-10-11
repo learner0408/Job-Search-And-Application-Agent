@@ -21,7 +21,7 @@ def prepare_application(title: str, company: Optional[str] = "", location: Optio
         JSON with app_id, status, and missing_fields.
     """
     from database import get_profile, save_application
-    from Agent.orchestrator import get_missing_fields
+    from agent.orchestrator import get_missing_fields
     profile = get_profile()
     missing = get_missing_fields(profile)
 

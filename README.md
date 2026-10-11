@@ -6,14 +6,14 @@ Search job listings from Indeed, LinkedIn, and Y Combinator startups, chat with 
 
 ### Backend (K8s pod)
 - **`api/main.py`** — FastAPI server on port 8000. Endpoints: `POST /api/search`, `POST /api/chat`, `GET/DELETE /api/history`, `GET/POST /api/profile`, `POST/GET /api/resume`, `POST /api/apply/prepare`, `GET /api/applications`, `GET /api/sessions`, `GET /api/sessions/{id}/messages`, `DELETE /api/sessions/{id}`, `GET /api/health`.
-- **`Agent/agent.py`** — LangChain ReAct agent using Groq (`llama-3.3-70b-versatile`), with 4 tools. Injects recent chat history for context (current message filtered to avoid duplication in LLM context). Auto-retries on rate limits (70s wait).
-- **`Agent/db_query_agent.py`** — LangGraph state machine that classifies user queries against the DB schema, generates & executes SQL (with up to 2 retries on failure), and returns results.
+- **`agent/agent.py`** — LangChain ReAct agent using Groq (`llama-3.3-70b-versatile`), with 4 tools. Injects recent chat history for context (current message filtered to avoid duplication in LLM context). Auto-retries on rate limits (70s wait).
+- **`agent/db_query_agent.py`** — LangGraph state machine that classifies user queries against the DB schema, generates & executes SQL (with up to 2 retries on failure), and returns results.
 - **`database.py`** — PostgreSQL persistence (via `psycopg2`, Neon-compatible) with tables: `sessions`, `searches`, `search_results`, `chat_messages`, `user_profile`, `applications`. Includes `get_schema_metadata()` for introspection and `execute_sql_query()` for safe SELECT-only execution via the SQL agent.
 - **`tools/job_search.py`** — DuckDuckGo search (`ddgs`) for Indeed, LinkedIn, and Y Combinator jobs. `search_jobs` @tool with `source` param ("all", "indeed", "linkedin", "yc"). Descriptions truncated to 120 chars.
-- **`tools/profile_tools.py`** — `update_profile` @tool (write-only; reads handled by `query_database`).
-- **`tools/application_tools.py`** — `update_application_status` @tool (write-only; reads handled by `query_database`).
-- **`tools/db_query_tool.py`** — `query_database` @tool wrapping the LangGraph SQL agent. Handles all DB read queries (profile, applications, search history, chat messages).
-- **`tools/database_metadata_tool.py`** — `get_database_schema` @tool for schema introspection (used internally by the SQL agent).
+- **`tools/profile/update_profile.py`** — `update_profile` @tool (write-only; reads handled by `query_database`).
+- **`tools/application/update_application_status.py`** — `update_application_status` @tool (write-only; reads handled by `query_database`).
+- **`tools/db/query_database.py`** — `query_database` @tool wrapping the LangGraph SQL agent. Handles all DB read queries (profile, applications, search history, chat messages).
+- **`tools/db/get_database_schema.py`** — `get_database_schema` @tool for schema introspection (used internally by the SQL agent).
 - **`tools/__init__.py`** — Exports 6 tools: `search_jobs`, `query_database`, `update_profile`, `update_application_status`, `get_database_schema`, and search helpers.
 
 ### Frontend (K8s pod)
@@ -72,6 +72,9 @@ kubectl create secret generic api-env \
 | `CHAT_LLM_MODEL` | `claude-sonnet-5` | Anthropic model for the chat agent (chat agent and DB query agent) |
 | `CHAT_LLM_PROVIDER` | `anthropic` | LLM provider for the chat agent |
 | `DATABASE_URL` | `postgresql://user:pass@host/db` | PostgreSQL connection string (Neon or local Postgres) |
+| `ADZUNA_APP_ID` | (none — Adzuna skipped) | Adzuna API app id (free at `developer.adzuna.com/signup`) |
+| `ADZUNA_APP_KEY` | (none — Adzuna skipped) | Adzuna API app key |
+| `ADZUNA_COUNTRY` | `in` | Fallback Adzuna country site when location doesn't map to one |
 
 ## Deployment Layout
 
@@ -134,14 +137,14 @@ DATABASE_URL=postgresql://user:pass@ep-xxx.neon.tech/neondb uv run python script
 |------|---------|
 | `api/main.py` | FastAPI routes |
 | `api/auth.py` | JWT, Argon2 password hashing, OAuth (Google/GitHub), rate limiting, session cookies |
-| `Agent/agent.py` | LangChain ReAct agent (4 tools, auto-retry) |
-| `Agent/db_query_agent.py` | LangGraph SQL query agent (classify → generate → execute, 2 retries) |
+| `agent/agent.py` | LangChain ReAct agent (4 tools, auto-retry) |
+| `agent/db_query_agent.py` | LangGraph SQL query agent (classify → generate → execute, 2 retries) |
 | `database.py` | PostgreSQL CRUD + `get_schema_metadata()` + `execute_sql_query()` |
-| `tools/job_search.py` | Job search @tool via DuckDuckGo |
-| `tools/db_query_tool.py` | `query_database` @tool (natural language → SQL) |
-| `tools/database_metadata_tool.py` | `get_database_schema` @tool |
-| `tools/profile_tools.py` | `update_profile` @tool |
-| `tools/application_tools.py` | `update_application_status` @tool |
+| `tools/search/` | Job search @tool + `JobSource` impls (Adzuna API, DDG: Indeed/LinkedIn/YC) |
+| `tools/db/` | `query_database` @tool (natural language → SQL), `get_database_schema` @tool |
+| `tools/profile/` | `get_profile` snapshot @tool, `update_profile` @tool |
+| `tools/scoring/` | `score_jobs` hybrid scorer @tool |
+| `tools/application/` | `prepare_application`, `update_application_status` @tools |
 | `tools/__init__.py` | Tool exports |
 | `web/public/index.html` | Single-page frontend |
 | `web/public/login.html` | Login / signup entry point (email/password + Google/GitHub) |

@@ -2,8 +2,8 @@
 
 ## Validator (B3)
 
-`Agent/planner/validator.py` checks before executor runs:
-- `tool` in allowed set (`search_jobs`, `get_profile`, `score_jobs`, `prepare_application`, `query_database`, `get_database_schema`)
+`agent/planner/validator.py` checks before executor runs:
+- `tool` in allowed set derived from `tools/registry.py` (`search_jobs`, `get_profile`, `score_jobs`, `prepare_application`, `apply_application`, `query_database`); the planner prompt allow-list block (`{{TOOLS}}`) renders from the same registry — adding a tool is one registry entry
 - Arg JSON schema per `docs/tools/<tool>.md`
 - `user_id` scoping present when tool reads `user_profile`/`applications`/etc. (`current_setting('app.current_user_id')`)
 - If query contains `match|≥70%|%`, plan must include `score_jobs` with `threshold`
@@ -12,7 +12,7 @@ Invalid plan → validator returns error, planner re-asks once.
 
 ## Prompt versioning (L2+L3)
 
-- Prompts live at `Agent/prompts/<node>/v1.md` (`planner`, `scoring`, `chat`)
+- Prompts live at `agent/prompts/<node>/v1.md` (`planner`, `scoring`, `chat`)
 - Env `PROMPT_VERSION` per node (default `v1`); bump file, not code, for rubric/weight changes
 - Models: `PLANNER_LLM_MODEL=claude-haiku-4-5` (planner + `score_jobs` rubric), `CHAT_LLM_MODEL=claude-sonnet-5` (chat)
 

@@ -13,4 +13,4 @@
 
 **Errors:** Returns `"I tried to query ... after 2 attempts: <error>"` on persistent failure.
 
-**Version:** `v1` (inherits `Agent/db_query_agent.py` graph).
+**Version:** `v1` (inherits `agent/db_query_agent.py` graph).

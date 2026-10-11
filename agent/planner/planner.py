@@ -15,9 +15,13 @@ def _load_prompt() -> str:
         Prompt template string.
     """
     p = Path(__file__).parent.parent / "prompts" / "planner" / "v1.md"
-    if p.exists():
-        return p.read_text()
-    return "Generate JSON plan with steps [{id,tool,args,depends_on}]"
+    if not p.exists():
+        return "Generate JSON plan with steps [{id,tool,args,depends_on}]"
+    text = p.read_text()
+    if "{{TOOLS}}" in text:
+        from tools.registry import render_tools_block
+        text = text.replace("{{TOOLS}}", render_tools_block())
+    return text
 
 
 def plan_query(query: str, user_id: int = 0) -> dict:
@@ -30,7 +34,7 @@ def plan_query(query: str, user_id: int = 0) -> dict:
     Returns:
         Validated plan dict.
     """
-    from Agent.planner.validator import validate_plan
+    from agent.planner.validator import validate_plan
 
     model_name = os.getenv("PLANNER_LLM_MODEL", "claude-haiku-4-5")
     llm = init_chat_model(model_name, model_provider="anthropic", temperature=0)

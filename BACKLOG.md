@@ -8,6 +8,7 @@
 ## P1 — Auth & platform
 - [ ] Decide `GET /wake` semantics: keep fire-and-forget (`warmApi(); res.send('ok')` at `web/server.js:58-61`) vs `?wait=1` await variant that makes cron 200 mean API was reached (adds up to ~55s on cold start)
 - [ ] Rate-limit visibility: admin-only debug for per-email limiter (`api/auth.py:35-38` on `POST /api/auth/login` at `api/main.py:158`) without exposing PII
+- [ ] Replace LLM guard judge with a small decision/classifier model (jev or similar) to remove the per-request judge call
 
 ## P2 — Product roadmap
 - [ ] Email verification / password reset flow

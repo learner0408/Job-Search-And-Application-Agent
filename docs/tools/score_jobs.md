@@ -14,7 +14,7 @@
 Sorted descending by `score`. Only jobs with `score >= threshold` returned when threshold set.
 
 **Deterministic (0–50):** skills overlap (embedding/keyword), location/remote match, salary band, employment_type.
-**LLM rubric (0–50):** experience relevance via `PLANNER_LLM_MODEL=claude-haiku-4-5` (`Agent/prompts/scoring/v1.md`).
+**LLM rubric (0–50):** experience relevance via `PLANNER_LLM_MODEL=claude-haiku-4-5` (`agent/prompts/scoring/v1.md`).
 
 **Errors**
 - Returns `[]` when `jobs` empty

@@ -15,7 +15,7 @@ def _read_prompt() -> str:
     """
     import os
     from pathlib import Path
-    prompt_path = Path(__file__).parent.parent.parent / "Agent" / "prompts" / "scoring" / "v1.md"
+    prompt_path = Path(__file__).parent.parent.parent / "agent" / "prompts" / "scoring" / "v1.md"
     if prompt_path.exists():
         return prompt_path.read_text()
     return "Score experience relevance 0-50: {profile} vs {job}"
@@ -65,8 +65,92 @@ def _deterministic_score(job: dict, snapshot: dict) -> tuple[int, dict]:
     return sum(breakdown.values()), breakdown
 
 
+_BATCH_CHUNK = 10
+_FALLBACK_EXPERIENCE = 25
+
+
+def _invoke_rubric(prompt: str) -> list[dict]:
+    """Invoke the rubric LLM and parse the scores list.
+
+    Args:
+        prompt: Full prompt text.
+
+    Returns:
+        List of score dicts, or empty list on failure.
+    """
+    import os
+    from langchain.chat_models import init_chat_model
+    model_name = os.getenv("PLANNER_LLM_MODEL", "claude-haiku-4-5")
+    llm = init_chat_model(model_name, model_provider="anthropic", temperature=0)
+    result = llm.invoke(prompt)
+    content = result.content if isinstance(result.content, str) else str(result.content)
+    m = re.search(r"\{.*\}", content, re.DOTALL)
+    if not m:
+        return []
+    data = json.loads(m.group())
+    scores = data.get("scores", [])
+    return scores if isinstance(scores, list) else []
+
+
+def _score_chunk(chunk: list[tuple[int, dict]], snapshot: dict) -> dict[int, int]:
+    """Score one chunk of jobs via a single LLM call.
+
+    Args:
+        chunk: List of (global index, job) pairs.
+        snapshot: Profile snapshot.
+
+    Returns:
+        Mapping of global index to experience score 0–50.
+    """
+    prompt_tmpl = _read_prompt()
+    jobs_payload = [
+        {"job_idx": idx, "title": job.get("title", ""), "description": (job.get("description", "") or "")[:1500],
+         "location": job.get("location", ""), "salary": job.get("salary", "")}
+        for idx, job in chunk
+    ]
+    prompt = (
+        prompt_tmpl
+        + f"\n\nProfile: {json.dumps(snapshot, indent=2)[:3000]}"
+        + f"\nJobs: {json.dumps(jobs_payload)}"
+    )
+    valid_idx = {idx for idx, _ in chunk}
+    try:
+        out = {}
+        for entry in _invoke_rubric(prompt):
+            idx = entry.get("job_idx")
+            if idx in valid_idx and idx not in out:
+                try:
+                    out[idx] = max(0, min(50, int(entry.get("experience", _FALLBACK_EXPERIENCE))))
+                except (TypeError, ValueError):
+                    out[idx] = _FALLBACK_EXPERIENCE
+        for idx, _ in chunk:
+            out.setdefault(idx, _FALLBACK_EXPERIENCE)
+        return out
+    except Exception as e:
+        logger.warning("LLM experience score failed: %s", e)
+        return {idx: _FALLBACK_EXPERIENCE for idx, _ in chunk}
+
+
+def _llm_experience_scores(jobs: list, snapshot: dict) -> list[int]:
+    """Score experience relevance 0–50 for jobs in chunks of 10.
+
+    Args:
+        jobs: List of job dicts.
+        snapshot: Profile snapshot.
+
+    Returns:
+        Experience scores aligned with jobs order.
+    """
+    scores = [0] * len(jobs)
+    for start in range(0, len(jobs), _BATCH_CHUNK):
+        chunk = list(enumerate(jobs[start:start + _BATCH_CHUNK], start=start))
+        for idx, exp in _score_chunk(chunk, snapshot).items():
+            scores[idx] = exp
+    return scores
+
+
 def _llm_experience_score(job: dict, snapshot: dict) -> int:
-    """Score experience relevance 0–50 via LLM rubric.
+    """Score experience relevance 0–50 for a single job (compat wrapper).
 
     Args:
         job: Job dict.
@@ -75,23 +159,7 @@ def _llm_experience_score(job: dict, snapshot: dict) -> int:
     Returns:
         Experience score 0–50.
     """
-    try:
-        import os
-        from langchain.chat_models import init_chat_model
-        prompt_tmpl = _read_prompt()
-        model_name = os.getenv("PLANNER_LLM_MODEL", "claude-haiku-4-5")
-        llm = init_chat_model(model_name, model_provider="anthropic", temperature=0)
-        prompt = prompt_tmpl + f"\n\nProfile: {json.dumps(snapshot, indent=2)[:3000]}\nJob: {json.dumps(job, indent=2)[:2000]}\nReturn ONLY JSON {{\"experience\": 0-50, \"rationale\": \"...\"}}"
-        result = llm.invoke(prompt)
-        content = result.content if isinstance(result.content, str) else str(result.content)
-        m = re.search(r"\{.*\}", content, re.DOTALL)
-        if m:
-            data = json.loads(m.group())
-            return max(0, min(50, int(data.get("experience", 25))))
-        return 25
-    except Exception as e:
-        logger.warning("LLM experience score failed: %s", e)
-        return 25
+    return _llm_experience_scores([job], snapshot)[0]
 
 
 @tool
@@ -106,10 +174,10 @@ def score_jobs(jobs: list, profile_snapshot: dict, threshold: Optional[int] = No
     Returns:
         JSON string with scored_jobs sorted by score, each with score and breakdown.
     """
+    exp_scores = _llm_experience_scores(jobs, profile_snapshot)
     scored = []
-    for job in jobs:
+    for job, exp_score in zip(jobs, exp_scores):
         det_score, breakdown = _deterministic_score(job, profile_snapshot)
-        exp_score = _llm_experience_score(job, profile_snapshot)
         total = det_score + exp_score
         breakdown["experience"] = exp_score
         scored.append({"job": job, "score": total, "breakdown": breakdown})

@@ -9,7 +9,7 @@ RUN uv sync --no-dev --quiet
 COPY database.py ./
 COPY api/ api/
 COPY tools/ tools/
-COPY Agent/ Agent/
+COPY agent/ agent/
 
 EXPOSE 8000
 
