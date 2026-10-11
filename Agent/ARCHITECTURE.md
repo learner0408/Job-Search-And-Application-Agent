@@ -56,15 +56,33 @@ docs/
 
 How data moves between modules. Mark each flow `[Input] → [Step] → [Output]`.
 
-- `[User NL query] → [guard node (LLM on-topic judge, fail-open)] → [classify_intent (LLM label + confidence ≥ 0.6, else rule fallback)] → [intent]`
-- `[NL query with mixed intent] → [planner proposes DAG {"steps":[{tool,args,depends_on}]} → validator] → [validated DAG]`
-- `[search intent] → [tools/search job_search → JobSource + 24h cache] → [jobs[]]`
-- `[mixed search + profile intent] → [tools/profile get_profile (structured + resume + preferences) || tools/search in parallel] → [profile_snapshot, jobs[]]`
-- `[search_score_prepare] → [plan node: plan_query + validate] → [execute node: topo-ordered validated DAG via tools/registry.py dispatch, fail-fast] → [format]` (invalid plan falls back to the fixed `search → profile → score → prepare` chain)
-- `[profile_snapshot + jobs[] + threshold] → [tools/scoring score_jobs (deterministic 50 + scoring/v1.md rubric 50)] → [scored_jobs[] with score + breakdown] → [code filter score ≥ threshold]`
-- `[scored_jobs[]] → [tools/application prepare_application → DB status: preparing] → [preview: top scored jobs + breakdown]`
-- `[User "apply to #2" / "apply to all"] → [apply intent → resolve #N/all to app_ids → apply_application tool] → [per-id results, no-op message for now; cloud submission is P2]`
-- `[DB-read intent] → [tools/db query_database (classify → generate → execute)] → [human-readable rows]`, all reads filtered `WHERE user_id = current_setting('app.current_user_id')`
+```
+[Browser chat] → [Express /api/* proxy] → [POST /api/chat] → [run_agent]
+                                                                     |
+                                                         [guard: on_topic?]
+                                                          /           \
+                                                    (reject)         (pass)
+                                                        |               |
+                                              [format: refusal]  [classify: 1-of-7 intent]
+                                                                 /  |  |  |  |  |  \
+                                                                /   |  |  |  |  |   \
+                                                     [search] [plan→execute] [db_read] [profile] [update] [apply] [chat→ReAct]
+                                                      (plain)  (score+   (SQL)  (snapshot (writes) (tool (fallback
+                                                                prepare)          +summary)          dummy)  renderer)
+                                                                    \     |     /
+                                                                     \    |    /
+                                                                      [format reply]
+```
+
+| Intent | Example query | Path |
+|---|---|---|
+| `search` | "AI Engineer jobs in Bangalore" | `[search] → [profile] → [score] → [prepare] → [format]` |
+| `search_score_prepare` | "…match ≥70%" | `[plan] → [execute: validated DAG] → [format]` (invalid plan → fixed chain) |
+| `db_read` | "what have I applied to" | `[db_read: classify → generate → execute] → [format]` |
+| `profile` | "fetch my resume" | `[profile snapshot] → [cached LLM summary] → [format]` |
+| `update` | "update my phone" | `[extract args] → [validated write] → [format]` |
+| `apply` | "apply to #2" | `[resolve #N/all] → [apply_application tool] → [format]` |
+| `chat` / `off_topic` | "hello" / joke | `[ReAct renderer]` / `[refusal]` |
 
 ## 6. Contracts & Interfaces
 
@@ -75,7 +93,7 @@ How data moves between modules. Mark each flow `[Input] → [Step] → [Output]`
 
 ## 8. Conventions Reference
 
-Project `CONVENTIONS.md` at the repo root applies: concise code, docstrings with `Args:`/`Returns:`, ask-before-edit/push, LangChain by default and LangGraph for custom flows, check LangChain/LangGraph abstractions first before creating new helpers, keep `README.md` current. Deviation: agent architecture lives at `Agent/ARCHITECTURE.md` (not project-root) because this doc scopes to the agent subsystem only; tool contracts live at `docs/tools/<tool>.md` with a mapping in `tools/README.md` and guardrails in `docs/GUARDRAILS.md`.
+Project `AGENTS.md` at the repo root applies (`CLAUDE.md` points there): concise code, docstrings with `Args:`/`Returns:`, ask-before-edit/push, LangChain by default and LangGraph for custom flows, check LangChain/LangGraph abstractions first before creating new helpers, keep `README.md` current. Deviation: agent architecture lives at `Agent/ARCHITECTURE.md` (not project-root) because this doc scopes to the agent subsystem only; tool contracts live at `docs/tools/<tool>.md` with a mapping in `tools/README.md` and guardrails in `docs/GUARDRAILS.md`.
 
 ## 9. Open Questions
 
