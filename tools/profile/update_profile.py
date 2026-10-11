@@ -21,7 +21,7 @@ def update_profile(
     """Update your saved profile. Scalars are replaced; skills are merged (union);
     work_history and education entries are appended, never removed.
 
-    Call this when the user wants to save or update their personal information. Use get_my_profile first
+    Call this when the user wants to save or update their personal information. Use get_profile first
     to see current values.
 
     Args:

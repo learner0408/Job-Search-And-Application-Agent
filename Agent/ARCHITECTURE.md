@@ -56,7 +56,7 @@ docs/
 
 How data moves between modules. Mark each flow `[Input] → [Step] → [Output]`.
 
-- `[User NL query] → [Agent/orchestrator classify_intent] → [intent]`
+- `[User NL query] → [guard node (LLM on-topic judge, fail-open)] → [classify_intent (LLM label + confidence ≥ 0.6, else rule fallback)] → [intent]`
 - `[NL query with mixed intent] → [planner proposes DAG {"steps":[{tool,args,depends_on}]} → validator] → [validated DAG]`
 - `[search intent] → [tools/search job_search → JobSource + 24h cache] → [jobs[]]`
 - `[mixed search + profile intent] → [tools/profile get_profile (structured + resume + preferences) || tools/search in parallel] → [profile_snapshot, jobs[]]`

@@ -8,3 +8,4 @@ Hard boundaries the agent architecture enforces.
 - Planner never invents tools — validator rejects any `tool` not in `tools/README.md` allow-list and validates arg JSON schemas and `user_id` scoping.
 - Apply never auto-submits — `prepare_application` only creates `status: preparing`; actual apply requires an explicit second user turn (`"apply to #N"` or `"apply to all ≥70%"`).
 - Check existing LangChain and LangGraph abstractions first before introducing new helpers; use `init_chat_model` everywhere.
+- Input scope: the entry guard node admits only career-domain queries (jobs, applications, resume/profile, interviews, salary, employment skills, cover letters); off-topic input gets a refusal with no tools or writes. Mixed queries with any job content pass through.

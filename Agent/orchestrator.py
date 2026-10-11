@@ -24,6 +24,56 @@ class OrchestratorState(TypedDict):
     plan: Optional[dict]
 
 
+def _load_guard_prompt() -> str:
+    """Load guard prompt template.
+
+    Returns:
+        Prompt template string.
+    """
+    from pathlib import Path
+    p = Path(__file__).parent / "prompts" / "guard" / "v1.md"
+    if p.exists():
+        return p.read_text()
+    return 'Return ONLY valid JSON: {"on_topic": true/false}.'
+
+
+GUARD_REFUSAL = (
+    "I'm a job-search assistant — I can help with finding jobs, matching them "
+    "to your profile, applications, your resume, and interviews. "
+    "What would you like to do?"
+)
+
+
+def _guard_node(state: OrchestratorState) -> dict:
+    """Reject off-topic queries before classification (fail-open).
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Dict with intent off_topic + refusal, or empty dict to continue.
+    """
+    raw = state.get("raw_query", "")
+    on_topic = True
+    try:
+        import os
+        from langchain.chat_models import init_chat_model
+
+        llm = init_chat_model(os.getenv("PLANNER_LLM_MODEL", "claude-haiku-4-5"), model_provider="anthropic", temperature=0)
+        result = llm.invoke(_load_guard_prompt() + f"\n\nQuery: {raw}\nJSON:")
+        content = result.content if isinstance(result.content, str) else str(result.content)
+        m = re.search(r"\{.*\}", content, re.DOTALL)
+        if m:
+            on_topic = bool(json.loads(m.group()).get("on_topic", True))
+    except Exception as e:
+        logger.warning("guard judge failed, failing open: %s", e)
+    if on_topic:
+        logger.info("guardrail=pass session=%s", state.get("session_id"))
+        return {}
+    logger.info("guardrail=reject session=%s", state.get("session_id"))
+    return {"intent": "off_topic", "error": GUARD_REFUSAL}
+
+
 def extract_threshold(raw_query: str) -> Optional[int]:
     """Extract threshold from query.
 
@@ -113,17 +163,25 @@ def _classify_intent(state: OrchestratorState) -> dict:
         from langchain.chat_models import init_chat_model
 
         llm = init_chat_model(os.getenv("PLANNER_LLM_MODEL", "claude-haiku-4-5"), model_provider="anthropic", temperature=0)
-        prompt = _load_classify_prompt() + f"\n\nQuery: {raw}\nIntent:"
+        prompt = _load_classify_prompt() + f"\n\nQuery: {raw}\nJSON:"
         result = llm.invoke(prompt)
         content = result.content if isinstance(result.content, str) else str(result.content)
-        m = re.search(r"\b(search_score_prepare|search|db_read|chat|profile|update|apply)\b", content.lower())
+        m = re.search(r"\{.*\}", content, re.DOTALL)
         if m:
-            logger.info("intent=%s session=%s", m.group(1), state.get("session_id"))
-            return {"intent": m.group(1), "plan": None}
+            parsed = json.loads(m.group())
+            label = str(parsed.get("intent", "")).lower()
+            try:
+                confidence = float(parsed.get("confidence", 0))
+            except (TypeError, ValueError):
+                confidence = 0
+            if label in ("search_score_prepare", "search", "db_read", "chat", "profile", "update", "apply") and confidence >= 0.6:
+                logger.info("intent=%s source=llm confidence=%.2f session=%s", label, confidence, state.get("session_id"))
+                return {"intent": label, "plan": None}
+            logger.info("intent gate rejected label=%s confidence=%.2f, falling back to rule", label, confidence)
     except Exception as e:
         logger.warning("LLM classify failed, falling back to rule: %s", e)
     intent = _rule_based_intent(raw)
-    logger.info("intent=%s session=%s (rule)", intent, state.get("session_id"))
+    logger.info("intent=%s source=rule session=%s", intent, state.get("session_id"))
     return {"intent": intent, "plan": None}
 
 
@@ -467,6 +525,8 @@ def _format_node(state: OrchestratorState) -> dict:
         return {"error": state.get("error") or "Done."}
     if state.get("intent") == "apply":
         return {"error": state.get("error") or "Done."}
+    if state.get("intent") == "off_topic":
+        return {"error": state.get("error") or GUARD_REFUSAL}
     if state.get("intent") == "profile":
         snap = state.get("profile_snapshot") or {}
         resume_text = snap.get("resume_text", "")
@@ -603,6 +663,20 @@ def _route_after_plan(state: OrchestratorState) -> str:
     return "search"
 
 
+def _route_after_guard(state: OrchestratorState) -> str:
+    """Route after guard based on whether the query is in scope.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Next node name.
+    """
+    if state.get("intent") == "off_topic":
+        return "format"
+    return "classify"
+
+
 def _route_after_classify(state: OrchestratorState) -> str:
     """Route after classify based on intent.
 
@@ -642,6 +716,7 @@ def _build_graph(checkpointer=None):
         StateGraph builder.
     """
     g = StateGraph(OrchestratorState)
+    g.add_node("guard", _guard_node)
     g.add_node("classify", _classify_intent)
     g.add_node("search", _search_node)
     g.add_node("profile", _profile_node)
@@ -654,7 +729,8 @@ def _build_graph(checkpointer=None):
     g.add_node("execute", _execute_node)
     g.add_node("format", _format_node)
 
-    g.set_entry_point("classify")
+    g.set_entry_point("guard")
+    g.add_conditional_edges("guard", _route_after_guard, {"classify": "classify", "format": "format"})
     g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "plan": "plan", "db_read": "db_read", "profile": "profile", "update": "update", "apply": "apply", "format": "format"})
     g.add_conditional_edges("plan", _route_after_plan, {"execute": "execute", "search": "search"})
     g.add_edge("execute", "format")
