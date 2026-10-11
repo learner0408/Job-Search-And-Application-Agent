@@ -15,9 +15,13 @@ def _load_prompt() -> str:
         Prompt template string.
     """
     p = Path(__file__).parent.parent / "prompts" / "planner" / "v1.md"
-    if p.exists():
-        return p.read_text()
-    return "Generate JSON plan with steps [{id,tool,args,depends_on}]"
+    if not p.exists():
+        return "Generate JSON plan with steps [{id,tool,args,depends_on}]"
+    text = p.read_text()
+    if "{{TOOLS}}" in text:
+        from tools.registry import render_tools_block
+        text = text.replace("{{TOOLS}}", render_tools_block())
+    return text
 
 
 def plan_query(query: str, user_id: int = 0) -> dict:

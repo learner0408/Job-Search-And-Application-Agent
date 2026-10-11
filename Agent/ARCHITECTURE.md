@@ -60,6 +60,7 @@ How data moves between modules. Mark each flow `[Input] → [Step] → [Output]`
 - `[NL query with mixed intent] → [planner proposes DAG {"steps":[{tool,args,depends_on}]} → validator] → [validated DAG]`
 - `[search intent] → [tools/search job_search → JobSource + 24h cache] → [jobs[]]`
 - `[mixed search + profile intent] → [tools/profile get_profile (structured + resume + preferences) || tools/search in parallel] → [profile_snapshot, jobs[]]`
+- `[search_score_prepare] → [plan node: plan_query + validate] → [execute node: topo-ordered validated DAG via tools/registry.py dispatch, fail-fast] → [format]` (invalid plan falls back to the fixed `search → profile → score → prepare` chain)
 - `[profile_snapshot + jobs[] + threshold] → [tools/scoring score_jobs (deterministic 50 + scoring/v1.md rubric 50)] → [scored_jobs[] with score + breakdown] → [code filter score ≥ threshold]`
 - `[scored_jobs[]] → [tools/application prepare_application → DB status: preparing] → [preview: top scored jobs + breakdown]`
 - `[User "apply to #2" / "apply to all"] → [apply intent → resolve #N/all to app_ids → apply_application tool] → [per-id results, no-op message for now; cloud submission is P2]`

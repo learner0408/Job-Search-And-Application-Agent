@@ -1,17 +1,12 @@
 import json
 import re
 
-ALLOWED_TOOLS = {"search_jobs", "get_profile", "score_jobs", "prepare_application", "apply_application", "query_database"}
+from tools.registry import allowed_tools, required_args
+
+ALLOWED_TOOLS = allowed_tools()
 
 
-REQUIRED_ARGS = {
-    "search_jobs": set(),
-    "get_profile": set(),
-    "score_jobs": set(),
-    "prepare_application": set(),
-    "apply_application": {"app_ids"},
-    "query_database": set(),
-}
+REQUIRED_ARGS = required_args()
 
 
 def validate_plan(plan: dict, raw_query: str = "") -> tuple[bool, str]:

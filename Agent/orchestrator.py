@@ -447,6 +447,8 @@ def _format_node(state: OrchestratorState) -> dict:
     if state.get("intent") == "search_score_prepare":
         drafts = state.get("drafts", [])
         if not drafts:
+            if state.get("error"):
+                return {"error": state["error"]}
             return {"error": "No jobs met the threshold. Try lowering it or broadening the search."}
         lines = [f"Found {len(drafts)} jobs meeting the threshold:"]
         for i, d in enumerate(drafts, 1):
@@ -547,6 +549,60 @@ def _route_after_profile(state: OrchestratorState) -> str:
     return "score"
 
 
+def _plan_node(state: OrchestratorState) -> dict:
+    """Generate and validate a DAG plan for search_score_prepare.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Dict with plan (or None on failure, falling back to fixed chain).
+    """
+    from Agent.planner.planner import plan_query
+
+    try:
+        plan = plan_query(state.get("raw_query", ""), user_id=state.get("user_id", 0))
+        logger.info("plan steps=%s session=%s", [s.get("tool") for s in plan.get("steps", [])], state.get("session_id"))
+        return {"plan": plan}
+    except Exception as e:
+        logger.warning("plan failed, falling back to fixed chain: %s", e)
+        return {"plan": None}
+
+
+def _execute_node(state: OrchestratorState) -> dict:
+    """Run the validated plan via the executor (fail-fast).
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Empty dict (working state updated in place) or error.
+    """
+    from Agent.planner.executor import execute_plan
+
+    try:
+        work = dict(state)
+        execute_plan(state.get("plan") or {}, work)
+        return {k: work.get(k) for k in ("jobs", "profile_snapshot", "scored_jobs", "threshold", "drafts")}
+    except Exception as e:
+        logger.warning("execute failed: %s", e)
+        return {"error": str(e)}
+
+
+def _route_after_plan(state: OrchestratorState) -> str:
+    """Route after plan based on whether a valid plan exists.
+
+    Args:
+        state: Current orchestrator state.
+
+    Returns:
+        Next node name.
+    """
+    if state.get("plan"):
+        return "execute"
+    return "search"
+
+
 def _route_after_classify(state: OrchestratorState) -> str:
     """Route after classify based on intent.
 
@@ -558,7 +614,7 @@ def _route_after_classify(state: OrchestratorState) -> str:
     """
     intent = state.get("intent", "chat")
     if intent == "search_score_prepare":
-        return "search"
+        return "plan"
     if intent == "search":
         return "search"
     if intent == "db_read":
@@ -594,10 +650,14 @@ def _build_graph(checkpointer=None):
     g.add_node("db_read", _db_read_node)
     g.add_node("update", _update_node)
     g.add_node("apply", _apply_node)
+    g.add_node("plan", _plan_node)
+    g.add_node("execute", _execute_node)
     g.add_node("format", _format_node)
 
     g.set_entry_point("classify")
-    g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "db_read": "db_read", "profile": "profile", "update": "update", "apply": "apply", "format": "format"})
+    g.add_conditional_edges("classify", _route_after_classify, {"search": "search", "plan": "plan", "db_read": "db_read", "profile": "profile", "update": "update", "apply": "apply", "format": "format"})
+    g.add_conditional_edges("plan", _route_after_plan, {"execute": "execute", "search": "search"})
+    g.add_edge("execute", "format")
     g.add_edge("search", "profile")
     g.add_conditional_edges("profile", _route_after_profile, {"score": "score", "format": "format"})
     g.add_edge("score", "prepare")
